@@ -1,0 +1,14 @@
+class UIView
+
+alias :accessibility_label :accessibilityLabel
+alias :accessibility_hint accessibilityHint
+alias :accessibility_traits accessibilityTraits
+alias :accessibility_value :accessibilityValue
+alias :accessibility_language :accessibilityLanguage
+alias :accessibility_frame :accessibilityFrame
+alias :accessibility_activation_point :accessibilityActivationPoint
+alias :accessibility_view_is_modal :accessibilityViewIsModal
+alias :should_group_accessibility_children :shouldGroupAccessibilityChildren
+alias :accessibility_element_hiden :accessibilityElementHidden
+
+end
