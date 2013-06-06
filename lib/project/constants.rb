@@ -41,6 +41,13 @@ causes_page_turn: UIAccessibilityTraitCausesPageTurn,
 not_enabled: UIAccessibilityTraitNotEnabled
 }
 
+PickerView_Attributes = {
+:accessibility_label_for_component => :accessibilityLabelForComponent,
+:accessibility_abel_for_component= => :setAccessibilityLabelForComponent,
+:accessibility_hint_for_component => :accessibilityHintForComponent,
+:accessibility_hint_for_component= => :setAccessibilityHintForComponent
+}
+
 end
 
 class Symbol
