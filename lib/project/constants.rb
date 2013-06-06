@@ -19,7 +19,7 @@ Attributes = {
 :should_group_accessibility_children => :shouldGroupAccessibilityChildren,
 :should_group_accessibility_children= => :setShouldGroupAccessibilityChildren,
 :accessibility_elements_hidden => :accessibilityElementsHidden,
-:accessibility_elements_hidden= => :setAccessibilityElementsHidden
+:accessibility_elements_hidden= => :setAccessibilityElementsHidden,
 }
 
 Traits = {
@@ -47,6 +47,18 @@ PickerView_Attributes = {
 :accessibility_hint_for_component => :accessibilityHintForComponent,
 :accessibility_hint_for_component= => :setAccessibilityHintForComponent
 }
+
+Container_Attributes = {
+:accessibility_element_at_index => :accessibilityElementAtIndex,
+:accessibility_element_count => :accessibilityElementCount,
+:index_of_accessibility_element => :indexOfAccessibilityElement
+}
+
+def Accessibility.all_attributes
+all=Hash.new
+all.merge!(Attributes)
+all.merge!(Container_Attributes)
+end
 
 end
 
