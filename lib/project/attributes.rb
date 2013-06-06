@@ -58,12 +58,10 @@ return unless Accessibility_Attributes.flatten.grep(%r{name.to_sym})
 if Accessibility_Attributes.has_key?(name)
 ruby=name
 ios=Accessibility_Attributes[name]
-NSLog("Redefining #{ios}")
 define_method(ios) {self.send(ruby)}
 else
 ios=name
 ruby=Accessibility_Attributes.rassoc(name).first
-NSLog("Redefining #{ruby}")
 define_method(ruby) { self.send(ios)}
 end
 end
