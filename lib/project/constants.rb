@@ -20,6 +20,9 @@ Attributes = {
 :should_group_accessibility_children= => :setShouldGroupAccessibilityChildren,
 :accessibility_elements_hidden => :accessibilityElementsHidden,
 :accessibility_elements_hidden= => :setAccessibilityElementsHidden,
+:accessibility_element? => :isAccessibilityElement,
+:is_accessibility_element => :isAccessibilityElement,
+:is_accessibility_element= => :isAccessibilityElement=
 }
 
 Traits = {
