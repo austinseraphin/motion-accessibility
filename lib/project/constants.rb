@@ -1,6 +1,8 @@
 class Accessibility
 
 Attributes = {
+:accessibility_identifier => :accessibilityIdentifier,
+:accessibility_identifier= => :setAccessibilityIdentifier,
 :accessibility_label => :accessibilityLabel,
 :accessibility_label= =>  :setAccessibilityLabel,
 :accessibility_hint => :accessibilityHint,
