@@ -97,32 +97,29 @@ Scroll_Directions = {
 :previous => UIAccessibilityScrollDirectionPrevious
 }
 
+Zoom = {
+:announcement_key_string_value => UIAccessibilityAnnouncementKeyStringValue,
+:announcement_key_was_successful => UIAccessibilityAnnouncementKeyWasSuccessful
+}
+
 end
 
 class Symbol
 
 def accessibility_trait
-if Accessibility::Traits[self]
-Accessibility::Traits[self]
-else
-raise "Unknown accessibility trait #{trait}"
-end
+Accessibility::Traits[self]||(raise("Unknown accessibility trait #{trait}"))
 end
 
 def accessibility_notification
-if Accessibility::Notifications[self]
-Accessibility::Notifications[self]
-else
-raise "Unknown accessibility notification #{name}"
-end
+Accessibility::Notifications[self]||(raise "Unknown accessibility notification #{name}")
 end
 
 def accessibility_scroll_direction
-if Accessibility::Scroll_Directions[self]
-Accessibility::Scroll_Directions[self]
-else
-raise "Unknown accessibility scroll direction #{self}"
+Accessibility::Scroll_Directions[self]||(raise "Unknown accessibility scroll direction #{self}")
 end
+
+def accessibility_zoom_type
+Accessibility::Zoom[self]||(raise("Unknown zoom type #{self}"))
 end
 
 end
