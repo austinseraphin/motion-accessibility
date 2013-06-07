@@ -57,11 +57,13 @@ Container_Attributes = {
 :index_of_accessibility_element => :indexOfAccessibilityElement
 }
 
-def Accessibility.all_attributes
-all=Hash.new
-all.merge!(Attributes)
-all.merge!(Container_Attributes)
-end
+Focus = {
+:accessibility_element_did_become_focused => :accessibilityElementDidBecomeFocused,
+:accessibility_element_did_lose_focus => :accessibilityElementDidLoseFocus,
+:accessibility_element_is_focused => :accessibilityElementIsFocused
+}
+
+Definitions=Attributes.merge(Container_Attributes).merge(Focus)
 
 Notifications = {
 :layout_changed => UIAccessibilityLayoutChangedNotification,
@@ -92,7 +94,8 @@ Scroll_Directions = {
 :up => UIAccessibilityScrollDirectionUp,
 :down => UIAccessibilityScrollDirectionDown,
 :next => UIAccessibilityScrollDirectionNext,
-:previous => UIAccessibilityScrollDirectionPrevious}
+:previous => UIAccessibilityScrollDirectionPrevious
+}
 
 end
 
