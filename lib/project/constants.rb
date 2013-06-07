@@ -63,6 +63,37 @@ all.merge!(Attributes)
 all.merge!(Container_Attributes)
 end
 
+Notifications = {
+:layout_changed => UIAccessibilityLayoutChangedNotification,
+:screen_changed => UIAccessibilityScreenChangedNotification,
+:page_scrolled => UIAccessibilityPageScrolledNotification,
+:announcement => UIAccessibilityAnnouncementNotification,
+:announcement_did_finish => UIAccessibilityAnnouncementDidFinishNotification,
+:closed_captioning => UIAccessibilityClosedCaptioningStatusDidChangeNotification,
+:guided_access => UIAccessibilityGuidedAccessStatusDidChangeNotification,
+:invert_colors => UIAccessibilityInvertColorsStatusDidChangeNotification,
+:mono_audio => UIAccessibilityMonoAudioStatusDidChangeNotification,
+:voiceover => UIAccessibilityVoiceOverStatusChanged
+}
+
+def Accessibility.post_notification(notification, *args)
+if(notification.kind_of?(Fixnum))
+UIAccessibilityPostNotification(notification, *args)
+elsif(notification.kind_of?(Symbol))
+UIAccessibilityPostNotification(Notifications[notification], *args)
+else
+raise "Unknown accessibility notification #{notification}"
+end
+end
+
+Scroll_Directions = {
+:right => UIAccessibilityScrollDirectionRight,
+:left => UIAccessibilityScrollDirectionLeft,
+:up => UIAccessibilityScrollDirectionUp,
+:down => UIAccessibilityScrollDirectionDown,
+:next => UIAccessibilityScrollDirectionNext,
+:previous => UIAccessibilityScrollDirectionPrevious}
+
 end
 
 class Symbol
@@ -72,6 +103,22 @@ if Accessibility::Traits[self]
 Accessibility::Traits[self]
 else
 raise "Unknown accessibility trait #{trait}"
+end
+end
+
+def accessibility_notification
+if Accessibility::Notifications[self]
+Accessibility::Notifications[self]
+else
+raise "Unknown accessibility notification #{name}"
+end
+end
+
+def accessibility_scroll_direction
+if Accessibility::Scroll_Directions[self]
+Accessibility::Scroll_Directions[self]
+else
+raise "Unknown accessibility scroll direction #{self}"
 end
 end
 
