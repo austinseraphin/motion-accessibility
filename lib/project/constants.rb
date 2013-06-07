@@ -65,7 +65,14 @@ Focus = {
 :accessibility_element_is_focused => :accessibilityElementIsFocused
 }
 
-Definitions=Attributes.merge(Container_Attributes).merge(Focus)
+Reading_Content = {
+accessibility_content_for_line_number: :accessibbilityContentForLineNumber,
+accessibility_frame_for_line_number: :accessibilityFrameForLineNumber,
+accessibility_line_number_for_point: :accessibilityLineNumberForPoint,
+accessibility_page_content: :accessibilityPageContent
+}
+
+Definitions=Attributes.merge(Container_Attributes).merge(Focus).merge(Reading_Content)
 
 Notifications = {
 :layout_changed => UIAccessibilityLayoutChangedNotification,
