@@ -1,0 +1,18 @@
+(in /Users/omeron/Programming/rubymotion/motion-accessibility)
+require 'lib/motion/project' is deprecated, please require 'lib/motion/project/template/ios' instead
+[1m     Build[0m ./build/iPhoneSimulator-6.1-Development
+[1m   Compile[0m /Users/omeron/Programming/rubymotion/motion-accessibility/lib/project/constants.rb
+/Users/omeron/Programming/rubymotion/motion-accessibility/lib/project/constants.rb:101: syntax error, unexpected keyword_end, expecting $end
+rake aborted!
+Command failed with status (): [/usr/bin/env VM_KERNEL_PATH="/Library/Ruby...]
+/Users/omeron/.rvm/gems/ruby-2.0.0-p0@global/gems/rake-10.0.4/lib/rake/file_utils.rb:53:in `block in create_shell_runner'
+/Users/omeron/.rvm/gems/ruby-2.0.0-p0@global/gems/rake-10.0.4/lib/rake/file_utils.rb:45:in `call'
+/Users/omeron/.rvm/gems/ruby-2.0.0-p0@global/gems/rake-10.0.4/lib/rake/file_utils.rb:45:in `sh'
+/Users/omeron/.rvm/gems/ruby-2.0.0-p0@global/gems/rake-10.0.4/lib/rake/file_utils_ext.rb:37:in `sh'
+/Library/RubyMotion/lib/motion/project/builder.rb:103:in `block (2 levels) in build'
+/Library/RubyMotion/lib/motion/project/builder.rb:94:in `each'
+/Library/RubyMotion/lib/motion/project/builder.rb:94:in `block in build'
+/Library/RubyMotion/lib/motion/project/builder.rb:147:in `call'
+/Library/RubyMotion/lib/motion/project/builder.rb:147:in `block (2 levels) in build'
+Tasks: TOP => default => simulator => build:simulator
+(See full trace by running task with --trace)

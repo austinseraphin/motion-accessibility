@@ -12,7 +12,6 @@ def Accessibility.scroll(direction)
 if direction.kind_of?(Fixnum)
 accessibilityScroll(direction)
 elsif direction.kind_of?(Symbol)
-
 accessibilityScroll(direction.accessibility_scroll_direction)
 else
 raise "Unknown accessibility scroll direction #{direction}"
