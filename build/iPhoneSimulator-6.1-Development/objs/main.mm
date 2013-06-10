@@ -14,7 +14,7 @@ main(int argc, char **argv)
     try {
         RubyMotionInit(argc, argv);
 rb_define_global_const("RUBYMOTION_ENV", @"development");
-rb_define_global_const("RUBYMOTION_VERSION", @"2.0");
+rb_define_global_const("RUBYMOTION_VERSION", @"2.1");
         retval = UIApplicationMain(argc, argv, nil, @"AppDelegate");
         rb_exit(retval);
     }

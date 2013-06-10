@@ -27,6 +27,23 @@ Attributes = {
 :is_accessibility_element= => :isAccessibilityElement=
 }
 
+Element_Attributes = {
+:container => :accessibilityContainer,
+:container= => :setAccessibilityContainer,
+:frame => :accessibilityFrame,
+:frame= => :setAccessibilityFrame,
+:hint => :accessibilityHint,
+:hint= => :setAccessibilityHint,
+:label => :accessibilityLabel,
+:label= => :setAccessibilityLabel,
+:traits => :accessibilityTraits,
+:value => :accessibilityValue,
+:value= => :setAccessibilityValue,
+:is_accessibility_element => :isAccessibilityElement,
+:is_accessibility_element => :setIsAccessibilityElement,
+:accessibility_element? => :isAccessibilityElement
+}
+
 Traits = {
 none: UIAccessibilityTraitNone,
 button: UIAccessibilityTraitButton,
