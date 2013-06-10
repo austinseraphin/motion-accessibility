@@ -72,7 +72,15 @@ accessibility_line_number_for_point: :accessibilityLineNumberForPoint,
 accessibility_page_content: :accessibilityPageContent
 }
 
-Definitions=Attributes.merge(Container_Attributes).merge(Focus).merge(Reading_Content)
+Actions = {
+:accessibility_decrement => :accessibilityDecrement,
+:accessibility_increment => :accessibilityIncrement,
+:accessibility_perform_escape => :accessibilityPerformEscape,
+:accessibility_perform_magic_tap => :accessibilityPerformMagicTap,
+:accessibility_scroll => :accessibilityScroll
+}
+
+All_Attributes=Attributes.merge(Container_Attributes).merge(Focus).merge(Reading_Content).merge(Actions)
 
 Notifications = {
 :layout_changed => UIAccessibilityLayoutChangedNotification,
