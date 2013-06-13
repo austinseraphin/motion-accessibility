@@ -107,6 +107,8 @@ The view displays an image.
 For example, a selected row in a table, or segment in a segmented control.
 ##### :keyboard_key
 The view behaves like a keyboard key.
+##### :header
+The view contains a header. VoiceOver will announce this as aheading, and allows for navigation between headings.
 ##### :static_text
 The view displays static text.
 ##### :summary_element
@@ -170,26 +172,110 @@ Accepts an integer and returns the accessibility label for the component.
 #### `accessibility_hint_for_component `
 Accepts an integer and returns the accessibility hint for the component.
 
+### UIAccessibility Actions
+
+These methods trigger when the VoiceOver user performs specific actions.
+
+#### `accessibility_perform_escape`
+
+VoiceOver has a special two-finger scrub gesture designed to act as a back button. The standard back button of a UINavigationController implements this method. It dismisses a modal view, and returns the success or failure of the action. For example, you could use this to dismiss a popover.
+
+#### `Accessibility_perform_magic_tap`
+
+VoiceOver has a special two-finger double-tap. This method should toggle the most important state of the program. For example, if a song plays it will pause and resume the song. If on a telephone call, doing a magic tap will end it.
+
+#### `accessibility_scroll`
+
+This method scrolls the screen in an application-specific way. If the scrolling succeeds, return true and post a :scroll notification. 
+
+#### `accessibility_increment`
+
+Increments the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
+
+#### `accessibility_decrement`
+
+Decrements the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
+
+#### Scroll Directions
+
+`accessibility_scroll` takes one of the following scroll directions.
+
+- :right
+- :left
+- :up
+- :down
+- :next
+- :previous
+
+
+### UIAccessibilityElement
+
+If you have something in your view that does not inheret from UIView or UIControl and you want to make it accessible, you need to define it as an accessibility element. Accessibility elements belong to a container, in other words the view which contains them. To create one, just call `Accessibility::Element.new` with the container, usually self. Like a UIView. An accessibility element has attributes, and you get and set them in exactly the same way.
+
+```
+class CustomView < UIView
+
+def viewDidLoad
+# …
+accessibility=Accessibility::Element.new(self)
+ðaccessibility.label="Hello."
+accessibility.frame=view.frame
+accessibility.traits=:button
+
+end
+```
+
+#### Container
+
+The container of the accessibility element.
+
+#### `label`
+
+The accessibility label.
+
+#### `hint`
+
+The accessibility hint.
+
+#### `frame`
+
+The frame which VoiceOver should consider as the element. In a UIView this would default to the frame of the view.
+
+#### `traits`
+
+The accessibility traits. This works exactly like UIView.
+
+#### `value`
+
+The value of the element, if applicable.
+
+#### `is_accessibility_element` or `accessibility_element?`
+
+Returns true if VoiceOver should consider this an accessibility element. Note that you can only use `is_accessibility_element?=` as a setter.
+
 ### UIAccessibilityContainer Informal Protocol
 
-The UIAccessibility Container informal protocol allows VoiceOver to handle a custom view which acts like a container. It  tells VoiceOver how to read the subviews in the proper order.
+The UIAccessibility Container informal protocol allows VoiceOver to handle a custom view which acts like a container. It  tells VoiceOver how to read the subviews in the proper order. It contains accessibility elements. Just implement these methods in a subclass of UIView.
+
 #### `accessibility_element_at_index`
 Accepts an integer and returns the accessibility element.
 #### `accessibility_element_count`
 Returns the number of accessible elements.
 #### `index_of_accessibility_element`
-Accepts
+Accepts an accessibility element and returns its index as an integer.
+
 ### UIAccessibilityFocus Informal Protocol
 
 This protocol lets you take actions if a view gains or loses VoiceOver's focus.
-- `accessibility_element_did_become_focused`
+#### `accessibility_element_did_become_focused`
+Triggered when 
 - `accessibility_element_did_lose_focus`
 - `accessibility_element_is_focused`
 
 ### UIAccessibilityReadingContent Informal Protocol
 
 This protocol gives a seamless reading experience when dealing with
-long pieces of text, such as a book.  -
+a UIView which contains long pieces of text, such as a book.  -
 #### `accessibility_content_for_line_number -`
 Accepts an integer and returns the line of text to read.
 #### `accessibility_frame_for_line_number -`
@@ -234,27 +320,6 @@ zoom_type method on the following symbols.
 
 - :announcement_key_string_value
 - :announcement_key_was_successful
-
-### UIAccessibility Actions
-
-These methods trigger when the VoiceOver user performs specific actions.
-
-- `Accessibility.perform_escape`
-- `Accessibility.perform_magic_tap`
-- `Accessibility.scroll`
-- `Accessibility.increment`
-- `Accessibility.decrement`
-
-#### Scroll Directions
-
-Accessibility.scrolltakes one of the following scroll directions.
-
-- :right
-- :left
-- :up
-- :down
-- :next
-- :previous
 
 ## contributing
 

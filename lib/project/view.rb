@@ -39,8 +39,8 @@ def self.method_added(name)
 if self.respond_to?(:method_added_accessibility)
 method_added_accessibility(name)
 end
-attributes=Accessibility::All_Attributes
 return if name=~/=$/
+attributes=Accessibility::All_Attributes
 return unless attributes.flatten.grep(%r{name.to_sym})
 if attributes.has_key?(name)
 ruby=name

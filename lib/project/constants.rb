@@ -39,6 +39,10 @@ Element_Attributes = {
 :traits => :accessibilityTraits,
 :value => :accessibilityValue,
 :value= => :setAccessibilityValue,
+:did_become_focused => :accessibilityElementDidBecomeFocused,
+:did_lose_focus => :accessibilityElementDidLoseFocus,
+:is_focused => :accessibilityElementIsFocused,
+:focused? => :accessibilityElementIsFocused,
 :is_accessibility_element => :isAccessibilityElement,
 :is_accessibility_element => :setIsAccessibilityElement,
 :accessibility_element? => :isAccessibilityElement
@@ -53,6 +57,7 @@ image: UIAccessibilityTraitImage,
 selected: UIAccessibilityTraitSelected,
 keyboard_key: UIAccessibilityTraitKeyboardKey,
 static_text: UIAccessibilityTraitStaticText,
+header: UIAccessibilityTraitHeader,
 summary_element: UIAccessibilityTraitSummaryElement,
 plays_sound: UIAccessibilityTraitPlaysSound,
 starts_media_session: UIAccessibilityTraitStartsMediaSession,
@@ -76,12 +81,6 @@ Container_Attributes = {
 :index_of_accessibility_element => :indexOfAccessibilityElement
 }
 
-Focus = {
-:accessibility_element_did_become_focused => :accessibilityElementDidBecomeFocused,
-:accessibility_element_did_lose_focus => :accessibilityElementDidLoseFocus,
-:accessibility_element_is_focused => :accessibilityElementIsFocused
-}
-
 Reading_Content = {
 accessibility_content_for_line_number: :accessibbilityContentForLineNumber,
 accessibility_frame_for_line_number: :accessibilityFrameForLineNumber,
@@ -97,7 +96,7 @@ Actions = {
 :accessibility_scroll => :accessibilityScroll
 }
 
-All_Attributes=Attributes.merge(Container_Attributes).merge(Focus).merge(Reading_Content).merge(Actions)
+All_Attributes=Attributes.merge(Container_Attributes).merge(Reading_Content).merge(Actions)
 
 Notifications = {
 :layout_changed => UIAccessibilityLayoutChangedNotification,

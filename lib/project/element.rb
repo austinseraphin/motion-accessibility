@@ -8,7 +8,6 @@ end
 alias :init_with_accessibility_container :initialize
 
 Accessibility::Element_Attributes.each do |ruby,ios|
-puts "Defining #{ruby} -> #{ios}\n"
 if ruby=~/=$/
 define_method(ruby) {|value| self.send(ios,value)}
 else
@@ -27,7 +26,7 @@ traits.each {|trait| bits|=trait.accessibility_trait}
 else
 raise "Pass a bitmask, a symbol, or an array to accessibility_traits="
 end
-self.accessibilityTraits=bits
+OAself.accessibilityTraits=bits
 end
 
 if self.respond_to?(:method_added)
@@ -38,12 +37,16 @@ def self.method_added(name)
 if self.respond_to?(:method_added_accessibility)
 method_added_accessibility(name)
 end
-attributes=Accessibility::Element_Attributes
 return if name=~/=$/
+attributes=Accessibility::Element_Attributes
 return unless attributes.flatten.grep(%r{name.to_sym})
 if attributes.has_key?(name)
 ruby=name
 ios=attributes[name]
+if ios==:accessibilityElementIsFocused
+	raise "You cannot define #{ruby}"
+end
+puts "Adding #{ruby} -> #{ios}"
 define_method(ios) {self.send(ruby)}
 else
 ios=name
