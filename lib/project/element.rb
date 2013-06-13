@@ -46,7 +46,6 @@ ios=attributes[name]
 if ios==:accessibilityElementIsFocused
 	raise "You cannot define #{ruby}"
 end
-puts "Adding #{ruby} -> #{ios}"
 define_method(ios) {self.send(ruby)}
 else
 ios=name
