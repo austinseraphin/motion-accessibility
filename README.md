@@ -138,7 +138,8 @@ The language used by VoiceOver to read the view.
 
 #### `accessibility_frame`
 
-The frame of the accessibility element. This defaults to the frame of the view.
+The frame of the accessibility element. This defaults to the frame of the view. Remember to give it in screen coordinates, not the coordinates of the view.
+
 
 #### `accessibility_activation_point`
 
@@ -174,7 +175,7 @@ Accepts an integer and returns the accessibility hint for the component.
 
 ### UIAccessibility Actions
 
-These methods trigger when the VoiceOver user performs specific actions.
+These methods trigger when the VoiceOver user performs specific actions. You can implement then in a UIView or an accessibility element.
 
 #### `accessibility_perform_escape`
 

@@ -1,4 +1,4 @@
-class UIView
+class NSObject
 
 Accessibility::Attributes.each do |ruby, ios|
 next if ruby==:accessibility_traits=
@@ -16,6 +16,8 @@ else
 define_method(ruby) {|n| ios(n)}
 end
 end
+
+Accessibility::Actions.each {|ruby,ios| define_method(ruby) {ios}}
 
 def accessibility_traits=(traits)
 bits=0
@@ -41,7 +43,7 @@ method_added_accessibility(name)
 end
 return if name=~/=$/
 attributes=Accessibility::All_Attributes
-return unless attributes.flatten.grep(%r{name.to_sym})
+return unless attributes.flatten.include?(name.to_sym)
 if attributes.has_key?(name)
 ruby=name
 ios=attributes[name]
