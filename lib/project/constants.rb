@@ -22,6 +22,10 @@ Attributes = {
 :should_group_accessibility_children= => :setShouldGroupAccessibilityChildren,
 :accessibility_elements_hidden => :accessibilityElementsHidden,
 :accessibility_elements_hidden= => :setAccessibilityElementsHidden,
+:accessibility_element_did_become_focused => :accessibilityElementDidBecomeFocused,
+:accessibility_element_did_lose_focus => :accessibilityElementDidLoseFocus,
+:accessibility_element_is_focused => :accessibilityElementIsFocused,
+:accessibility_element_focused? => :accessibilityElementIsFocused,
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
 :is_accessibility_element= => :isAccessibilityElement=

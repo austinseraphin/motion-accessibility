@@ -34,7 +34,9 @@ self.accessibilityTraits=bits
 end
 
 if self.respond_to?(:method_added)
+class << self
 alias :method_added_accessibility :method_added
+end
 end
 
 def self.method_added(name)

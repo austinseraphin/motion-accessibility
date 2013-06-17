@@ -3,7 +3,9 @@ class UIPickerView
 Accessibility::PickerView_Attributes.each {|ruby,ios| define_method(ruby) {|component| self.send(ios, component)}}
 
 if self.respond_to?(:method_added)
+class << self
 alias :method_added_accessibility :method_added
+end
 end
 
 def self.method_added(name)
