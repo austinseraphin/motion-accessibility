@@ -26,15 +26,11 @@ Or install it yourself as:
 
 ### UIAccessibility Informal Protocol
 
-This informal protocol describes how to convey proper information to
-VoiceOver, the piece of software which allows the blind to read the
-screen. All of the UIAccessibility attributes you can define in a
-UIView now have Ruby-like names.
+This informal protocol describes how to convey proper information to VoiceOver, the piece of software which allows the blind to read the screen. All of the UIAccessibility attributes   now have Ruby-like names. Just like the protocol, these methods belong to the NSObject class, so you can use them anywhere. Usually, you will define them for a UIView.
 
 #### Defining Attributes in a Custom Subclass
 
-You can define these attributes in one of two ways. Firstly you can
-define a function in a subclass of UIView.
+You can define these attributes in one of two ways. Firstly you can define a function in a subclass of UIView.
 
 ```
 class CustomView < UIView
@@ -46,10 +42,7 @@ end
 end
 ```
 
-Note that motion-accessibility uses some metaprogramming to accomplish
-this. It tries to play nicely with other gems. If another gem has
-already defined the `UIView.method_added` method, it will alias it and
-run it before its own.
+Note that motion-accessibility uses some metaprogramming to accomplish this. It tries to play nicely with other gems. If another gem has already defined the `UIView.method_added` method, it will alias it and run it before its own.
 
 #### Defining Attributes in the Instanciation Code
 
@@ -86,7 +79,7 @@ end
 end
 ```
 
-Or, to set it in an instance of a viewyou can do this.
+Or, to set it in an instance of a view you can do this.
 
 ```
 view=UIView.alloc.init
@@ -108,7 +101,7 @@ For example, a selected row in a table, or segment in a segmented control.
 ##### :keyboard_key
 The view behaves like a keyboard key.
 ##### :header
-The view contains a header. VoiceOver will announce this as aheading, and allows for navigation between headings.
+The view contains a header. VoiceOver will announce this as a heading. VoiceOver allows for navigation between headings. This gives quick access to different sections.
 ##### :static_text
 The view displays static text.
 ##### :summary_element
@@ -139,7 +132,6 @@ The language used by VoiceOver to read the view.
 #### `accessibility_frame`
 
 The frame of the accessibility element. This defaults to the frame of the view. Remember to give it in screen coordinates, not the coordinates of the view.
-
 
 #### `accessibility_activation_point`
 
@@ -208,20 +200,21 @@ Decrements the value of the accessibility element. Make sure to have the :adjust
 - :next
 - :previous
 
-
 ### UIAccessibilityElement
 
-If you have something in your view that does not inheret from UIView or UIControl and you want to make it accessible, you need to define it as an accessibility element. Accessibility elements belong to a container, in other words the view which contains them. To create one, just call `Accessibility::Element.new` with the container, usually self. Like a UIView. An accessibility element has attributes, and you get and set them in exactly the same way.
+If you have something in your view that does not inherit from UIView or UIControl and you want to make it accessible, you need to define it as an accessibility element. Accessibility elements belong to an accessibility container, in other words the view which contains them. To create one, just call `Accessibility::Element.new` with the container, usually self. Like a UIView, an accessibility element has attributes, and you get and set them in exactly the same way.
 
 ```
 class CustomView < UIView
 
-def viewDidLoad
+def initWithFrame(frame)
+super
 # …
 accessibility=Accessibility::Element.new(self)
-ðaccessibility.label="Hello."
+accessibility.label="Hello."
 accessibility.frame=view.frame
 accessibility.traits=:button
+end
 
 end
 ```
@@ -267,11 +260,13 @@ Accepts an accessibility element and returns its index as an integer.
 
 ### UIAccessibilityFocus Informal Protocol
 
-This protocol lets you take actions if a view gains or loses VoiceOver's focus.
+This protocol lets you take actions if a view gains or loses VoiceOver's focus. Note that if you use these in an Accessibility::Element that you can leave off the `accessibility_element_` prefix.
 #### `accessibility_element_did_become_focused`
-Triggered when 
-- `accessibility_element_did_lose_focus`
-- `accessibility_element_is_focused`
+Triggered when the accessibility element becomes focused by VoiceOver.
+#### `accessibility_element_did_lose_focus`
+Triggered when the accessibility element loses VoiceOver's focus.
+#### `accessibility_element_is_focused`
+Returns true if the element currently has VoiceOver focus.
 
 ### UIAccessibilityReadingContent Informal Protocol
 
@@ -286,12 +281,7 @@ Accepts a CGPoint and returns the line number of the text to read.
 
 ### Notifications
 
-The UIAccessibility notifications can either come from UIKit or from
-an applications. You can observe them with the standard notification
-center. You can post them with
-`Accessibility.post_notification`. Motion-Accessibility adds an
-accessibility_notification method to the Symbol class, so you can use
-any of these symbols.
+The UIAccessibility notifications can either come from UIKit or from an applications. You can observe them with the standard notification center. You can post them with `Accessibility.post_notification`. Motion-Accessibility adds an accessibility_notification method to the Symbol class, so you can use any of these symbols.
 
 - :layout_changed
 - :screen_changed
@@ -304,9 +294,7 @@ any of these symbols.
 - :mono_audio
 - :voiceover
 
-For example, if a view controller removes a subview and adds another,
-you will want to post the layout changed notification. You can do this
-with
+For example, if a view controller removes a subview and adds another, you will want to post the layout changed notification. You can do this with
 
 ```
 Accessibility.post_notification(:layout_changed)
@@ -316,8 +304,7 @@ Much easier, don't you think?
 
 #### Zoom Type
 
-The :announcement_did_finish notification posts these. Use the
-zoom_type method on the following symbols.
+The :announcement_did_finish notification posts these. Use the zoom_type method on the following symbols.
 
 - :announcement_key_string_value
 - :announcement_key_was_successful
