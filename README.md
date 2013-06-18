@@ -297,7 +297,7 @@ Your application should post this notification when a  part of the screen's layo
 Your application should post this notification when a major part of the screen changes. It has the same parameter as `:layout_changed`.
 #### :page_scrolled
 Post this notification after calling `Accessibility.scroll`. Include a string which describes the scrolling action, for example "Page 3 of 10".
-#### :announcement
+##### :announcement
 Post this notification to make VoiceOver output something. Just include the string.
 #### :announcement_did_finish
 UIKit posts this announcement when VoiceOver finishes announcing something. It accepts a dictionary with the following keys as a parameter. Use the zoom_type method on these symbols.
@@ -316,12 +316,15 @@ UIKit posts this when the user toggles VoiceOver.
 
 ### Determining the Status of Accessibility Components
 You can use these handy methods to determine the status of different accessibility components. They take no parameters and return true or false.
+
 - `Accessibility.voiceover_running?`
 - `Accessibility.closed_captioning_enabled?`
 - `Accessibility.guided_access_enabled?`
 - `Accessibility.invert_colors_enabled?`
 - `Accessibility.mono_audio_enabled?`
+
 Additionally, these two methods relate to the Zoom screen magnification software.
+
 #### `Accessibility.zoom_focused_changed`
 This notifies Zoom that an app's focus has changed. It takes a zoom type described above, a frame, and the view containing the frame.
 #### `Accessibility.register_gesture_conflicts_with_zoom`
