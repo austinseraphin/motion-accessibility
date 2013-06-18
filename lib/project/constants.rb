@@ -18,9 +18,12 @@ Attributes = {
 :accessibility_activation_point= => :setAccessibilityActivationPoint,
 :accessibility_view_is_modal => :accessibilityViewIsModal,
 :accessibility_view_is_modal= => :setAccessibilityViewIsModal,
+:accessibility_modal_view? => :accessibilityViewIsModal,
 :should_group_accessibility_children => :shouldGroupAccessibilityChildren,
+:group_accessibility_children? => :shouldGroupAccessibilityChildren,
 :should_group_accessibility_children= => :setShouldGroupAccessibilityChildren,
 :accessibility_elements_hidden => :accessibilityElementsHidden,
+:accessibility_elements_hidden? => :accessibilityElementsHidden,
 :accessibility_elements_hidden= => :setAccessibilityElementsHidden,
 :accessibility_element_did_become_focused => :accessibilityElementDidBecomeFocused,
 :accessibility_element_did_lose_focus => :accessibilityElementDidLoseFocus,
@@ -119,6 +122,7 @@ def Accessibility.post_notification(notification, *args)
 if(notification.kind_of?(Fixnum))
 UIAccessibilityPostNotification(notification, *args)
 elsif(notification.kind_of?(Symbol))
+raise "You cannot post #{notification} as an accessibility notification" unless Notifications[notification].kind_of?(Fixnum)
 UIAccessibilityPostNotification(Notifications[notification], *args)
 else
 raise "Unknown accessibility notification #{notification}"
@@ -148,7 +152,7 @@ Accessibility::Traits[self]||(raise("Unknown accessibility trait #{trait}"))
 end
 
 def accessibility_notification
-Accessibility::Notifications[self]||(raise "Unknown accessibility notification #{name}")
+Accessibility::Notifications[self]||(raise "Unknown accessibility notification #{self}")
 end
 
 def accessibility_scroll_direction

@@ -11,9 +11,9 @@ end
 
 Accessibility::Container_Attributes.each do |ruby, ios|
 if ruby=="accessibility_element_count"
-define_method(ruby) {ios}
+define_method(ruby) {self.send(ios)}
 else
-define_method(ruby) {|n| ios(n)}
+define_method(ruby) {|n| self.send(ios,n)}
 end
 end
 

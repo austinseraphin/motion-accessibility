@@ -5,7 +5,7 @@
 https://github.com/austinseraphin/motion-accessibility
 
 Motion-Accessibility wraps the UIAccessibility protocols in nice
-ruby. I hope that making it easier will encourage developers to use it
+ruby. I hope that making them easier will encourage developers to use it
 more and make their apps accessible.
 
 ## Installation
@@ -30,7 +30,7 @@ This informal protocol describes how to convey proper information to VoiceOver, 
 
 #### Defining Attributes in a Custom Subclass
 
-You can define these attributes in one of two ways. Firstly you can define a function in a subclass of UIView.
+You can define these attributes in one of two ways. Firstly you can define a method in a subclass of UIView.
 
 ```
 class CustomView < UIView
@@ -42,7 +42,7 @@ end
 end
 ```
 
-Note that motion-accessibility uses some metaprogramming to accomplish this. It tries to play nicely with other gems. If another gem has already defined the `UIView.method_added` method, it will alias it and run it before its own.
+Note that motion-accessibility uses some metaprogramming to accomplish this. It tries to play nicely with other gems. If another gem has already defined the `NSObject.method_added` method, it will alias it and run it before its own.
 
 #### Defining Attributes in the Instanciation Code
 
@@ -61,12 +61,12 @@ Labels briefly describe the element. They do not include the control type. They 
 
 #### `accessibility_hint`
 
-Hints describe the results of performing an action. Only provide one when not obvious. They briefly describe results. They begin with a verb and omit the subject. They use the third person singular declarative form - Plays music instead of play music. Imagine describing it to a friend. "Tapping the button plays music." They begin with a capitalized word and ends with a period. They do not include the action or gesture.  They do not include the name or type of the controller or view. Localized.
+Hints describe the results of performing an action. Only provide one when not obvious. They briefly describe results. They begin with a verb and omit the subject. They use the third person singular declarative form - Plays music instead of play music. Imagine describing it to a friend. "Tapping the button plays music." They begin with a capitalized word and end with a period. They do not include the action or gesture.  They do not include the name or type of the controller or view. Localized.
 
 #### `accessibility_traits`
 
 Traits describe an element's state, behavior, or usage. They tell
-VoiceOver how to respond to a view. To combine them, use the binary or `|` operator.
+VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator.
 
 The `accessibility_attribute=` method accepts a symbol or array of symbols, and applies the accessibility_attribute method to them. For example, if a view displays an image  that opens a link, you can do this.
 
@@ -97,7 +97,7 @@ The view acts like a search field.
 ##### :image
 The view displays an image.
 ##### :selected
-For example, a selected row in a table, or segment in a segmented control.
+VoiceOver will report the element as selected. For example, a selected row in a table, or segment in a segmented control.
 ##### :keyboard_key
 The view behaves like a keyboard key.
 ##### :header
@@ -111,7 +111,7 @@ The view plays its own sound when activated.
 #### :starts_media_session
 Silences VoiceOver during a media session that should not be interrupted. For example, silence VoiceOver speech while the user is recording audio.
 #### :updates_frequently
-Tells VoiceOver to avoid handling continual notifications. Instead it should poll for changes when it needs updated information.
+Tells VoiceOver to avoid handling continual notifications. Instead it should poll for changes when it needs updated information. You do this with the notifications discussed below.
 #### :adjustable
 The view has an adjustable value. Also see the `accessibility_increment` and `accessibility_decrement` methods.
 #### :allows_direct_interaction
@@ -137,17 +137,17 @@ The frame of the accessibility element. This defaults to the frame of the view. 
 
 The point activated when a VoiceOver user activates the view by double tapping it. This defaults to the center of the view. In other words, a VoiceOver can double-tap anywhere on the screen, but it will simulate a sighted user touching the center of the view.
 
-#### `accessibility_view_is_modal`
+#### `accessibility_modal_view?` or `accessibility_view_is_modal`
 
 Ignores elements within views which are siblings of the receiver. If you present a modal view and want VoiceOver to ignore other views on the screen, set this to true.
 
-#### `should_group_accessibility_children`
+####  `group_accessibility_children?` or `should_group_accessibility_children`
 
 VoiceOver gives two ways to browse the screen. The user can drag their finger around the screen and hear the contents. They can also swipe right or left with one finger to hear the next or previous element. Normally, VoiceOver reads from left to right, and from top to bottom. Sometimes this can get confusing, depending on the layout of the screen. Setting this to true tells VoiceOver to read the views in the order defined in the subviews array.
 
-#### `accessibility_elements_hidden`
+#### `accessibility_elements_hidden?` or `accessibility_elements_hidden`
 
-Tells VoiceOver to hid the subviews of this view.
+A boolean value which tells VoiceOver to hide the subviews of this view.
 
 #### `accessibility_element?`, or `is_accessibility_element`
 
@@ -179,15 +179,7 @@ VoiceOver has a special two-finger double-tap. This method should toggle the mos
 
 #### `accessibility_scroll`
 
-This method scrolls the screen in an application-specific way. If the scrolling succeeds, return true and post a :scroll notification. 
-
-#### `accessibility_increment`
-
-Increments the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
-
-#### `accessibility_decrement`
-
-Decrements the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
+VoiceOver uses three-finger swipes to scroll the screen. These gestures will trigger this method. It accepts a scroll direction as a parameter. If the scrolling succeeds, it should return true and post a :scroll notification. 
 
 #### Scroll Directions
 
@@ -199,6 +191,14 @@ Decrements the value of the accessibility element. Make sure to have the :adjust
 - :down
 - :next
 - :previous
+
+#### `accessibility_increment`
+
+Increments the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
+
+#### `accessibility_decrement`
+
+Decrements the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
 
 ### UIAccessibilityElement
 
@@ -252,11 +252,11 @@ Returns true if VoiceOver should consider this an accessibility element. Note th
 The UIAccessibility Container informal protocol allows VoiceOver to handle a custom view which acts like a container. It  tells VoiceOver how to read the subviews in the proper order. It contains accessibility elements. Just implement these methods in a subclass of UIView.
 
 #### `accessibility_element_at_index`
-Accepts an integer and returns the accessibility element.
+Accepts an integer and returns the accessibility element. You can  use the standard `Array#[]` method for this.
 #### `accessibility_element_count`
-Returns the number of accessible elements.
+Returns the number of accessible elements. You can use `Array#length` for this.
 #### `index_of_accessibility_element`
-Accepts an accessibility element and returns its index as an integer.
+Accepts an accessibility element and returns its index as an integer. You can use the `Array#index` method for this.
 
 ### UIAccessibilityFocus Informal Protocol
 
@@ -265,7 +265,7 @@ This protocol lets you take actions if a view gains or loses VoiceOver's focus. 
 Triggered when the accessibility element becomes focused by VoiceOver.
 #### `accessibility_element_did_lose_focus`
 Triggered when the accessibility element loses VoiceOver's focus.
-#### `accessibility_element_is_focused`
+#### `accessibility_element_focused?` or `accessibility_element_is_focused`
 Returns true if the element currently has VoiceOver focus.
 
 ### UIAccessibilityReadingContent Informal Protocol
@@ -281,34 +281,51 @@ Accepts a CGPoint and returns the line number of the text to read.
 
 ### Notifications
 
-The UIAccessibility notifications can either come from UIKit or from an applications. You can observe them with the standard notification center. You can post them with `Accessibility.post_notification`. Motion-Accessibility adds an accessibility_notification method to the Symbol class, so you can use any of these symbols.
+The UIAccessibility notifications can either come from UIKit or from  applications. You can observe them with the standard notification center. You can post them with `Accessibility.post_notification`. It takes one of the following symbols as a parameter. Many notifications have additional parameters as well. Motion-Accessibility adds an accessibility_notification method to the Symbol class.
 
-- :layout_changed
-- :screen_changed
-- :page_scrolled
-- :announcement
-- :announcement_did_finish
-- :closed_captioning
-- :guided_access
-- :inverted_colors
-- :mono_audio
-- :voiceover
-
-For example, if a view controller removes a subview and adds another, you will want to post the layout changed notification. You can do this with
+For example, if a view controller removes a subview and adds another, you will want to post the screen changed notification. You can do this with
 
 ```
-Accessibility.post_notification(:layout_changed)
+Accessibility.post_notification(:screen_changed)
 ```
 
 Much easier, don't you think?
 
-#### Zoom Type
-
-The :announcement_did_finish notification posts these. Use the zoom_type method on the following symbols.
-
+#### :layout_changed
+Your application should post this notification when a  part of the screen's layout changes. It has one parameter. You can provide a string which VoiceOver should speak. You can also provide an accessibility element, such as a UIView, and VoiceOver will move there.
+#### :screen_changed
+Your application should post this notification when a major part of the screen changes. It has the same parameter as `:layout_changed`.
+- :page_scrolled
+Post this notification after calling `Accessibility.scroll`. Include a string which describes the scrolling action, for example "Page 3 of 10".
+#### :announcement
+Post this notification to make VoiceOver output something. Just include the string.
+#### :announcement_did_finish
+UIKit posts this announcement when VoiceOver finishes announcing something. It accepts a dictionary with the following keys as a parameter. Use the zoom_type method on these symbols.
 - :announcement_key_string_value
 - :announcement_key_was_successful
+#### :closed_captioning
+UIKit posts this when the user toggles closed captioning.
+#### :guided_access
+UIKit posts this when the user toggles guided access.
+#### :inverted_colors
+UIKit posts this when the user toggles inverted colors.
+#### :mono_audio
+UIKit posts this when the user toggles mono audio.
+#### :voiceover
+UIKit posts this when the user toggles VoiceOver.
 
+### Determining the Status of Accessibility Components
+You can use these handy methods to determine the status of different accessibility components. They take no parameters and return true or false.
+- `Accessibility.voiceover_running?`
+- `Accessibility.closed_captioning_enabled?`
+- `Accessibility.guided_access_enabled?`
+- `Accessibility.invert_colors_enabled?`
+- `Accessibility.mono_audio_enabled?`
+Additionally, these two methods relate to the Zoom screen magnification software.
+#### `Accessibility.zoom_focused_changed`
+This notifies Zoom that an app's focus has changed. It takes a zoom type described above, a frame, and the view containing the frame.
+#### `Accessibility.register_gesture_conflicts_with_zoom`
+This issues a dialog to the user when a three-fingered gesture conflicts with Zoom. It lets them choose to disable Zoom or continue.
 ## contributing
 
 
