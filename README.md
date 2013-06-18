@@ -295,7 +295,7 @@ Much easier, don't you think?
 Your application should post this notification when a  part of the screen's layout changes. It has one parameter. You can provide a string which VoiceOver should speak. You can also provide an accessibility element, such as a UIView, and VoiceOver will move there.
 #### :screen_changed
 Your application should post this notification when a major part of the screen changes. It has the same parameter as `:layout_changed`.
-- :page_scrolled
+#### :page_scrolled
 Post this notification after calling `Accessibility.scroll`. Include a string which describes the scrolling action, for example "Page 3 of 10".
 #### :announcement
 Post this notification to make VoiceOver output something. Just include the string.
