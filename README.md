@@ -297,7 +297,7 @@ Your application should post this notification when a  part of the screen's layo
 Your application should post this notification when a major part of the screen changes. It has the same parameter as `:layout_changed`.
 #### :page_scrolled
 Post this notification after calling `Accessibility.scroll`. Include a string which describes the scrolling action, for example "Page 3 of 10".
-##### :announcement
+#### :announcement
 Post this notification to make VoiceOver output something. Just include the string.
 #### :announcement_did_finish
 UIKit posts this announcement when VoiceOver finishes announcing something. It accepts a dictionary with the following keys as a parameter. Use the zoom_type method on these symbols.
