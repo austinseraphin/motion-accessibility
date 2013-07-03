@@ -34,14 +34,16 @@ self.accessibilityTraits=bits
 end
 
 if self.respond_to?(:method_added)
+NSLog("motion-accessibility: aliasing method_added")
 class << self
-alias :method_added_accessibility :method_added
+alias :method_added_motion_accessibility :method_added
+Accessibility::Data[:object_method_added]=true
 end
 end
 
 def self.method_added(name)
-if self.respond_to?(:method_added_accessibility)
-method_added_accessibility(name)
+if self.respond_to?(:method_added_motion_accessibility)
+self.method_added_motion_accessibility(name)
 end
 return if name=~/=$/
 attributes=Accessibility::All_Attributes

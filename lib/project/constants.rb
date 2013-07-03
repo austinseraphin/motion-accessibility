@@ -1,5 +1,7 @@
 class Accessibility
 
+Data={}
+
 Attributes = {
 :accessibility_identifier => :accessibilityIdentifier,
 :accessibility_identifier= => :setAccessibilityIdentifier,

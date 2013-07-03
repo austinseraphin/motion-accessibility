@@ -13,8 +13,6 @@ main(int argc, char **argv)
     int retval = 0;
     try {
         RubyMotionInit(argc, argv);
-rb_define_global_const("RUBYMOTION_ENV", @"development");
-rb_define_global_const("RUBYMOTION_VERSION", @"2.2");
         retval = UIApplicationMain(argc, argv, nil, @"AppDelegate");
         rb_exit(retval);
     }
