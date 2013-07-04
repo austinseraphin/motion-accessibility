@@ -53,7 +53,7 @@ Element_Attributes = {
 :is_focused => :accessibilityElementIsFocused,
 :focused? => :accessibilityElementIsFocused,
 :is_accessibility_element => :isAccessibilityElement,
-:is_accessibility_element => :setIsAccessibilityElement,
+:is_accessibility_element= => :setIsAccessibilityElement,
 :accessibility_element? => :isAccessibilityElement
 }
 

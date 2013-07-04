@@ -4,6 +4,13 @@ Accessibility::Attributes.each do |ruby, ios|
 next if ruby==:accessibility_traits=
 if ruby=~/=$/
 define_method(ruby) {|value| self.send(ios,value)}
+elsif(ruby=~/^is_|\?$/)
+define_method(ruby) do
+result=self.send(ios)
+result=true if result==1
+result=false if result==0
+result
+end
 else
 define_method(ruby) {self.send(ios)}
 end
