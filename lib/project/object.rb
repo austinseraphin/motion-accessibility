@@ -41,7 +41,6 @@ self.accessibilityTraits=bits
 end
 
 if self.respond_to?(:method_added)
-NSLog("motion-accessibility: aliasing method_added")
 class << self
 alias :method_added_motion_accessibility :method_added
 Accessibility::Data[:object_method_added]=true
