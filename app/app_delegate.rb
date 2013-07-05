@@ -18,6 +18,7 @@ view.addSubview(@textfield)
 @button=UIButton.buttonWithType(UIButtonTypeRoundedRect)
 @button.frame=CGRect.new([0, @textfield.frame.origin.y+@textfield.frame.size.height],
 [@textfield.frame.size.width, @textfield.frame.size.height/3])
+@button.setTitle("Update", forState: UIControlStateNormal)
 view.addSubview(@button)
 end
 
