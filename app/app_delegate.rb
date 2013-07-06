@@ -14,12 +14,18 @@ def viewDidLoad
 @label.text="Hello!"
 view.addSubview(@label)
 @textfield=UITextField.alloc.initWithFrame(CGRect.new([0, @label.frame.origin.y], [@label.frame.size.width, @label.frame.size.height]))
+@textfield.delegate=self
 view.addSubview(@textfield)
 @button=UIButton.buttonWithType(UIButtonTypeRoundedRect)
 @button.frame=CGRect.new([0, @textfield.frame.origin.y+@textfield.frame.size.height],
 [@textfield.frame.size.width, @textfield.frame.size.height/3])
 @button.setTitle("Update", forState: UIControlStateNormal)
 view.addSubview(@button)
+end
+
+def textFieldShouldReturn(textfield)
+textfield.resignFirstResponder
+false
 end
 
 end
