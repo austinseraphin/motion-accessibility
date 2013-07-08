@@ -4,3 +4,4 @@ class Motion
   end
 end
 
+A11y=Accessibility unless defined?(A11y)

@@ -33,7 +33,7 @@ Attributes = {
 :accessibility_element_focused? => :accessibilityElementIsFocused,
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
-:is_accessibility_element= => :isAccessibilityElement=
+:is_accessibility_element= => :setIsAccessibilityElement
 }
 
 Element_Attributes = {
@@ -91,7 +91,7 @@ Container_Attributes = {
 }
 
 Reading_Content = {
-accessibility_content_for_line_number: :accessibbilityContentForLineNumber,
+accessibility_content_for_line_number: :accessibilityContentForLineNumber,
 accessibility_frame_for_line_number: :accessibilityFrameForLineNumber,
 accessibility_line_number_for_point: :accessibilityLineNumberForPoint,
 accessibility_page_content: :accessibilityPageContent
@@ -144,6 +144,38 @@ Zoom = {
 :announcement_key_string_value => UIAccessibilityAnnouncementKeyStringValue,
 :announcement_key_was_successful => UIAccessibilityAnnouncementKeyWasSuccessful
 }
+
+Attribute_Types = {
+:accessibilityIdentifier =>:string,
+:accessibilityLabel => :string,
+:accessibilityHint => :string,
+:accessibilityTraits => :fixnum,
+:accessibilityValue=>:string,
+:accessibilityLanguage=>:string,
+:accessibilityFrame=>:cgrect,
+:accessibilityActivationPoint=>:cgrect,
+:accessibilityViewIsModal=>:boolean,
+:shouldGroupAccessibilityChildren=>:boolean,
+:accessibilityElementsHidden=>:boolean,
+:isAccessibilityElement=>:boolean
+}
+
+def self.attribute_type(attribute)
+Attribute_Types[attribute]||nil
+end
+
+Defined_Attributes=Hash.new
+
+def self.defined_attribute(class_name, attribute)
+Defined_Attributes[class_name]||=Array.new
+Defined_Attributes[class_name]<<attribute
+end
+
+def self.defined_attribute?(class_name, attribute)
+attributes=Defined_Attributes[class_name]
+return false if attributes.nil?
+attributes.member?(attribute)
+end
 
 end
 
