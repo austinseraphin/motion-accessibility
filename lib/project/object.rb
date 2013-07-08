@@ -4,15 +4,16 @@ Accessibility::Attributes.each do |ruby, ios|
 next if ruby==:accessibility_traits=
 if ruby=~/=$/
 define_method(ruby) {|value| self.send(ios,value)}
-elsif(ruby=~/^is_|\?$/)
+else
 define_method(ruby) do
 result=self.send(ios)
+case Accessibility.attribute_type(ios)
+when :boolean
 result=true if result==1
 result=false if result==0
+end
 result
 end
-else
-define_method(ruby) {self.send(ios)}
 end
 end
 
@@ -40,6 +41,18 @@ end
 self.accessibilityTraits=bits
 end
 
+def inspect_accessibility_traits
+traits=[]
+Accessibility::Traits.each do |trait, bitmask|
+if self.accessibility_traits&bitmask>0
+name=trait.gsub(/_/,' ').capitalize
+traits<<name
+end
+end
+traits=["None"] if traits.empty?
+	traits.join(', ')
+end
+
 if self.respond_to?(:method_added)
 class << self
 alias :method_added_motion_accessibility :method_added
@@ -63,6 +76,7 @@ ios=name
 ruby=attributes.rassoc(name).first
 define_method(ruby) { self.send(ios)}
 end
+Accessibility.defined_attribute(self,ios)
 end
 
 end
