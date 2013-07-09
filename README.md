@@ -23,6 +23,9 @@ Or install it yourself as:
     $ gem install motion-accessibility
 
 ## Usage
+### The Accessibility Inspector
+
+You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` or `inspect_a11y` method on any object.
 
 ### UIAccessibility Informal Protocol
 
