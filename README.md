@@ -25,7 +25,29 @@ Or install it yourself as:
 ## Usage
 ### The Accessibility Inspector
 
-You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` or `inspect_a11y` method on any object.
+You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` method on any object.
+
+```
+main)>	label=UILabel.alloc.initWithFrame(CGRectMake(0, 0, 100, 100))           
+=> #<UILabel:0xb062870>                                                         
+(main)> label.text="Hello!"                                                     
+=> "Hello!"                                                                     
+(main)> label.inspect_accessibility                                             
+Accessibility label: "Hello!"                                                   
+Accessibility hint: nil                                                         
+Accessibility traits: Static text                                               
+Accessibility value: nil                                                        
+Accessibility language: nil                                                     
+Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0                       
+Accessibility activation point: x=0.0 y=0.0                                     
+Accessibility view is modal: false                                              
+Should group accessibility children: false                                      
+Accessibility elements hidden: false                                            
+Is accessibility element: false                                                 
+Accessibility identifier: nil
+```
+
+By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `inspect_a11y` as a shortcut. You can also use this abreviation when referring to the Accessibility class, for instance `A11y::Element`.
 
 ### UIAccessibility Informal Protocol
 
