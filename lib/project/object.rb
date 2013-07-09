@@ -1,3 +1,4 @@
+
 class NSObject
 
 Accessibility::Attributes.each do |ruby, ios|
@@ -18,7 +19,7 @@ end
 end
 
 Accessibility::Container_Attributes.each do |ruby, ios|
-if ruby=="accessibility_element_count"
+if ruby==:accessibility_element_count
 define_method(ruby) {self.send(ios)}
 else
 define_method(ruby) {|n| self.send(ios,n)}
@@ -39,6 +40,7 @@ else
 raise "Pass a bitmask, a symbol, or an array to accessibility_traits="
 end
 self.accessibilityTraits=bits
+self
 end
 
 def inspect_accessibility_traits

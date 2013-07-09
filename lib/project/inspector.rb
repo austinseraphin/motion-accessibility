@@ -30,6 +30,8 @@ value=self.send(attribute).inspect
 end
 case Accessibility.attribute_type(attribute)
 when :boolean then value=(value==1?true:false)
+when :cgrect then value="x=#{self.origin.x} y=#{self.origin.y} width=#{self.size.width} height=#{self.size.height}"
+when :cgpoint then value="x=#{self.origin.x} y=#{self.origin.y}"
 end
 rescue
 value="Error: #{$!}"

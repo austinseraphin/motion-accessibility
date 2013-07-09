@@ -3,13 +3,12 @@ class Accessibility
 Data={}
 
 Attributes = {
-:accessibility_identifier => :accessibilityIdentifier,
-:accessibility_identifier= => :setAccessibilityIdentifier,
 :accessibility_label => :accessibilityLabel,
 :accessibility_label= =>  :setAccessibilityLabel,
 :accessibility_hint => :accessibilityHint,
 :accessibility_hint= => :setAccessibilityHint,
 :accessibility_traits => :accessibilityTraits,
+:accessibility_traits= => :setAccessibilityTraits,
 :accessibility_value => :accessibilityValue,
 :accessibility_value= => :setAccessibilityValue,
 :accessibility_language => :accessibilityLanguage,
@@ -33,7 +32,9 @@ Attributes = {
 :accessibility_element_focused? => :accessibilityElementIsFocused,
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
-:is_accessibility_element= => :setIsAccessibilityElement
+:is_accessibility_element= => :setIsAccessibilityElement,
+:accessibility_identifier => :accessibilityIdentifier,
+:accessibility_identifier= => :setAccessibilityIdentifier
 }
 
 Element_Attributes = {
@@ -85,8 +86,8 @@ PickerView_Attributes = {
 }
 
 Container_Attributes = {
-:accessibility_element_at_index => :accessibilityElementAtIndex,
 :accessibility_element_count => :accessibilityElementCount,
+:accessibility_element_at_index => :accessibilityElementAtIndex,
 :index_of_accessibility_element => :indexOfAccessibilityElement
 }
 
@@ -153,11 +154,19 @@ Attribute_Types = {
 :accessibilityValue=>:string,
 :accessibilityLanguage=>:string,
 :accessibilityFrame=>:cgrect,
-:accessibilityActivationPoint=>:cgrect,
+:accessibilityActivationPoint=>:cgpoint,
 :accessibilityViewIsModal=>:boolean,
 :shouldGroupAccessibilityChildren=>:boolean,
 :accessibilityElementsHidden=>:boolean,
 :isAccessibilityElement=>:boolean
+}
+
+Default_Type_Values = {
+:string => "Testing",
+:boolean => true,
+:fixnum => 23,
+:cgrect=>CGRectMake(0,0,100,100),
+:cgpoint=>CGPointMake(100,100)
 }
 
 def self.attribute_type(attribute)
@@ -175,6 +184,24 @@ def self.defined_attribute?(class_name, attribute)
 attributes=Defined_Attributes[class_name]
 return false if attributes.nil?
 attributes.member?(attribute)
+end
+
+private
+def compile_attributes
+# Needed just to include these
+view=UIView.new
+view.accessibilityActivationPoint=CGPoint.new(100,100)
+view.accessibilityViewIsModal=true
+view.shouldGroupAccessibilityChildren=true
+view.accessibilityElementsHidden=true
+view.isAccessibilityElement=true
+view.accessibilityTraits==0
+view.accessibilityActivationPoint==nil
+view.accessibilityViewIsModal==nil
+view.shouldGroupAccessibilityChildren==nil
+view.accessibilityElementsHidden==nil
+view.isAccessibilityElement==true
+view.indexOfAccessibilityElement(0)
 end
 
 end
