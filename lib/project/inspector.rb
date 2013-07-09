@@ -4,8 +4,8 @@ class Object
 
 def inspect_accessibility
 displayed=[]
-attributes=Accessibility::All_Attributes
-attributes+=Accessibility::PickerView_Attributes if self.class==UIPickerView
+attributes=Accessibility::All_Attributes.dup
+attributes.merge(Accessibility::PickerView_Attributes) if self.class==UIPickerView
 attributes.each do |ruby,ios|
 next if ios=~/^set/
 next if displayed.member?(ios)
