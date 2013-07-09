@@ -6,6 +6,7 @@ def inspect_accessibility
 displayed=[]
 attributes=Accessibility::All_Attributes.dup
 attributes.merge(Accessibility::PickerView_Attributes) if self.class==UIPickerView
+puts self.inspect
 attributes.each do |ruby,ios|
 next if ios=~/^set/
 next if displayed.member?(ios)
@@ -29,7 +30,9 @@ else
 value=self.send(attribute).inspect
 end
 case Accessibility.attribute_type(attribute)
-when :boolean then value=(value==1?true:false)
+when :boolean 
+value=true if value==1
+value=false if value==0||value.nil?
 when :cgrect then value="x=#{self.origin.x} y=#{self.origin.y} width=#{self.size.width} height=#{self.size.height}"
 when :cgpoint then value="x=#{self.origin.x} y=#{self.origin.y}"
 end

@@ -11,7 +11,7 @@ result=self.send(ios)
 case Accessibility.attribute_type(ios)
 when :boolean
 result=true if result==1
-result=false if result==0
+result=false if result==0||result.nil?
 end
 result
 end
