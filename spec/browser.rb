@@ -2,7 +2,7 @@ describe Accessibility::Browser do
 
 before do
 @view=UIView.new
-5.times do |time|
+2.times do |time|
 label=UILabel.new
 label.text="Label #{time+1}"
 label.accessibility_label.should=="Label #{time+1}"
@@ -13,7 +13,7 @@ end
 
 it "finds a view" do
 A11y::Browser.find_view(0).should==@view.superview
-5.times do |time|
+2.times do |time|
 A11y::Browser.find_view(time+1).should==@view.subviews[time]
 A11y::Browser.find_view((time+1).to_s).should==@view.subviews[time]
 A11y::Browser.find_view("label #{time+1}").should==@view.subviews[time]
