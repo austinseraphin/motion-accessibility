@@ -225,3 +225,5 @@ Accessibility::Zoom[self]||(raise("Unknown zoom type #{self}"))
 end
 
 end
+
+A11y=Accessibility unless defined?(A11y)

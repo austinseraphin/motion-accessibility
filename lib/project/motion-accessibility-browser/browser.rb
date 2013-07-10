@@ -19,16 +19,16 @@ def self.views
 end
 
 def self.init(view=nil)
-if view.nil?&&Accessibility::Browser.current_view.nil?
+if view.nil?&&self.current_view.nil?
 view=UIApplication.sharedApplication.keyWindow
 view=view.subviews.first while view.subviews.length==1
-Accessibility::Browser.current_view=view
+self.current_view=view
 else
-Accessibility::Browser.current_view=view if view
+self.current_view=view if view
 end
 end
 
-def say_view(view, index=nil)
+def self.say_view(view, index=nil)
 control=view.class.to_s
 if view.accessibility_element?
 name=view.accessibility_label||"Unlabeled"
@@ -40,26 +40,26 @@ say="#{index}. #{say}" if index
 say
 end
 
-def display_views
-Accessibility::Browser.views.each_index do |index|
-puts say_view(A11y::Browser.views[index], index)
+def self.display_views
+self.views.each_index do |index|
+puts self.say_view(self.views[index], index)
 end
 end
 
-def browse(request=nil)
-Accessibility::Browser.init
+def self.browse(request=nil)
+self.init
 new_view=nil
 request=0 if request==:back
 if request.nil?
-display_views
+self.display_views
 else
-found=A11y::Browser.find_view(request)
+found=self.find_view(request)
 new_view=found if found
 end
 if new_view
 raise "This view has no subviews" if new_view.subviews.empty?
-A11y::Browser.current_view=new_view
-display_views
+self.current_view=new_view
+self.display_views
 end
 nil
 end
@@ -67,11 +67,11 @@ end
 def self.find_view(request)
 found=nil
 if request.kind_of?(Fixnum)
-raise "Invalid number" unless request>=0&&request<Accessibility::Browser.views.length
-found=Accessibility::Browser.views[request]
+raise "Invalid number" unless request>=0&&request<self.views.length
+found=self.views[request]
 elsif request.kind_of?(String)
 results=[]
-Accessibility::Browser.current_view.subviews.each do |view|
+self.current_view.subviews.each do |view|
 next unless view.accessibility_label
 pattern=Regexp.new(request,true)
 compare=view.accessibility_label=~pattern
@@ -90,12 +90,12 @@ end
 found
 end
 
-def view(request=nil)
-Accessibility::Browser.init
-return Accessibility::Browser.cursor unless request
-result=Accessibility::Browser.find_view(request)
+def self.view(request=nil)
+self.init
+return self.cursor unless request
+result=self.find_view(request)
 raise "Unknown view" unless result
-Accessibility::Browser.cursor=result
+self.cursor=result
 say_view result
 end
 
@@ -103,6 +103,13 @@ end
 end
 
 class NSObject
+
+def browse(*args)
+A11y::Browser.browse(*args)
+end
+def view(*args)
+A11y::Browser.view(*args)
+end
 
 def touch(arg=nil)
 control=self.class.to_s
