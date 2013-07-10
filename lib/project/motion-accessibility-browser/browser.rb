@@ -30,12 +30,8 @@ end
 
 def self.say_view(view, index=nil)
 control=view.class.to_s
-if view.accessibility_element?
-name=view.accessibility_label||"Unlabeled"
+name=view.accessibility_value||view.accessibility_label||"Unlabeled"
 say="#{control}: #{name}"
-else
-say=control
-end
 say="#{index}. #{say}" if index
 say
 end
@@ -110,6 +106,8 @@ end
 def view(*args)
 A11y::Browser.view(*args)
 end
+alias :b :browse
+alias :v :view
 
 def touch(arg=nil)
 control=self.class.to_s
@@ -118,9 +116,14 @@ arg||=UIControlEventTouchUpInside
 self.sendActionsForControlEvents(arg)
 elsif control=="UITextField"
 self.text=arg
+elsif control=="UIPickerView"
+raise "You must pass a hash with the row and component keywords" unless arg.kind_of?(Hash)&&arg[:row]&&arg[:component]
+arg[:animated]||=false
+self.selectRow(arg[:row], forComponent: arg[:component], animated: arg[:animated])
 else
 raise "I don't know what to do with a #{control}"
 end
+self.browse
 end
 
 end
