@@ -30,10 +30,9 @@ end
 
 def say_view(view, index=nil)
 control=view.class.to_s
-#control.sub!(/^UI/,"")
 if view.accessibility_element?
 name=view.accessibility_label||"Unlabeled"
-say="#{name} #{control}"
+say="#{control}: #{name}"
 else
 say=control
 end
