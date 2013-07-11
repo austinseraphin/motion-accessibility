@@ -28,27 +28,31 @@ self.current_view=view if view
 end
 end
 
-def self.say_view(view, index=nil)
+def self.display_view(view, index=nil)
 control=view.class.to_s
-name=view.accessibility_value||view.accessibility_label||"Unlabeled"
-say="#{control}: #{name}"
-say="#{index}. #{say}" if index
+control="Superview #{control}" if index==0
+name=view.accessibility_value||view.accessibility_label
+say="#{control} #{name}"
+say="#{index} #{say}" if index
 say
 end
 
 def self.display_views
+puts self.current_view.inspect
 self.views.each_index do |index|
-puts self.say_view(self.views[index], index)
+next if self.views[index].nil?
+puts self.display_view(self.views[index], index)
 end
 end
 
 def self.browse(request=nil)
 self.init
 new_view=nil
-request=0 if request==:back
+request=0 if request==:back||request==:up
 if request.nil?
 self.display_views
 else
+raise "You cannot go back any further" if self.current_view.superview.nil?
 found=self.find_view(request)
 new_view=found if found
 end

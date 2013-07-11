@@ -21,11 +21,16 @@ view.addSubview(@textfield)
 [@textfield.frame.size.width, @textfield.frame.size.height/3])
 @button.setTitle("Update", forState: UIControlStateNormal)
 view.addSubview(@button)
+@button.addTarget(self, action: 'tap_update', forControlEvents: UIControlEventTouchUpInside)
 end
 
 def textFieldShouldReturn(textfield)
 textfield.resignFirstResponder
 false
+end
+
+def tap_update
+@label.text=@textfield.text
 end
 
 end
