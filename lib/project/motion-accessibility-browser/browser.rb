@@ -109,21 +109,4 @@ end
 alias :b :browse
 alias :v :view
 
-def touch(arg=nil)
-control=self.class.to_s
-if control=~/^UI.+?Button/
-arg||=UIControlEventTouchUpInside
-self.sendActionsForControlEvents(arg)
-elsif control=="UITextField"
-self.text=arg
-elsif control=="UIPickerView"
-raise "You must pass a hash with the row and component keywords" unless arg.kind_of?(Hash)&&arg[:row]&&arg[:component]
-arg[:animated]||=false
-self.selectRow(arg[:row], forComponent: arg[:component], animated: arg[:animated])
-else
-raise "I don't know what to do with a #{control}"
-end
-self.browse
-end
-
 end
