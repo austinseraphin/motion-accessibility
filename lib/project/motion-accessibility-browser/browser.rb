@@ -107,7 +107,7 @@ return self.cursor unless request
 result=self.find_view(request)
 raise "Unknown view" unless result
 self.cursor=result
-say_view result
+display_view result
 end
 
 end
