@@ -40,4 +40,37 @@ def pickerView(view, numberOfRowsInComponent: component)
 10
 end
 
+it "UIDatePicker" do
+picker=UIDatePicker.new
+now=Time.now
+picker.touch(now)
+picker.date.should==now
+end
+
+it "UISegmentedView" do
+segment=UISegmentedControl.alloc.initWithItems(["Test 1", "Test 2"])
+segment.touch(0)
+segment.selectedSegmentIndex.should==0
+segment.touch("2")
+segment.selectedSegmentIndex.should==1
+end
+
+it "UISlider" do
+slider=UISlider.new
+slider.touch(0.5)
+slider.value.should==0.5
+end
+
+it "UIStepper" do
+stepper=UIStepper.new
+stepper.touch(23)
+stepper.value.should==23
+end
+
+it "UISwitch" do
+switch=UISwitch.new
+switch.touch(true)
+switch.on?.should==true
+end
+
 end

@@ -186,7 +186,9 @@ return false if attributes.nil?
 attributes.member?(attribute)
 end
 
-Touchable_Types = ["UITextField", "UIButton", "UIPickerView"]
+Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
+"UISegmentedControl", "UISlider", "UIStepper", "UISwitch"]
+
 private
 def compile_attributes
 # Needed just to include these
