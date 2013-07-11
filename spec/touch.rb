@@ -19,13 +19,13 @@ $button_tapped=true
 end
 
 it "UIPickerView" do
-picker=Picker.new
+picker=UIPickerView.new
 picker.delegate=self
 picker.dataSource=self
 picker.touch(row: 5, component: 0)
-picker.selectedRowForComponent(0).should==5
+picker.selectedRowInComponent(0).should==5
 picker.touch(row: "5", component: 0)
-picker.selectedRowForComponent(0).should==4
+picker.selectedRowInComponent(0).should==5
 end
 
 def numberOfComponentsInPickerView(view)

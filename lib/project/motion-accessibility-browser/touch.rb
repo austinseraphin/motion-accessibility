@@ -27,21 +27,22 @@ raise "You must pass a hash with the row and component keywords" unless arg.kind
 arg[:animated]||=false
 if arg[:row].kind_of?(String)
 results=[]
-pickerview(self, numberOfRowsForComponent: arg[:component]).each do |row_index|
-title=view.dataSource.pickerView(self, titleForRow: row_index, forComponent: arg[:component])
-if title=~Regexp.new(req,true)
+self.numberOfRowsInComponent(arg[:component]).times do |row_index|
+title=self.delegate.pickerView(self, titleForRow: row_index, forComponent: arg[:component])
+puts "#{title} =~ #{arg[:row]}"
+if title=~Regexp.new(arg[:row],true)
 results=[row_index]
 break
 end
-if title=~Regexp.new(req)
+if title=~Regexp.new(arg[:row])
 results<<row_index
 end
 end
 raise "Unknown value" if results.empty?
 raise "That could refer to more than one value." if results.length>1
-self.dataSource.pickerView(self, selectRow: row_index, forComponent: arg[:component], animated: false)
+self.selectRow(results.first, inComponent: arg[:component], animated: false)
 elsif arg[:row].kind_of?(Fixnum)
-self.dataSource.pickerView(self, selectRow: arg[:row], forComponent: arg[:component], animated: arg[:animated])
+selectRow(arg[:row], inComponent: arg[:component], animated: arg[:animated])
 else
 raise "Unknown row #{arg[:row]}"
 end

@@ -55,6 +55,7 @@ end
 if new_view
 raise "This view has no subviews" if new_view.subviews.empty?
 self.current_view=new_view
+self.cursor=nil
 self.display_views
 end
 nil
