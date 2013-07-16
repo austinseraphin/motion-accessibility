@@ -61,8 +61,12 @@ new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
 self.display_views
+elsif request==:top
+self.current_view=nil
+self.init
+self.display_views
 else
-raise "You cannot go back any further" if self.current_view.superview.nil?
+raise "You cannot go back any further" if request==0&&self.current_view.superview.nil?
 found=self.find_view(request)
 new_view=found if found
 end
