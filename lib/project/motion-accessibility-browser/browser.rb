@@ -23,6 +23,7 @@ if view.nil?&&self.current_view.nil?
 view=UIApplication.sharedApplication.keyWindow
 view=view.subviews.first while view.subviews.length==1
 self.current_view=view
+self.cursor=view
 else
 self.current_view=view if view
 end
@@ -73,7 +74,7 @@ end
 if new_view
 raise "This view has no subviews" if new_view.subviews.empty?
 self.current_view=new_view
-self.cursor=nil
+self.cursor=new_view
 self.display_views
 end
 nil
