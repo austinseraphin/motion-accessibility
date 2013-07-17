@@ -2,7 +2,9 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
 @window=UIWindow.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 @window.makeKeyAndVisible
-@window.rootViewController=TestController.alloc.initWithNibName(nil, bundle: nil)
+controller=TestController.alloc.initWithNibName(nil, bundle: nil)
+nav=UINavigationController.alloc.initWithRootViewController(controller)
+@window.rootViewController=nav
     true
   end
 end
@@ -10,6 +12,7 @@ end
 class TestController < UIViewController
 
 def viewDidLoad
+self.title="Test App"
 @label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [view.frame.size.width, view.frame.size.height/3]))
 @label.text="Hello!"
 view.addSubview(@label)

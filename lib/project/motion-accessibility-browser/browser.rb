@@ -13,9 +13,24 @@ end
 def self.cursor=(view)
 Accessibility::Data[:cursor]=view
 end
-
 def self.views
-[self.current_view.superview]+self.current_view.subviews
+Accessibility::Data[:views]
+end
+def self.views=(subviews)
+Accessibility::Data[:views]=subviews
+end
+
+def self.init_views
+self.views=[self.current_view.superview]+self.current_view.subviews
+end
+
+def self.init_transition(view)
+raise "init_transition requires a UINavigationTransitionView" unless view.kind_of?(UINavigationTransitionView)
+view=view.subviews.first
+raise "Could not find the UIViewControllerWrapperView" unless view.kind_of?(UIViewControllerWrapperView)
+view=view.subviews.first
+raise "Could not find the UIView for the transition" unless view.kind_of?(UIView)
+view
 end
 
 def self.init(view=nil)
@@ -27,6 +42,12 @@ self.cursor=view
 else
 self.current_view=view if view
 end
+init_views
+self.views.each_index do |index|
+subview=self.views[index]
+ self.views[index]=self.init_transition(subview) if subview.kind_of?(UINavigationTransitionView)
+end
+nil
 end
 
 def self.display_view(view, index=nil)
@@ -64,7 +85,7 @@ if request.nil?
 self.display_views
 elsif request==:top
 self.current_view=nil
-self.init
+self.init_views
 self.display_views
 else
 raise "You cannot go back any further" if request==0&&self.current_view.superview.nil?
@@ -75,6 +96,7 @@ if new_view
 raise "This view has no subviews" if new_view.subviews.empty?
 self.current_view=new_view
 self.cursor=new_view
+self.init_views
 self.display_views
 end
 nil
