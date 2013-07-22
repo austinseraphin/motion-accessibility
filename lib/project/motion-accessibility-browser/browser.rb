@@ -1,6 +1,19 @@
 module Accessibility
 module Browser
 
+def self.tree
+A11y::Data[:tree]
+end
+def self.tree=(tree)
+A11y::Data[:tree]=tree
+end
+def self.path
+A11y::Data[:path]||[]
+end
+def self.path=(path)
+A11y::Data[:path]=path
+end
+
 def self.current_view
 Accessibility::Data[:view]
 end
@@ -18,6 +31,17 @@ Accessibility::Data[:views]
 end
 def self.views=(subviews)
 Accessibility::Data[:views]=subviews
+end
+
+def self.build_tree(root)
+puts "build_tree #{root.inspect}"
+return if root.nil?
+return root if root.subviews.empty?
+tree=[root]
+root.subviews.each do |subview|
+tree<<self.build_tree(subview)
+end
+tree
 end
 
 def self.init_views

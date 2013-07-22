@@ -14,4 +14,4 @@ nbproject
 .eprj
 .sass-cache
 .idea
-.gem
+*.gem
