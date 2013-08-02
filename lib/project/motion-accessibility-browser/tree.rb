@@ -2,15 +2,16 @@ class Accessibility
 class Browser
 class Tree
 
-attr_accessor :view, :subviews
+attr_accessor :view, :subviews, :superview
 
 def initialize(options)
 @view=options[:view]
 @subviews=options[:subviews]
+@superview=options[:superview]
 end
 
 def browsable_nodes
-nodes=[A11y::Browser::Tree.new(view: @view)]
+nodes=[A11y::Browser::Tree.new(view: @superview)]
 nodes+=@subviews if @subviews
 nodes
 end
@@ -43,13 +44,13 @@ display<<name if name
 display.join(" ")
 end
 
-def self.build(view=nil)
+def self.build(view=nil, superview=nil)
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
 view.subviews.each do |subview|
-subviews<<self.build(subview)
+subviews<<self.build(subview, view)
 end
-self.new(view: view, subviews: subviews)
+self.new(view: view, subviews: subviews, superview: superview)
 end
 
 def find(request)

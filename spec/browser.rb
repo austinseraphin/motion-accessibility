@@ -10,6 +10,10 @@ end
 @tree=A11y::Browser::Tree.build(@view)
 end
 
+it "has superviews" do
+@tree.subviews.each {|node| node.superview.should==@tree.view}
+end
+
 it "#browsable_nodes" do
 @tree.browsable_nodes.length.should==3
 end
