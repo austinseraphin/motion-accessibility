@@ -37,10 +37,10 @@ nil
 end
 
 def self.display_views
-puts "Browsing "+self.display_view(self.current.view)
+puts "Browsing "+self.current.display_view
 self.current.browsable_nodes.each_index do |index|
 next if self.current.browsable_nodes[index].nil?
-puts self.display_view(self.current.browsable_nodes[index], index)
+puts self.current.browsable_nodes[index].display_view( index)
 end
 end
 
