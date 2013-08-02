@@ -36,30 +36,11 @@ self.cursor=view
 nil
 end
 
-def self.display_view(view, index=nil)
-display=Array.new
-control=view.class.to_s
-control="Superview #{control}" if index==0
-name=view.accessibility_value||view.accessibility_label
-if index
-if index>0 and  not(view.subviews.empty?)
-indicator="+"
-else
-indicator=" "
-end
-indicator+=index.to_s
-		      display<<indicator
-end
-display<<control
-display<<name if name
-display.join(" ")
-end
-
 def self.display_views
 puts "Browsing "+self.display_view(self.current.view)
-self.current.views.each_index do |index|
-next if self.current.subviews[index].nil?
-puts self.display_view(self.current.subviews[index], index)
+self.current.browsable_nodes.each_index do |index|
+next if self.current.browsable_nodes[index].nil?
+puts self.display_view(self.current.browsable_nodes[index], index)
 end
 end
 

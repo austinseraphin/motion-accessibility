@@ -10,8 +10,8 @@ end
 @tree=A11y::Browser::Tree.build(@view)
 end
 
-it "#views" do
-@tree.views.length.should==3
+it "#browsable_nodes" do
+@tree.browsable_nodes.length.should==3
 end
 
 it "builds a tree" do
@@ -20,7 +20,6 @@ it "builds a tree" do
 end
 
 it "finds a view" do
-puts @tree.views
 found=@tree.find(1)
 found.view.accessibility_label.should=="Label 1"
 found=@tree.find("1")

@@ -9,10 +9,10 @@ def initialize(options)
 @subviews=options[:subviews]
 end
 
-def views
-views=[@view]
-views+=@subviews if @subviews
-views
+def browsable_nodes
+nodes=[A11y::Browser::Tree.new(view: @view)]
+nodes+=@subviews if @subviews
+nodes
 end
 
 def inspect
@@ -22,6 +22,25 @@ result="[#{@view.class}"
 result+=" #{nodes.join(" ")}" unless nodes.empty?
 result+="]"
 result
+end
+
+def display_view(index=nil)
+display=Array.new
+control=@view.class.to_s
+control="Superview #{control}" if index==0
+name=@view.accessibility_value||view.accessibility_label
+if index
+if index>0 and  not(@subviews.empty?)
+indicator="+"
+else
+indicator=" "
+end
+indicator+=index.to_s
+		      display<<indicator
+end
+display<<control
+display<<name if name
+display.join(" ")
 end
 
 def self.build(view=nil)
@@ -36,11 +55,11 @@ end
 def find(request)
 found=nil
 if request.kind_of?(Fixnum)
-raise "Invalid number" unless request>=0&&request<views.length
-found=views[request]
+raise "Invalid number" unless request>=0&&request<browsable_nodes.length
+found=browsable_nodes[request]
 elsif request.kind_of?(String)
 results=[]
-views.each do |node|
+browsable_nodes.each do |node|
 next unless node.view.accessibility_label
 pattern=Regexp.new(request,true)
 compare=node.view.accessibility_label=~pattern
