@@ -1,10 +1,10 @@
 module Accessibility
 module Browser
 
-def self.tree
+def self.current
 A11y::Data[:tree]
 end
-def self.tree=(tree)
+def self.current=(tree)
 A11y::Data[:tree]=tree
 end
 def self.path
@@ -13,39 +13,11 @@ end
 def self.path=(path)
 A11y::Data[:path]=path
 end
-
-def self.current_view
-Accessibility::Data[:view]
-end
-def self.current_view=(view)
-Accessibility::Data[:view]=view
-end
 def self.cursor
 Accessibility::Data[:cursor]
 end
 def self.cursor=(view)
 Accessibility::Data[:cursor]=view
-end
-def self.views
-Accessibility::Data[:views]
-end
-def self.views=(subviews)
-Accessibility::Data[:views]=subviews
-end
-
-def self.build_tree(root)
-puts "build_tree #{root.inspect}"
-return if root.nil?
-return root if root.subviews.empty?
-tree=[root]
-root.subviews.each do |subview|
-tree<<self.build_tree(subview)
-end
-tree
-end
-
-def self.init_views
-self.views=[self.current_view.superview]+self.current_view.subviews
 end
 
 def self.init_transition(view)
@@ -58,19 +30,9 @@ view
 end
 
 def self.init(view=nil)
-if view.nil?&&self.current_view.nil?
-view=UIApplication.sharedApplication.keyWindow
-view=view.subviews.first while view.subviews.length==1
-self.current_view=view
+view=UIApplication.sharedApplication.keyWindow if view.nil?
+self.current=A11y::Browser::Tree.build(view)
 self.cursor=view
-else
-self.current_view=view if view
-end
-init_views
-self.views.each_index do |index|
-subview=self.views[index]
- self.views[index]=self.init_transition(subview) if subview.kind_of?(UINavigationTransitionView)
-end
 nil
 end
 
@@ -94,62 +56,34 @@ display.join(" ")
 end
 
 def self.display_views
-puts "Browsing "+self.display_view(self.current_view)
-self.views.each_index do |index|
-next if self.views[index].nil?
-puts self.display_view(self.views[index], index)
+puts "Browsing "+self.display_view(self.current.view)
+self.current.views.each_index do |index|
+next if self.current.subviews[index].nil?
+puts self.display_view(self.current.subviews[index], index)
 end
 end
 
 def self.browse(request=nil)
-self.init
 new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
-self.display_views
+self.init(self.current.view)
 elsif request==:top
-self.current_view=nil
-self.init_views
+self.init
+elsif request==0
+raise "You cannot go back any further" if self.path.empty?
+self.path.pop
+self.init(self.path.last)
 self.display_views
 else
-raise "You cannot go back any further" if request==0&&self.current_view.superview.nil?
-found=self.find_view(request)
+found=self.current.find(request)
 new_view=found if found
 end
 if new_view
 raise "This view has no subviews" if new_view.subviews.empty?
-self.current_view=new_view
-self.cursor=new_view
-self.init_views
+end
 self.display_views
-end
 nil
-end
-
-def self.find_view(request)
-found=nil
-if request.kind_of?(Fixnum)
-raise "Invalid number" unless request>=0&&request<self.views.length
-found=self.views[request]
-elsif request.kind_of?(String)
-results=[]
-self.current_view.subviews.each do |view|
-next unless view.accessibility_label
-pattern=Regexp.new(request,true)
-compare=view.accessibility_label=~pattern
-next if compare.nil?
-if view.accessibility_label.downcase==request.downcase
-return view
-else
-results<<view
-end
-end
-raise "\"#{request}\" could refer to more than one view." if results.length>1
-found=results.first
-else
-raise "Unknown request: #{request}: #{request.class}"
-end
-found
 end
 
 def self.view(request=nil)

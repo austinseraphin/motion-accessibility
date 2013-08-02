@@ -39,7 +39,6 @@ if arg[:row].kind_of?(String)
 results=[]
 self.numberOfRowsInComponent(arg[:component]).times do |row_index|
 title=self.delegate.pickerView(self, titleForRow: row_index, forComponent: arg[:component])
-puts "#{title} =~ #{arg[:row]}"
 if title.casecmp(arg[:row])==0
 results=[row_index]
 break
