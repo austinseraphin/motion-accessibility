@@ -26,7 +26,6 @@ result
 end
 
 def display_view(index=nil)
-puts "index=#{index} superview=#{@superview}"
 return if index==0&&@superview.nil?
 display=Array.new
 control=@view.class.to_s
