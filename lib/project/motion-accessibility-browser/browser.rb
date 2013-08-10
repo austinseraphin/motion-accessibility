@@ -59,8 +59,9 @@ request=0 if request==:back||request==:up
 if request.nil?
 self.init
 elsif request==:top
-self.path.clear
 self.init
+self.current=self.tree
+self.path.clear
 elsif request==0
 raise "You cannot go back any further" if self.path.length<2
 self.path.pop
