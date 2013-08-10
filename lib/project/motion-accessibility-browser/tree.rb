@@ -44,12 +44,24 @@ display<<name if name
 display.join(" ")
 end
 
+def self.ignore_view?(view)
+view=view.class.to_s
+return true if view=~/^_/
+A11y::Ignored_Views.member?(view)
+end
+
 def self.build(view=nil, superview=nil)
 tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
 view.subviews.each do |subview|
-subviews<<self.build(subview, tree)
+subview_tree=self.build(subview, tree)
+if self.ignore_view?(subview)
+subview_tree.subviews.each {|v| v.superview=tree}
+subviews=subviews+subview_tree.subviews
+else
+subviews<<subview_tree
+end
 end
 tree.view=view
 tree.subviews=subviews

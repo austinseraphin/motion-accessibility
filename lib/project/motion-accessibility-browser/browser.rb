@@ -53,7 +53,6 @@ end
 end
 
 def self.browse(request=nil)
-self.init if self.current.nil?
 new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
@@ -68,6 +67,8 @@ self.path.pop
 self.current=self.path.last
 self.init
 else
+self.init unless self.tree
+self.current=self.tree unless self.current
 found=self.current.find(request)
 if found
 raise "This view has no subviews" if found.subviews.empty?
