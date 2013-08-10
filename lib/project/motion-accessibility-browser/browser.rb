@@ -89,7 +89,6 @@ return self.cursor.view unless request
 result=self.current.find(request)
 raise "Unknown view" unless result
 self.cursor=result
-result.display_view
 result.view
 end
 
