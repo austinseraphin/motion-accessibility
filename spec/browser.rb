@@ -11,7 +11,7 @@ end
 end
 
 it "has superviews" do
-@tree.subviews.each {|node| node.superview.should==@tree.view}
+@tree.subviews.each {|node| node.superview.should==@tree}
 end
 
 it "#browsable_nodes" do
@@ -25,9 +25,12 @@ end
 
 it "finds a view" do
 found=@tree.find(1)
+found.kind_of?(A11y::Browser::Tree).should.be.true
+found.superview.should==@tree
 found.view.accessibility_label.should=="Label 1"
 found=@tree.find("1")
 found.kind_of?(A11y::Browser::Tree).should.be.true
+found.superview.should==@tree
 found.view.accessibility_label.should=="Label 1"
 end
 

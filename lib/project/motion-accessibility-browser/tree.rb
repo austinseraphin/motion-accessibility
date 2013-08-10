@@ -4,14 +4,14 @@ class Tree
 
 attr_accessor :view, :subviews, :superview
 
-def initialize(options)
+def initialize(options={})
 @view=options[:view]
 @subviews=options[:subviews]
 @superview=options[:superview]
 end
 
 def browsable_nodes
-nodes=[A11y::Browser::Tree.new(view: @superview)]
+nodes=[@superview]
 nodes+=@subviews if @subviews
 nodes
 end
@@ -26,7 +26,6 @@ result
 end
 
 def display_view(index=nil)
-return if index==0&&@superview.nil?
 display=Array.new
 control=@view.class.to_s
 control="Superview #{control}" if index==0
@@ -46,12 +45,16 @@ display.join(" ")
 end
 
 def self.build(view=nil, superview=nil)
+tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
 view.subviews.each do |subview|
-subviews<<self.build(subview, view)
+subviews<<self.build(subview, tree)
 end
-self.new(view: view, subviews: subviews, superview: superview)
+tree.view=view
+tree.subviews=subviews
+tree.superview=superview
+tree
 end
 
 def find(request)

@@ -70,8 +70,8 @@ else
 found=self.current.find(request)
 if found
 raise "This view has no subviews" if found.subviews.empty?
-self.current=found
 self.init
+self.current=found
 self.path<<found
 end
 end
