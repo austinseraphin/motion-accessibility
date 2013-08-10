@@ -83,11 +83,14 @@ end
 
 def self.view(request=nil)
 self.init
-return self.cursor unless request
-result=self.find_view(request)
+self.current=tree unless self.current
+self.cursor=self.tree unless self.cursor
+return self.cursor.view unless request
+result=self.current.find(request)
 raise "Unknown view" unless result
 self.cursor=result
-display_view result
+result.display_view
+result.view
 end
 
 end
