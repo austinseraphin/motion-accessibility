@@ -1,5 +1,5 @@
-class Accessibility
-class Browser
+module Accessibility
+module Browser
 class Tree
 
 attr_accessor :view, :subviews, :superview

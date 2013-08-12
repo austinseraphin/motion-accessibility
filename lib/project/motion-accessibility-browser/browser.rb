@@ -26,15 +26,6 @@ def self.cursor=(view)
 Accessibility::Data[:cursor]=view
 end
 
-def self.init_transition(view)
-raise "init_transition requires a UINavigationTransitionView" unless view.kind_of?(UINavigationTransitionView)
-view=view.subviews.first
-raise "Could not find the UIViewControllerWrapperView" unless view.kind_of?(UIViewControllerWrapperView)
-view=view.subviews.first
-raise "Could not find the UIView for the transition" unless view.kind_of?(UIView)
-view
-end
-
 def self.init(view=nil)
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 self.tree=A11y::Browser::Tree.build(view)
