@@ -20,7 +20,7 @@ puts output unless output.nil?
 end
 end
 
-def self.browse(request=nil)
+def browse(request=nil)
 new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
@@ -49,7 +49,7 @@ self.display_views
 nil
 end
 
-def self.view(request=nil)
+def view(request=nil)
 self.init
 $browser_current=$browser_tree unless $browser_current
 $browser_cursor=$browser_tree unless $browser_cursor
@@ -59,6 +59,8 @@ raise "Unknown view" unless result
 $browser_cursor=result
 result.view
 end
+
+module_function(:browse, :view)
 
 end
 end
