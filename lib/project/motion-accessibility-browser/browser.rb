@@ -1,42 +1,19 @@
 module Accessibility
 module Browser
 
-def self.tree
-A11y::Data[:tree]
-end
-def self.tree=(tree)
-A11y::Data[:tree]=tree
-end
-def self.path
-A11y::Data[:path]||=Array.new
-end
-def self.path=(path)
-A11y::Data[:path]=path
-end
-def self.current
-A11y::Data[:current]
-end
-def self.current=(tree)
-A11y::Data[:current]=tree
-end
-def self.cursor
-Accessibility::Data[:cursor]
-end
-def self.cursor=(view)
-Accessibility::Data[:cursor]=view
-end
+$browser_path=[]
 
 def self.init(view=nil)
 view=UIApplication.sharedApplication.keyWindow if view.nil?
-self.tree=A11y::Browser::Tree.build(view)
-self.path<<tree if self.path.empty?
+$browser_tree=A11y::Browser::Tree.build(view)
+$browser_path<<$browser_tree if $browser_path.empty?
 nil
 end
 
 def self.display_views
-self.current=self.tree unless self.current
-puts "Browsing "+self.current.display_view
-self.current.browsable_nodes.each_with_index do |node, index|
+$browser_current=$browser_tree unless $browser_current
+puts "Browsing "+$browser_current.display_view
+$browser_current.browsable_nodes.each_with_index do |node, index|
 next if node.nil?
 output=node.display_view( index)
 puts output unless output.nil?
@@ -50,22 +27,22 @@ if request.nil?
 self.init
 elsif request==:top
 self.init
-self.current=self.tree
-self.path.clear
+$browser_current=$browser_tree
+$browser_path.clear
 elsif request==0
-raise "You cannot go back any further" if self.path.length<2
-self.path.pop
-self.current=self.path.last
+raise "You cannot go back any further" if $browser_path.length<2
+$browser_path.pop
+$browser_current=$browser_path.last
 self.init
 else
-self.init unless self.tree
-self.current=self.tree unless self.current
-found=self.current.find(request)
+self.init unless $browser_tree
+$browser_current=$browser_tree unless $browser_current
+found=$browser_current.find(request)
 if found
 raise "This view has no subviews" if found.subviews.empty?
 self.init
-self.current=found
-self.path<<found
+$browser_current=found
+$browser_path<<found
 end
 end
 self.display_views
@@ -74,12 +51,12 @@ end
 
 def self.view(request=nil)
 self.init
-self.current=tree unless self.current
-self.cursor=self.tree unless self.cursor
-return self.cursor.view unless request
-result=self.current.find(request)
+$browser_current=$browser_tree unless $browser_current
+$browser_cursor=$browser_tree unless $browser_cursor
+return $browser_cursor.view unless request
+result=$browser_current.find(request)
 raise "Unknown view" unless result
-self.cursor=result
+$browser_cursor=result
 result.view
 end
 
