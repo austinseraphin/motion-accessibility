@@ -77,6 +77,7 @@ found=browsable_nodes[request]
 elsif request.kind_of?(String)
 results=[]
 browsable_nodes.each do |node|
+next if node.nil?
 next unless node.view.accessibility_label
 pattern=Regexp.new(request,true)
 compare=node.view.accessibility_label=~pattern
