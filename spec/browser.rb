@@ -1,5 +1,4 @@
 describe Accessibility::Browser do
-
 before do
 @view=UIView.new
 2.times do |time|
@@ -8,16 +7,31 @@ label.text="Label #{time+1}"
 label.accessibility_label.should=="Label #{time+1}"
 @view.addSubview(label)
 end
-A11y::Browser.current_view=@view
+@tree=A11y::Browser::Tree.build(@view)
+end
+
+it "has superviews" do
+@tree.subviews.each {|node| node.superview.should==@tree}
+end
+
+it "#browsable_nodes" do
+@tree.browsable_nodes.length.should==3
+end
+
+it "builds a tree" do
+@tree.view.class.should==UIView
+@tree.subviews.each {|node| node.view.class.should==UILabel}
 end
 
 it "finds a view" do
-A11y::Browser.find_view(0).should==@view.superview
-2.times do |time|
-A11y::Browser.find_view(time+1).should==@view.subviews[time]
-A11y::Browser.find_view((time+1).to_s).should==@view.subviews[time]
-A11y::Browser.find_view("label #{time+1}").should==@view.subviews[time]
-end
+found=@tree.find(1)
+found.kind_of?(A11y::Browser::Tree).should.be.true
+found.superview.should==@tree
+found.view.accessibility_label.should=="Label 1"
+found=@tree.find("1")
+found.kind_of?(A11y::Browser::Tree).should.be.true
+found.superview.should==@tree
+found.view.accessibility_label.should=="Label 1"
 end
 
 end
