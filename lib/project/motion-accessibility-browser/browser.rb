@@ -45,6 +45,7 @@ $browser_current=found
 $browser_path<<found
 end
 end
+$browser_cursor=$browser_current
 self.display_views
 nil
 end
