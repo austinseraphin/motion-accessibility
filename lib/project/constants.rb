@@ -187,7 +187,8 @@ attributes.member?(attribute)
 end
 
 Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
-"UISegmentedControl", "UISlider", "UIStepper", "UISwitch"]
+"UISegmentedControl", "UISlider", "UIStepper", "UISwitch",
+"UITableViewCell"]
 
 Ignored_Views = ["UIView", "UILayoutContainerView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView"]
 

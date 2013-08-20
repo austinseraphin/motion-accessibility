@@ -24,6 +24,9 @@ when "UIStepper"
 self.value=arg
 when "UISwitch"
 self.on=arg
+when "UITableViewCell"
+index=self.superview.indexPathForCell(self)
+self.delegate.tableView(self, didSelectRowAtIndexPath: index)
 else
 raise "I don't know what to do with a #{control}"
 end
