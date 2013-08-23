@@ -2,14 +2,24 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
 @window=UIWindow.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 @window.makeKeyAndVisible
-controller=TestController.alloc.initWithNibName(nil, bundle: nil)
-nav=UINavigationController.alloc.initWithRootViewController(controller)
-@window.rootViewController=nav
+test_controller=TestController.alloc.initWithNibName(nil, bundle: nil)
+test_nav=UINavigationController.alloc.initWithRootViewController(test_controller)
+table_controller=Table_Test.alloc.initWithNibName(nil, bundle: nil)
+table_nav=UINavigationController.alloc.initWithRootViewController(table_controller)
+tab_controller=UITabBarController.alloc.initWithNibName(nil, bundle: nil)
+tab_controller.viewControllers=[test_nav, table_nav]
+@window.rootViewController=tab_controller
     true
   end
 end
 
 class TestController < UIViewController
+
+def initWithNibName(name, bundle: bundle)
+super
+self.tabBarItem=UITabBarItem.alloc.initWithTitle("Tests", image: nil, tag: 1)
+self
+end
 
 def viewDidLoad
 self.title="Test App"

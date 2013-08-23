@@ -73,34 +73,4 @@ switch.touch(true)
 switch.on?.should==true
 end
 
-it "UITableView" do
-table=UITableView.alloc.initWithFrame(CGRectZero)
-table.delegate=self
-table.dataSource=self
-@table_data=("A".."Z").to_a
-index=NSIndexPath.indexPathForRow(0, inSection: 0)
-cell=tableView(table, cellForRowAtIndexPath: index)
-cell.class.should==UITableViewCell
-$touched_table=nil
-cell.touch
-$touched_table.should==cell.textLabel.text
-end
-
-def tableView(view, numberOfRowsInSection: section)
-@table_data.count
-end
-
-def tableView(view, cellForRowAtIndexPath: index)
-@reuse_identifier||="CELL_IDENTIFIER"
-cell=view.dequeueReusableCellWithIdentifier(@reuse_identifier)
-cell=UITableViewCell.alloc.initWithStyle(0, reuseIdentifier: @reuse_identifier)
-cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator
-cell.textLabel.text=@table_data[index.row]
-cell
-end
-
-def tableView(view, didSelectRowAtIndexPath: index)
-$touched_table=@table_data[index.row]
-end
-
 end
