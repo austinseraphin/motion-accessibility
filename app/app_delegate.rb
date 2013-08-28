@@ -22,6 +22,7 @@ self
 end
 
 def viewDidLoad
+super
 self.title="Test App"
 @label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [view.frame.size.width, view.frame.size.height/3]))
 @label.text="Hello!"

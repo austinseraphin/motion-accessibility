@@ -188,7 +188,7 @@ end
 
 Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
 "UISegmentedControl", "UISlider", "UIStepper", "UISwitch",
-"UITableViewCell"]
+"UITableViewCell", "UITabBarButton"]
 
 Ignored_Views = ["UIView", "UILayoutContainerView", "UITransitionView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView"]
 

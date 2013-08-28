@@ -10,6 +10,9 @@ case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
 self.sendActionsForControlEvents(arg)
+when "UITabBarButton"
+arg||=UIControlEventTouchUpInside
+self.sendActionsForControlEvents(arg)
 when "UITextField"
 self.text=arg
 when "UIPickerView"
