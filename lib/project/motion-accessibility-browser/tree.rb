@@ -44,10 +44,16 @@ display<<name if name
 display.join(" ")
 end
 
+def self.accessible_view?(view)
+return view.accessibility_element?||view.accessibility_label||view.accessibility_value||view.accessibility_traits
+end
+
 def self.ignore_view?(view)
-view=view.class.to_s
-return true if view=~/^_/
-A11y::Ignored_Views.member?(view)
+return true if view.subviews.empty?&&!self.accessible_view?(view)
+return true if view.superview&&A11y::Touchable_Types.member?(view.superview.class.to_s)
+class_name=view.class.to_s
+return true if class_name=~/^_/
+A11y::Ignored_Views.member?(class_name)
 end
 
 def self.build(view=nil, superview=nil)

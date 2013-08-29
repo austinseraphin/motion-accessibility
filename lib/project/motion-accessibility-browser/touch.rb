@@ -1,11 +1,8 @@
 class NSObject
 
 def touch(arg=nil)
+raise "I don't know how to touch a #{self.class}" unless A11y::Browser.touchable?(self)
 control=self.class
-until A11y::Touchable_Types.member?(control.to_s)||control.nil?
-control=control.superclass
-end
-raise "I don't know how to touch a #{self.class}" if control.nil?
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside

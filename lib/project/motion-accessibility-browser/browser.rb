@@ -3,6 +3,14 @@ module Browser
 
 $browser_path=[]
 
+def self.touchable?(view)
+control=view.class
+until A11y::Touchable_Types.member?(control.to_s)||control.nil?
+control=control.superclass
+end
+control
+end
+
 def self.init(view=nil)
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 $browser_tree=A11y::Browser::Tree.build(view)
