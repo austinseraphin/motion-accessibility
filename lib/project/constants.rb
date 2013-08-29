@@ -192,6 +192,8 @@ Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
 
 Ignored_Views = ["UIView", "UILayoutContainerView", "UITransitionView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView"]
 
+Ignored_ImageViews = ["UINavigationBar", "UITabBar"]
+
 private
 def compile_attributes
 # Needed just to include these

@@ -50,7 +50,15 @@ end
 
 def self.ignore_view?(view)
 return true if view.subviews.empty?&&!self.accessible_view?(view)
-return true if view.superview&&A11y::Browser.touchable?(view.superview)
+if view.superview
+sv=view.superview
+while sv.class.to_s=~/^_/
+sv=sv.superview
+end
+sv=sv.class.to_s
+return true if A11y::Browser.touchable?(sv)
+return true if view.class==UIImageView&&A11y::Ignored_ImageViews.member?(sv)
+end
 class_name=view.class.to_s
 return true if class_name=~/^_/
 A11y::Ignored_Views.member?(class_name)
