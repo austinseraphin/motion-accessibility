@@ -50,7 +50,7 @@ end
 
 def self.ignore_view?(view)
 return true if view.subviews.empty?&&!self.accessible_view?(view)
-return true if view.superview&&A11y::Touchable_Types.member?(view.superview.class.to_s)
+return true if view.superview&&A11y::Browser.touchable?(view.superview)
 class_name=view.class.to_s
 return true if class_name=~/^_/
 A11y::Ignored_Views.member?(class_name)
