@@ -27,6 +27,8 @@ self.on=arg
 when "UITableViewCell"
 index=self.superview.indexPathForCell(self)
 self.superview.delegate.tableView(self, didSelectRowAtIndexPath: index)
+when "UINavigationItemButtonView"
+$browser_cursor.superview.view.delegate.popViewControllerAnimated(true)
 else
 raise "I don't know what to do with a #{control}"
 end
