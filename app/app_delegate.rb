@@ -5,6 +5,7 @@ class AppDelegate
 test_controller=TestController.alloc.initWithNibName(nil, bundle: nil)
 test_nav=UINavigationController.alloc.initWithRootViewController(test_controller)
 table_controller=Table_Test.alloc.initWithNibName(nil, bundle: nil)
+table_controller.title="Table"
 table_nav=UINavigationController.alloc.initWithRootViewController(table_controller)
 tab_controller=UITabBarController.alloc.initWithNibName(nil, bundle: nil)
 tab_controller.viewControllers=[test_nav, table_nav]
