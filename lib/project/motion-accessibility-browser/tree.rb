@@ -12,7 +12,13 @@ end
 
 def browsable_nodes
 nodes=[@superview]
-nodes+=@subviews if @subviews
+if @subviews
+if A11y::Reverse_Views.member?(@view.class.to_s)
+nodes+=@subviews.reverse
+else
+nodes+=@subviews
+end
+end
 nodes
 end
 
@@ -29,7 +35,13 @@ def display_view(index=nil)
 display=Array.new
 control=@view.class.to_s
 control="Superview #{control}" if index==0
+if @view.class==UITableViewCell
+label=@view.subviews.first.subviews.first
+raise "Could not find the UITableViewCell's label" unless label.kind_of?(UILabel)
+name=label.text
+else
 name=@view.accessibility_value||view.accessibility_label
+end
 if index
 if index>0 and  not(@subviews.empty?)
 indicator="+"

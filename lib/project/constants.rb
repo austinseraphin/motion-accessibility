@@ -194,6 +194,8 @@ Ignored_Views = ["UIView", "UILayoutContainerView", "UITransitionView", "UINavig
 
 Ignored_ImageViews = ["UINavigationBar", "UITabBar"]
 
+Reverse_Views = ["UITableView", "UINavigationBar", "UITabBar"]
+
 private
 def compile_attributes
 # Needed just to include these
