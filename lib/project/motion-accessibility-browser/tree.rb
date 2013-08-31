@@ -67,7 +67,7 @@ sv=view.superview
 while self.ignore_view?(sv)
 sv=sv.superview
 end
-return true if A11y::Browser.touchable?(sv)
+return true if A11y::Browser.touchable_type(sv)
 return true if view.class==UIImageView&&A11y::Ignored_ImageViews.member?(sv.class.to_s)
 end
 class_name=view.class.to_s

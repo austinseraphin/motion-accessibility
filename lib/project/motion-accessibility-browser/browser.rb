@@ -3,7 +3,7 @@ module Browser
 
 $browser_path=[]
 
-def self.touchable?(view)
+def self.touchable_type(view)
 control=view.class
 until A11y::Touchable_Types.member?(control.to_s)||control.nil?
 control=control.superclass

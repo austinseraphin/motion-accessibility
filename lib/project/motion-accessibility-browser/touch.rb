@@ -1,8 +1,8 @@
 class NSObject
 
 def touch(arg=nil)
-raise "I don't know how to touch a #{self.class}" unless A11y::Browser.touchable?(self)
-control=self.class
+control=A11y::Browser.touchable_type(self)
+raise "I don't know how to touch a #{self.class}"  if control.nil?
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
@@ -26,7 +26,7 @@ when "UISwitch"
 self.on=arg
 when "UITableViewCell"
 index=self.superview.indexPathForCell(self)
-self.delegate.tableView(self, didSelectRowAtIndexPath: index)
+self.superview.delegate.tableView(self, didSelectRowAtIndexPath: index)
 else
 raise "I don't know what to do with a #{control}"
 end
