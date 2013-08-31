@@ -4,14 +4,12 @@ attr_reader :table
 
 def initWithNibName(name, bundle: bundle)
 super
-puts "Initing the table view controller..."
 self.tabBarItem=UITabBarItem.alloc.initWithTitle("Table", image: nil, tag: 1)
 self
 end
 
 def viewDidLoad
 super
-puts "Loading the table view controller"
 self.title="Table Test"
 @table=UITableView.alloc.initWithFrame(self.view.bounds)
 view.addSubview(@table)
