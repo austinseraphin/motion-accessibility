@@ -1,30 +1,34 @@
-class NSObject
+module Accessibility
+module Browser
 
-def touch(arg=nil, options={})
-control=A11y::Browser.touchable_type(self)
-raise "I don't know how to touch a #{self.class}"  if control.nil?
-sv=options[:superview]||superview
+def touch(view, arg=nil, options={})
+found=$browser_current.find(view)
+raise "Could not find the view" unless found
+      view=found.view
+control=A11y::Browser.touchable_type(view)
+raise "I don't know how to touch a #{view.class}"  if control.nil?
+sv=options[:superview]||view.superview
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
-self.sendActionsForControlEvents(arg)
+view.sendActionsForControlEvents(arg)
 when "UITabBarButton"
 arg||=UIControlEventTouchUpInside
-self.sendActionsForControlEvents(arg)
+view.sendActionsForControlEvents(arg)
 when "UITextField"
-self.text=arg
+view.text=arg
 when "UIPickerView"
-touch_pickerview(arg)
+self.touch_pickerview(view, arg)
 when "UIDatePicker"
-self.date=arg
+view.date=arg
 when "UISegmentedControl"
-touch_segmented(arg)
+self.touch_segmented(view, arg)
 when "UISlider"
-self.value=arg
+view.value=arg
 when "UIStepper"
-self.value=arg
+view.value=arg
 when "UISwitch"
-self.on=arg
+view.on=arg
 when "UITableViewCell"
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
 index=options[:index]||sv.indexPathForCell(self)
@@ -38,15 +42,13 @@ end
 self.browse unless RUBYMOTION_ENV=="test"
 end
 
-protected
-
-def touch_pickerview(arg)
+def self.touch_pickerview(view, arg)
 raise "You must pass a hash with the row and component keywords" unless arg.kind_of?(Hash)&&arg[:row]&&arg[:component]
 arg[:animated]||=false
 if arg[:row].kind_of?(String)
 results=[]
-self.numberOfRowsInComponent(arg[:component]).times do |row_index|
-title=self.delegate.pickerView(self, titleForRow: row_index, forComponent: arg[:component])
+view.numberOfRowsInComponent(arg[:component]).times do |row_index|
+title=view.delegate.pickerView(view, titleForRow: row_index, forComponent: arg[:component])
 if title.casecmp(arg[:row])==0
 results=[row_index]
 break
@@ -57,21 +59,21 @@ end
 end
 raise "Unknown value" if results.empty?
 raise "That could refer to more than one value." if results.length>1
-self.selectRow(results.first, inComponent: arg[:component], animated: false)
+view.selectRow(results.first, inComponent: arg[:component], animated: false)
 elsif arg[:row].kind_of?(Fixnum)
-selectRow(arg[:row], inComponent: arg[:component], animated: arg[:animated])
+view.selectRow(arg[:row], inComponent: arg[:component], animated: arg[:animated])
 else
 raise "Unknown row #{arg[:row]}"
 end
 end
 
-def touch_segmented(arg)
+def self.touch_segmented(view, arg)
 if arg.kind_of?(Fixnum)
-self.selectedSegmentIndex=arg
+view.selectedSegmentIndex=arg
 elsif arg.kind_of?(String)
 results=[]
-self.numberOfSegments.times do |index|
-title=self.titleForSegmentAtIndex(index)
+view.numberOfSegments.times do |index|
+title=view.titleForSegmentAtIndex(index)
 if title.casecmp(arg)==0
 results=[index]
 break
@@ -82,10 +84,13 @@ end
 end
 raise "Unknown segment" if results.empty?
 raise "That could refer to more than one segment" if results.length>1
-self.selectedSegmentIndex=results.first
+view.selectedSegmentIndex=results.first
 else
 raise "Invalid segment"
 end
 end
 
+module_function :touch
+
+end
 end

@@ -116,7 +116,8 @@ end
 raise "\"#{request}\" could refer to more than one view." if results.length>1
 found=results.first
 else
-raise "Unknown request: #{request}: #{request.class}"
+raise "Unknown request: #{request}: #{request.class}" unless request.respond_to?(:superview)
+found=request
 end
 found
 end
