@@ -64,7 +64,7 @@ def self.ignore_view?(view)
 return true if view.subviews.empty?&&!self.accessible_view?(view)
 if view.superview
 sv=view.superview
-while self.ignore_view?(sv)
+while sv&&self.ignore_view?(sv)
 sv=sv.superview
 end
 return true if A11y::Browser.touchable_type(sv)

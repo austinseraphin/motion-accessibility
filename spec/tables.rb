@@ -3,7 +3,7 @@ tests Table_Test
 
 it "touches a UITableView" do
 index=NSIndexPath.indexPathForRow(0, inSection: 0)
-cell=controller.tableView(table, cellForRowAtIndexPath: index)
+cell=controller.tableView(controller.table, cellForRowAtIndexPath: index)
 cell.class.should==UITableViewCell
 $touched_table=nil
 cell.touch
@@ -18,7 +18,7 @@ attr_reader :table
 
 def viewDidLoad
 super
-@table=UITableView.alloc.initWithFrame(CGRectZero)
+@table=UITableView.alloc.initWithFrame(self.view.bounds)
 @table.delegate=self
 @table.dataSource=self
 @table_data=("A".."Z").to_a
