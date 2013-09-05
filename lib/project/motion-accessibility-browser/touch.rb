@@ -1,8 +1,9 @@
 class NSObject
 
-def touch(arg=nil)
+def touch(arg=nil, options={})
 control=A11y::Browser.touchable_type(self)
 raise "I don't know how to touch a #{self.class}"  if control.nil?
+sv=options[:superview]||superview
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
@@ -25,8 +26,10 @@ self.value=arg
 when "UISwitch"
 self.on=arg
 when "UITableViewCell"
-index=self.superview.indexPathForCell(self)
-self.superview.delegate.tableView(self, didSelectRowAtIndexPath: index)
+raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
+index=options[:index]||sv.indexPathForCell(self)
+raise "Could not get the index" unless index
+sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
 when "UINavigationItemButtonView"
 $browser_cursor.superview.view.delegate.popViewControllerAnimated(true)
 else
