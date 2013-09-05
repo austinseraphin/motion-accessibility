@@ -1,7 +1,9 @@
 module Accessibility
 module Browser
 
-def touch(view, arg=nil, options={})
+def self.touch(view, arg=nil, options={})
+self.init
+$browser_current=$browser_tree unless $browser_current
 found=$browser_current.find(view)
 raise "Could not find the view" unless found
       view=found.view
@@ -90,7 +92,6 @@ raise "Invalid segment"
 end
 end
 
-module_function :touch
 
 end
 end

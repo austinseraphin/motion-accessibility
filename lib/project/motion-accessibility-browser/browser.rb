@@ -28,7 +28,7 @@ puts output unless output.nil?
 end
 end
 
-def browse(request=nil)
+def self.browse(request=nil)
 new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
@@ -63,7 +63,7 @@ self.display_views
 nil
 end
 
-def view(request=nil)
+def self.view(request=nil)
 self.init
 $browser_current=$browser_tree unless $browser_current
 $browser_cursor=$browser_tree unless $browser_cursor
@@ -74,7 +74,6 @@ $browser_cursor=result
 result.view
 end
 
-module_function(:browse, :view)
 alias :b :browse
 alias :v :view
 
