@@ -6,8 +6,16 @@ attr_accessor :view, :subviews, :superview
 
 def initialize(options={})
 @view=options[:view]
-@subviews=options[:subviews]
+@subviews=options[:subviews]||[]
 @superview=options[:superview]
+end
+
+def copy
+other=A11y::Browser::Tree.new
+other.superview=self.superview if superview
+other.view=self.view if view
+self.subviews.each {|subview| other.subviews<<subview.clone}
+other
 end
 
 def ==(other)

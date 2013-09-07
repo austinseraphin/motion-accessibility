@@ -34,4 +34,14 @@ found.superview.should==@tree
 found.view.accessibility_label.should=="Label 1"
 end
 
+it "#==" do
+other=@tree.copy
+@tree.should==other
+other=A11y::Browser::Tree.new(view: UIView.new)
+@tree.should.not==other
+other=@tree.copy
+other.subviews.pop
+@tree.should.not==other
+end
+
 end
