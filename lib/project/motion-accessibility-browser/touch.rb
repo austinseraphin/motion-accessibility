@@ -36,11 +36,11 @@ arg||=!view.arg
 view.on=arg
 when "UITableViewCell"
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
-index=options[:index]||sv.indexPathForCell(self)
+index=options[:index]||sv.indexPathForCell(view)
 raise "Could not get the index" unless index
 sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
 when "UINavigationItemButtonView"
-$browser_cursor.superview.view.delegate.popViewControllerAnimated(true)
+view.superview.delegate.popViewControllerAnimated(true)
 else
 raise "I don't know what to do with a #{control}"
 end
