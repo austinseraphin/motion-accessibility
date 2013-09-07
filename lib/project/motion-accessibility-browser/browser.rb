@@ -47,11 +47,9 @@ self.init unless $browser_tree
 $browser_current=$browser_tree unless $browser_current
 found=$browser_current.find(request)
 if found
-#raise "This view has no subviews" if found.subviews.empty?
 if found.subviews.empty?
 $browser_cursor=found
 return found.view.inspect_a11y
-#return found.view
 end
 self.init
 $browser_current=found

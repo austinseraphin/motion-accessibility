@@ -10,6 +10,14 @@ def initialize(options={})
 @superview=options[:superview]
 end
 
+def ==(other)
+return false unless self.superview.view==other.superview.view
+return false unless self.view==other.view
+return false unless self.subviews.size==other.subviews.size
+self.subviews.each_index {|index| return false unless self.subviews[index].view==other.subviews[index].view}
+return true
+end
+
 def browsable_nodes
 nodes=[@superview]
 if @subviews
