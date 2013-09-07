@@ -4,9 +4,11 @@ module Browser
 def self.touch(view, arg=nil, options={})
 self.init
 $browser_current=$browser_tree unless $browser_current
+unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(view)
 raise "Could not find the view" unless found
       view=found.view
+end
 control=A11y::Browser.touchable_type(view)
 raise "I don't know how to touch a #{view.class}"  if control.nil?
 sv=options[:superview]||view.superview
@@ -30,6 +32,7 @@ view.value=arg
 when "UIStepper"
 view.value=arg
 when "UISwitch"
+arg||=!view.arg
 view.on=arg
 when "UITableViewCell"
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)

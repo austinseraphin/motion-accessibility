@@ -12,7 +12,7 @@ index=NSIndexPath.indexPathForRow(0, inSection: 0)
 cell=controller.tableView(controller.table, cellForRowAtIndexPath: index)
 cell.class.should==UITableViewCell
 $touched_table=nil
-cell.touch(UIControlEventTouchUpInside, {superview: controller.table, index: index})
+A11y::Browser.touch(cell, UIControlEventTouchUpInside, {superview: controller.table, index: index})
 $touched_table.should==cell.textLabel.text
 end
 
