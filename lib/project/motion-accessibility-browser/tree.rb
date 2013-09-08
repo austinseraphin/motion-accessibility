@@ -56,7 +56,7 @@ label=@view.subviews.first.subviews.first
 raise "Could not find the UITableViewCell's label" unless label.kind_of?(UILabel)
 name=label.text
 else
-name=A11y::View_Names[@view.class.to_s]||@view.accessibility_value||@view.accessibility_label if @view.accessibility_element?
+name=A11y::View_Names[@view.class.to_s]||@view.accessibility_value||@view.accessibility_label if @view.accessibility_element?||view.superclass==UIControl
 end
 if index
 if index>0 and  not(@subviews.empty?)
