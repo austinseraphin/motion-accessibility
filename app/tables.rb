@@ -2,6 +2,8 @@ class Table_Test < UIViewController
 
 attr_reader :table
 
+Phonetics = %w[alpha bravo charlie delta echo foxtrat golf hotel india juliet kilo lima mike november oscar papa quebec romeo siera tango uniform victor whiskey x-ray yankee zulu]
+
 def initWithNibName(name, bundle: bundle)
 super
 self.tabBarItem=UITabBarItem.alloc.initWithTitle("Table", image: nil, tag: 1)
@@ -33,10 +35,11 @@ end
 
 def tableView(view, didSelectRowAtIndexPath: index)
 letter=@data[index.row]
+phonetic=Phonetics[index.row]
 controller=UIViewController.alloc.initWithNibName(nil, bundle: nil)
 controller.title=letter
 label=UILabel.alloc.initWithFrame(CGRectZero)
-label.text=letter
+label.text=phonetic
 label.sizeToFit
 label.center=[controller.view.frame.size.width/2, controller.view.frame.size.height/2]
 controller.view.addSubview(label)
