@@ -29,7 +29,6 @@ end
 end
 
 def self.browse(request=nil)
-new_view=nil
 request=0 if request==:back||request==:up
 if request.nil?
 self.init

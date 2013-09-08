@@ -3,6 +3,7 @@ module Browser
 
 def self.touch(view, arg=nil, options={})
 self.init
+before=$browser_tree.copy
 $browser_current=$browser_tree unless $browser_current
 unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(view)
@@ -44,7 +45,21 @@ view.superview.delegate.popViewControllerAnimated(true)
 else
 raise "I don't know what to do with a #{control}"
 end
-self.browse unless RUBYMOTION_ENV=="test"
+unless RUBYMOTION_ENV=="test"
+self.init
+if $browser_tree==before
+self.browse
+else
+puts "The screen has changed."
+NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
+nil
+end
+end
+end
+
+def self.after_timer
+self.browse :top
+print "(main)> "
 end
 
 def self.touch_pickerview(view, arg)
