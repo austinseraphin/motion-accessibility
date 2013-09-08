@@ -90,8 +90,7 @@ Hints describe the results of performing an action. Only provide one when not ob
 
 #### `accessibility_traits`
 
-Traits describe an element's state, behavior, or usage. They tell
-VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator.
+Traits describe an element's state, behavior, or usage. They tell VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator.
 
 The `accessibility_attribute=` method accepts a symbol or array of symbols, and applies the accessibility_attribute method to them. For example, if a view displays an image  that opens a link, you can do this.
 
@@ -160,7 +159,7 @@ The frame of the accessibility element. This defaults to the frame of the view. 
 
 #### `accessibility_activation_point`
 
-The point activated when a VoiceOver user activates the view by double tapping it. This defaults to the center of the view. In other words, a VoiceOver can double-tap anywhere on the screen, but it will simulate a sighted user touching the center of the view.
+The point activated when a VoiceOver user activates the view by double tapping it. This defaults to the center of the view. In other words, a VoiceOver user can double-tap anywhere on the screen, but it will simulate a sighted user touching the center of the view.
 
 #### `accessibility_modal_view?` or `accessibility_view_is_modal`
 
@@ -200,7 +199,7 @@ VoiceOver has a special two-finger scrub gesture designed to act as a back butto
 
 #### `Accessibility_perform_magic_tap`
 
-VoiceOver has a special two-finger double-tap. This method should toggle the most important state of the program. For example, if a song plays it will pause and resume the song. If on a telephone call, doing a magic tap will end it.
+VoiceOver has a special two-finger double-tap. This method should toggle the most important state of the program. For example, if a song plays it will pause and resume the song. If on a telephone call, doing a magic tap will end it. If playing music, a magic tap will pause it.
 
 #### `accessibility_scroll`
 
