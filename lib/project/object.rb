@@ -26,7 +26,13 @@ define_method(ruby) {|n| self.send(ios,n)}
 end
 end
 
-Accessibility::Actions.each {|ruby,ios| define_method(ruby) {ios}}
+Accessibility::Actions.each do |ruby,ios|
+if ruby==:accessibility_scroll
+define_method(ruby) {|direction| ios(direction)}
+else
+define_method(ruby) {ios}
+end
+end
 
 def accessibility_traits=(traits)
 bits=0
