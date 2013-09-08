@@ -196,6 +196,8 @@ Ignored_ImageViews = ["UINavigationBar", "UITabBar"]
 
 Reverse_Views = ["UITableView", "UINavigationBar", "UITabBar"]
 
+View_Names = {"UINavigationItemButtonView" => "Back Button"}
+
 private
 def compile_attributes
 # Needed just to include these
