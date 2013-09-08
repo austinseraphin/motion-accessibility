@@ -51,7 +51,7 @@ if $browser_tree==before
 self.browse
 else
 puts "The screen has changed."
-NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
+NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
 nil
 end
 end
