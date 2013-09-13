@@ -64,7 +64,7 @@ display<<control
 display<<name if name
 if index
 if index>0 and  not(@subviews.empty?)
-indicator="#{@subviews.length} subview"
+indicator="with #{@subviews.length} subview"
 indicator+="s" if @subviews.length>1
 end
    display<<indicator
