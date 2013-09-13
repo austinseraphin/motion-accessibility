@@ -58,19 +58,17 @@ name=label.text
 else
 name=A11y::View_Names[@view.class.to_s]||@view.accessibility_value||@view.accessibility_label if @view.accessibility_element?||view.superclass==UIControl
 end
-if index
-if index>0 and  not(@subviews.empty?)
-indicator="+"
-elsif A11y::Browser.touchable_type(@view)
-indicator="*"
-else
-indicator=" "
-end
-indicator+=index.to_s
-		      display<<indicator
-end
+display<<index.to_s
+display<<"Touchable" if A11y::Browser.touchable_type(@view)
 display<<control
 display<<name if name
+if index
+if index>0 and  not(@subviews.empty?)
+indicator="#{@subviews.length} subview"
+indicator+="s" if @subviews.length>1
+end
+   display<<indicator
+end
 display.join(" ")
 end
 
