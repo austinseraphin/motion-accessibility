@@ -1,4 +1,4 @@
-gmodule Accessibility
+module Accessibility
 module Browser
 
 $browser_path=[]

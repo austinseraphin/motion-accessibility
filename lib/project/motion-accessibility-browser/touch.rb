@@ -1,7 +1,7 @@
 module Accessibility
 module Browser
 
-Update_Delay=1.0
+Update_Delay=1.25
 
 def self.touch(view, arg=nil, options={})
 self.init
