@@ -190,9 +190,9 @@ Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
 "UISegmentedControl", "UISlider", "UIStepper", "UISwitch",
 "UITableViewCell", "UITabBarButton","UINavigationItemButtonView"]
 
-Ignored_Views = ["UIView", "UILayoutContainerView", "UITransitionView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView", "UINavigationItemView"]
+Ignored_Views = ["UIView", "UILayoutContainerView", "UITransitionView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView", "UINavigationItemView", "UITableViewWrapperView"]
 
-Ignored_ImageViews = ["UINavigationBar", "UITabBar"]
+Ignored_ImageViews = ["UINavigationBar", "UITabBar", "UITableView"]
 
 Reverse_Views = ["UITableView", "UINavigationBar", "UITabBar"]
 

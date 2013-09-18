@@ -52,9 +52,14 @@ display=Array.new
 control=@view.class.to_s
 control="Superview #{control}" if index==0
 if @view.class==UITableViewCell
-label=@view.subviews.first.subviews.first
+label=@view.subviews.first
+while label&&!label.kind_of?(UILabel)
+label=label.subviews.first
+end
 raise "Could not find the UITableViewCell's label" unless label.kind_of?(UILabel)
 name=label.text
+elsif @view.class==UITextField
+name=@view.text
 else
 name=A11y::View_Names[@view.class.to_s]||@view.accessibility_value||@view.accessibility_label if @view.accessibility_element?||view.superclass==UIControl
 end

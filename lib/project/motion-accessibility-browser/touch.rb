@@ -1,9 +1,11 @@
 module Accessibility
 module Browser
 
+Update_Delay=1.0
+
 def self.touch(view, arg=nil, options={})
 self.init
-before=$browser_tree.copy
+$before=$browser_tree.copy
 $browser_current=$browser_tree unless $browser_current
 unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(view)
@@ -12,7 +14,7 @@ raise "Could not find the view" unless found
 end
 control=A11y::Browser.touchable_type(view)
 raise "I don't know how to touch a #{view.class}"  if control.nil?
-sv=options[:superview]||view.superview
+sv=options[:superview]||found.superview.view
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
@@ -46,19 +48,17 @@ else
 raise "I don't know what to do with a #{control}"
 end
 unless RUBYMOTION_ENV=="test"
-self.init
-if $browser_tree==before
-self.browse
-else
-puts "The screen has changed."
-NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
-nil
-end
+NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
 end
 end
 
 def self.after_timer
+self.init
+if $browser_tree==$before
+self.browse
+else
 self.browse :top
+end
 print "(main)> "
 end
 
