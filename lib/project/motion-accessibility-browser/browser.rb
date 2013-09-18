@@ -1,4 +1,4 @@
-module Accessibility
+gmodule Accessibility
 module Browser
 
 $browser_path=[]
@@ -32,7 +32,7 @@ def self.browse(request=nil)
 request=0 if request==:back||request==:up
 if request.nil?
 self.init
-elsif request==:top
+elsif request==:top||request==:refresh
 self.init
 $browser_current=$browser_tree
 $browser_path.clear

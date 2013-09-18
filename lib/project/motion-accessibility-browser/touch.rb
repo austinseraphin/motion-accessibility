@@ -14,7 +14,11 @@ raise "Could not find the view" unless found
 end
 control=A11y::Browser.touchable_type(view)
 raise "I don't know how to touch a #{view.class}"  if control.nil?
+if found
 sv=options[:superview]||found.superview.view
+else
+sv=options[:superview]
+end
 case control.to_s
 when "UIButton"
 arg||=UIControlEventTouchUpInside
@@ -49,6 +53,7 @@ raise "I don't know what to do with a #{control}"
 end
 unless RUBYMOTION_ENV=="test"
 NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'after_timer', userInfo: nil, repeats: false)
+nil
 end
 end
 
