@@ -50,6 +50,7 @@ end
 def display_view(index=nil)
 display=Array.new
 control=@view.class.to_s
+control=nil if A11y::View_Names[control]
 control="Superview #{control}" if index==0
 if @view.class==UITableViewCell
 label=@view.subviews.first
@@ -65,7 +66,7 @@ name=A11y::View_Names[@view.class.to_s]||@view.accessibility_value||@view.access
 end
 display<<index.to_s
 display<<"Touchable" if A11y::Browser.touchable_type(@view)
-display<<control
+display<<control if control
 display<<name if name
 if index
 if index>0 and  not(@subviews.empty?)
