@@ -22,7 +22,7 @@ def ==(other)
 return false unless self.superview.view==other.superview.view
 return false unless self.view==other.view
 return false unless self.subviews.size==other.subviews.size
-self.subviews.each_index {|index| return false unless self.subviews[index].view==other.subviews[index].view}
+self.subviews.each_index {|index| return false unless self.subviews[index]==other.subviews[index]}
 return true
 end
 

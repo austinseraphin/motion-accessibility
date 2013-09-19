@@ -51,14 +51,9 @@ raise "You cannot go back any further" if $browser_path.length<2
 $browser_path.pop
 $browser_current=$browser_path.last
 self.init unless A11y::Data[:refresh]
-elsif request==:down
+elsif request==:scroll
 below=CGRect.new([0, $browser_current.view.size.height], $browser_current.view.size)
 $browser_current.view.scrollRectToVisible(below, animated: false)
-self.init
-elsif request==:up
-above=CGRect.new([0, $browser_current.view.origin.y-$browser_current.view.size.height], $browser_current.view.size)
-$browser_current.view.scrollRectToVisible(above, animated: false)
-self.init
 else
 self.init unless $browser_tree
 $browser_current=$browser_tree unless $browser_current
