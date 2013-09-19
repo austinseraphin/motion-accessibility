@@ -2,7 +2,7 @@ module Accessibility
 module Console
 
 $browser_path=[]
-Update_Delay=0.5
+Update_Delay=1.0
 
 def self.touchable_type(view)
 control=view.class
