@@ -29,14 +29,18 @@ puts output unless output.nil?
 end
 end
 
-def self.browse(request=nil)
-self.init unless $browser_current
+def self.start_refreshing
 if !A11y::Data[:refresh]&&RUBYMOTION_ENV!='test'
 NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'refresh', userInfo: nil, repeats: true)
 A11y::Data[:refresh]=true
 self.init
 end
-request=0 if request==:back||request==:up
+end
+
+def self.browse(request=nil)
+self.init unless $browser_current
+self.start_refreshing
+request=0 if request==:back
 if request.nil?
 elsif request==:top||request==:refresh
 self.init

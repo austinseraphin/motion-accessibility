@@ -2,6 +2,7 @@ module Accessibility
 module Console
 
 def self.touch(view, arg=nil, options={})
+self.start_refreshing
 $browser_current=$browser_tree unless $browser_current
 unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(view)
