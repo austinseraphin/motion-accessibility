@@ -33,7 +33,6 @@ def self.browse(request=nil)
 self.init unless $browser_current
 if !A11y::Data[:refresh]&&RUBYMOTION_ENV!='test'
 NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'refresh', userInfo: nil, repeats: true)
-NSLog("Background refreshing enabled.")
 A11y::Data[:refresh]=true
 self.init
 end
