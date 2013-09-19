@@ -1,15 +1,7 @@
 module Accessibility
 module Console
 
-Update_Delay=2.0
-
 def self.touch(view, arg=nil, options={})
-unless A11y::Data[:refresh]
-NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'refresh', userInfo: nil, repeats: true)
-NSLog("Background refreshing enabled.")
-A11y::Data[:refresh]=true
-self.init
-end
 $browser_current=$browser_tree unless $browser_current
 unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(view)
@@ -55,18 +47,7 @@ view.superview.delegate.popViewControllerAnimated(true)
 else
 raise "I don't know what to do with a #{control}"
 end
-self.browse
-end
-
-def self.refresh
-self.init
-$before=$browser_tree.copy unless $before
-unless $browser_tree==$before
-puts "The screen has changed."
-self.browse :top
-puts "(Main)> "
-end
-$before=$browser_tree.copy
+self.browse unless RUBYMOTION_ENV=='test'
 end
 
 def self.touch_pickerview(view, arg)

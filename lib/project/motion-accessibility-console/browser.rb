@@ -2,6 +2,7 @@ module Accessibility
 module Console
 
 $browser_path=[]
+Update_Delay=0.5
 
 def self.touchable_type(view)
 control=view.class
@@ -30,6 +31,12 @@ end
 
 def self.browse(request=nil)
 self.init unless $browser_current
+if !A11y::Data[:refresh]&&RUBYMOTION_ENV!='test'
+NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'refresh', userInfo: nil, repeats: true)
+NSLog("Background refreshing enabled.")
+A11y::Data[:refresh]=true
+self.init
+end
 request=0 if request==:back||request==:up
 if request.nil?
 elsif request==:top||request==:refresh
@@ -58,6 +65,17 @@ end
 $browser_cursor=$browser_current
 self.display_views
 nil
+end
+
+def self.refresh
+self.init
+$before=$browser_tree.copy unless $before
+unless $browser_tree==$before
+puts "The screen has changed."
+self.browse :top
+puts "(Main)> "
+end
+$before=$browser_tree.copy
 end
 
 def self.view(request=nil)
