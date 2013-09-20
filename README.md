@@ -25,14 +25,17 @@ Or install it yourself as:
 ## Usage
 ### The Motion-Accessibility Console
 
-The motion-accessibility console gives you a way to interact with a running application through a purely text interface. This works well for blind developers and command line junkies.
+The motion-accessibility console gives you a way to interact with a running application through a purely textual interface. This works well for blind developers and command line junkies.
 
 #### Enabling the Console
 
-To enabe the console, you can do one of two things. If you would just like to try it, type `include Accessibility::Console` at a REPL prompt. If you would like to use it in your application, add `require motion-accessibility-console` to your Rakefile. You have to do this even if you use bundler.
+To enable the console, you can do one of two things. If you would just like to try it, type `include Accessibility::Console` at a REPL prompt. If you would like to use it in your application, add `require motion-accessibility-console` to your Rakefile. You have to do this even if you use bundler.
 
 #### `browse` or `b`
-The `browse` or `b` command lets you examine the view hierarchy in a speech-friendly way. The following examples come from the sample app included with motion-accessibility. To get it, visit the github page.
+
+The `browse` or `b` command lets you examine the view hierarchy in a speech-friendly way. This lets you see all the relevant views displayed in your running application. It will detect if the screen has changed and refresh itself automatically.
+
+The following examples come from the sample app included with motion-accessibility.
 
 ```
 (main)>	browse                                                                  
@@ -56,10 +59,13 @@ Browsing  UITabBar
 => nil
 ```
 
-You can also refresh the browser by passing the `:refresh` or `:top` keyword.
+You can  refresh the browser by passing the `:refresh` or `:top` keyword. 
+
+You may pass the `:scroll` keyword to scroll a UIScrollView or descendants, such as a UITableView. This still has some minor issues .
 
 #### `view` or `v`
-The `view` or `v` command simply returns the current view. If you have just browsed a view, it will return that. Otherwise, you may specify the view you wish to browse. Note that for all the commands, you may either use the number or accessibility label.
+
+The `view` or `v` command simply returns the current view. If you have just browsed a view, it will return that. Otherwise, you may specify the view you wish to browse. Note that for all the commands, you may either use its number or accessibility label.
 
 ```
 (main)>	v 1                                                                     
