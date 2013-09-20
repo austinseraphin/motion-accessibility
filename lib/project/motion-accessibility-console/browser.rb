@@ -12,6 +12,14 @@ end
 control
 end
 
+def self.scrollable_view?(view)
+control=view.class
+until control==UIScrollView||control.nil?
+control=control.superclass
+end
+control==UIScrollView
+end
+
 def self.init(view=nil)
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 $browser_tree=A11y::Console::Tree.build(view)
@@ -52,6 +60,7 @@ $browser_path.pop
 $browser_current=$browser_path.last
 self.init unless A11y::Data[:refresh]
 elsif request==:scroll
+raise "This view cannot scroll" unless A11y::Console.scrollable_view?($browser_current.view)
 below=CGRect.new([0, $browser_current.view.size.height], $browser_current.view.size)
 $browser_current.view.scrollRectToVisible(below, animated: false)
 else

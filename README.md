@@ -23,6 +23,76 @@ Or install it yourself as:
     $ gem install motion-accessibility
 
 ## Usage
+### The Motion-Accessibility Console
+
+The motion-accessibility console gives you a way to interact with a running application through a purely text interface. This works well for blind developers and command line junkies.
+
+#### Enabling the Console
+
+To enabe the console, you can do one of two things. If you would just like to try it, type `include Accessibility::Console` at a REPL prompt. If you would like to use it in your application, add `require motion-accessibility-console` to your Rakefile. You have to do this even if you use bundler.
+
+#### `browse` or `b`
+The `browse` or `b` command lets you examine the view hierarchy in a speech-friendly way. The following examples come from the sample app included with motion-accessibility. To get it, visit the github page.
+
+```
+(main)>	browse                                                                  
+Browsing  UIWindow                                                              
+1 UILabel Hello!                                                                
+2 Touchable UITextField                                                         
+3 Touchable UIRoundedRectButton Update                                          
+4 UINavigationBar                                                               
+5 UITabBar with 2 subviews                                                      
+=> nil
+```
+
+If a view has subviews, you can browse that view.
+
+```
+(main)>	b 5                                                                     
+Browsing  UITabBar                                                              
+0 Superview UIWindow                                                            
+1 Touchable UITabBarButton Test App                                             
+2 Touchable UITabBarButton Table                                                
+=> nil
+```
+
+You can also refresh the browser by passing the `:refresh` or `:top` keyword.
+
+#### `view` or `v`
+The `view` or `v` command simply returns the current view. If you have just browsed a view, it will return that. Otherwise, you may specify the view you wish to browse. Note that for all the commands, you may either use the number or accessibility label.
+
+```
+(main)>	v 1                                                                     
+=> #<UITabBarButton:0x9380560>
+```
+
+#### `touch`
+The `touch` command lets you interact with the various controls. It works on all standard UIControls. `touch` can accept an argument depending on the type of control. For example, you can pass a UITextField a string to set its value.
+
+```
+(main)>	touch 2,"motion-accessibility rocks!"                                   
+Browsing  UIWindow                                                              
+1 UILabel Hello!                                                                
+2 Touchable UITextField motion-accessibility rocks!                             
+3 Touchable UIRoundedRectButton Update                                          
+4 UINavigationBar                                                               
+5 UITabBar with 2 subviews                                                      
+=> nil
+```
+
+UIButtons can take a UIControlEvent, but default to `UIControlEventTouchUpInside`. Note here the use of an accessibility label to reference the view.
+
+```
+(main)>	touch "update"                                                          
+Browsing  UIWindow                                                              
+1 UILabel motion-accessibility rocks!                                           
+2 Touchable UITextField motion-accessibility rocks!                             
+3 Touchable UIRoundedRectButton Update                                          
+4 UINavigationBar                                                               
+5 UITabBar with 2 subviews                                                      
+=> nil
+```
+
 ### The Accessibility Inspector
 
 You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` method on any object.
