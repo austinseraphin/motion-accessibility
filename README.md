@@ -25,7 +25,7 @@ Or install it yourself as:
 ## Usage
 ### The Motion-Accessibility Console
 
-The motion-accessibility console gives you a way to interact with a running application through a purely textual interface. This works well for blind developers and command line junkies.
+The motion-accessibility console gives you a way to interact with a running application through a purely textual interface. This works well for blind developers and command line users.
 
 #### Enabling the Console
 
