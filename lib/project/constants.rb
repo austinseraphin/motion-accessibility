@@ -17,6 +17,8 @@ Attributes = {
 :accessibility_frame= => :setAccessibilityFrame,
 :accessibility_activation_point => :accessibilityActivationPoint,
 :accessibility_activation_point= => :setAccessibilityActivationPoint,
+:accessibility_path => :accessibilityPath,
+:accessibility_path= => :setAccessibilityPath,
 :accessibility_view_is_modal => :accessibilityViewIsModal,
 :accessibility_view_is_modal= => :setAccessibilityViewIsModal,
 :accessibility_modal_view? => :accessibilityViewIsModal,
@@ -36,11 +38,6 @@ Attributes = {
 :accessibility_identifier => :accessibilityIdentifier,
 :accessibility_identifier= => :setAccessibilityIdentifier
 }
-
-if UIDevice.currentDevice.systemVersion.to_f>=7.0
-Attributes[:accessibility_path]=:accessibilityPath
-Attributes[:accessibility_path=]=:setAccessibilityPath
-end
 
 Element_Attributes = {
 :container => :accessibilityContainer,
@@ -160,6 +157,7 @@ Attribute_Types = {
 :accessibilityLanguage=>:string,
 :accessibilityFrame=>:cgrect,
 :accessibilityActivationPoint=>:cgpoint,
+:accessibilityPath => :uibezierpath,
 :accessibilityViewIsModal=>:boolean,
 :shouldGroupAccessibilityChildren=>:boolean,
 :accessibilityElementsHidden=>:boolean,

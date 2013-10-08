@@ -2,6 +2,7 @@
 class NSObject
 
 Accessibility::Attributes.each do |ruby, ios|
+next unless self.respond_to?(ios)
 next if ruby==:accessibility_traits=
 if ruby=~/=$/
 define_method(ruby) {|value| self.send(ios,value)}
