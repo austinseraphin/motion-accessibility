@@ -80,6 +80,13 @@ causes_page_turn: UIAccessibilityTraitCausesPageTurn,
 not_enabled: UIAccessibilityTraitNotEnabled
 }
 
+Speech_Attributes = {
+:punctuation => UIAccessibilitySpeechAttributePunctuation,
+:language => UIAccessibilitySpeechAttributeLanguage,
+:pitch => UIAccessibilitySpeechAttributePitch
+}
+
+
 PickerView_Attributes = {
 :accessibility_label_for_component => :accessibilityLabelForComponent,
 :accessibility_abel_for_component= => :setAccessibilityLabelForComponent,
@@ -237,6 +244,10 @@ end
 
 def accessibility_zoom_type
 Accessibility::Zoom[self]||(raise("Unknown zoom type #{self}"))
+end
+
+def speech_attribute
+Accessibility::Speech_Attributes[self]||(raise "Unknown speech attribute #{self}")
 end
 
 end
