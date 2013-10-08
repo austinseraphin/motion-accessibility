@@ -37,6 +37,11 @@ Attributes = {
 :accessibility_identifier= => :setAccessibilityIdentifier
 }
 
+if UIDevice.currentDevice.systemVersion.to_f>=7.0
+Attributes[:accessibility_path]=:accessibilityPath
+Attributes[:accessibility_path=]=:setAccessibilityPath
+end
+
 Element_Attributes = {
 :container => :accessibilityContainer,
 :container= => :setAccessibilityContainer,

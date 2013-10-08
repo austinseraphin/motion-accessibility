@@ -27,14 +27,15 @@ begin
 case attribute
 when :accessibilityTraits then value=inspect_accessibility_traits
 else
-value=self.send(attribute).inspect
+value=self.send(attribute)
+value="nil" if value.nil?
 end
 case Accessibility.attribute_type(attribute)
 when :boolean 
 value=true if value==1
 value=false if value==0||value.nil?
-when :cgrect then value="x=#{self.origin.x} y=#{self.origin.y} width=#{self.size.width} height=#{self.size.height}"
-when :cgpoint then value="x=#{self.origin.x} y=#{self.origin.y}"
+when :cgrect then value="x=#{value.origin.x.round(1)} y=#{value.origin.y.round(1)} width=#{value.size.width.round(1)} height=#{value.size.height.round(1)}"
+when :cgpoint then value="x=#{value.x.round(1)} y=#{value.y.round(1)}"
 end
 rescue
 value="Error: #{$!}"
