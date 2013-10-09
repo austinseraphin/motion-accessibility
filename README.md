@@ -116,6 +116,7 @@ Accessibility value: nil
 Accessibility language: nil                                                     
 Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0                       
 Accessibility activation point: x=0.0 y=0.0                                     
+Accessibility path: nil
 Accessibility view is modal: false                                              
 Should group accessibility children: false                                      
 Accessibility elements hidden: false                                            
@@ -238,6 +239,10 @@ The frame of the accessibility element. This defaults to the frame of the view. 
 
 The point activated when a VoiceOver user activates the view by double tapping it. This defaults to the center of the view. In other words, a VoiceOver can double-tap anywhere on the screen, but it will simulate a sighted user touching the center of the view.
 
+#### `accessibility_path`
+
+If nil, the default, VoiceOver uses the `accessibility_frame` to highlight the element. If set, it will use the path. This method accepts a `UIBezierPath`.
+
 #### `accessibility_modal_view?` or `accessibility_view_is_modal`
 
 Ignores elements within views which are siblings of the receiver. If you present a modal view and want VoiceOver to ignore other views on the screen, set this to true.
@@ -269,6 +274,10 @@ Accepts an integer and returns the accessibility hint for the component.
 ### UIAccessibility Actions
 
 These methods trigger when the VoiceOver user performs specific actions. You can implement then in a UIView or an accessibility element.
+
+#### `accessibility_activate`
+
+New in iOS 7, this method performs a custom action when a VoiceOver double-taps the view. You can use this if the view uses a custom gesture, for example. It returns true or false depending on the success of the action.
 
 #### `accessibility_perform_escape`
 
