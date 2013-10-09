@@ -439,6 +439,14 @@ Additionally, these two methods relate to the Zoom screen magnification software
 This notifies Zoom that an app's focus has changed. It takes a zoom type described above, a frame, and the view containing the frame.
 #### `Accessibility.register_gesture_conflicts_with_zoom`
 This issues a dialog to the user when a three-fingered gesture conflicts with Zoom. It lets them choose to disable Zoom or continue.
+
+### Speech Attributes
+
+iOS 7 adds some speech attributes to use in attributed strings. To get them, just call the `speech_attribute` method on the following symbols.
+- `:punctuation`
+- `:language`
+- `:pitch`
+
 ## contributing
 
 
