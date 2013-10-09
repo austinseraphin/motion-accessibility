@@ -115,7 +115,8 @@ Actions = {
 :accessibility_increment => :accessibilityIncrement,
 :accessibility_perform_escape => :accessibilityPerformEscape,
 :accessibility_perform_magic_tap => :accessibilityPerformMagicTap,
-:accessibility_scroll => :accessibilityScroll
+:accessibility_scroll => :accessibilityScroll,
+:accessibility_activate => :accessibilityActivate
 }
 
 All_Attributes=Attributes.merge(Container_Attributes).merge(Reading_Content).merge(Actions)
