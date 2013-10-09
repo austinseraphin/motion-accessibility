@@ -80,12 +80,15 @@ causes_page_turn: UIAccessibilityTraitCausesPageTurn,
 not_enabled: UIAccessibilityTraitNotEnabled
 }
 
+if UIDevice.currentDevice.systemVersion.to_f>=7.0
 Speech_Attributes = {
 :punctuation => UIAccessibilitySpeechAttributePunctuation,
 :language => UIAccessibilitySpeechAttributeLanguage,
 :pitch => UIAccessibilitySpeechAttributePitch
 }
-
+else
+Speech_Attributes={}
+end
 
 PickerView_Attributes = {
 :accessibility_label_for_component => :accessibilityLabelForComponent,
