@@ -10,12 +10,18 @@ end
 @tree=A11y::Console::Tree.build(@view)
 end
 
+it "built the tree" do
+	@tree.kind_of?(Accessibility::Console::Tree).should.be.true
+end
+
 it "has superviews" do
-@tree.subviews.each {|node| node.superview.should==@tree}
+@tree.subviews.each do |node| 
+	node.superview.should.be.same_as @tree
+end
 end
 
 it "#browsable_nodes" do
-@tree.browsable_nodes.length.should==3
+@tree.browsable_nodes.length.should.equal 3
 end
 
 it "builds a tree" do

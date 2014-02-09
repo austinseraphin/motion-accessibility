@@ -20,8 +20,7 @@ end
 
 def ==(other)
 	return false if other.nil?
-	puts "self superview=#{self.superview.inspect}
-return false unless self.superview.view==other.superview.view
+return false if self.superview&&other.superview&&self.superview.view!=other.superview.view
 return false unless self.view==other.view
 return false unless self.subviews.size==other.subviews.size
 self.subviews.each_index {|index| return false unless self.subviews[index]==other.subviews[index]}
