@@ -6,7 +6,7 @@ https://github.com/austinseraphin/motion-accessibility
 
 Motion-Accessibility wraps the UIAccessibility protocols in nice
 ruby. I hope that making them easier will encourage developers to use it
-more and make their apps accessible.
+more and make their apps accessible. The gem also includes an accessibility inspector and a text console to aide blind iOS developers.
 
 ## Installation
 
