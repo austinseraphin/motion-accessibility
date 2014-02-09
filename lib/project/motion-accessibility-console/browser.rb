@@ -41,30 +41,30 @@ def self.start_refreshing
 if !A11y::Data[:refresh]&&RUBYMOTION_ENV!='test'
 NSTimer.scheduledTimerWithTimeInterval(Update_Delay, target: self, selector: 'refresh', userInfo: nil, repeats: true)
 A11y::Data[:refresh]=true
-self.init
+A11y::Console.init
 end
 end
 
-def self.browse(request=nil)
-self.init unless $browser_current
-self.start_refreshing
+def browse(request=nil)
+A11y::Console.init unless $browser_current
+A11y::Console.start_refreshing
 request=0 if request==:back
 if request.nil?
 elsif request==:top||request==:refresh
-self.init
+A11y::Console.init
 $browser_current=$browser_tree
 $browser_path.clear
 elsif request==0
 raise "You cannot go back any further" if $browser_path.length<2
 $browser_path.pop
 $browser_current=$browser_path.last
-self.init unless A11y::Data[:refresh]
+A11y::Console.init unless A11y::Data[:refresh]
 elsif request==:scroll
 raise "This view cannot scroll" unless A11y::Console.scrollable_view?($browser_current.view)
 below=CGRect.new([0, $browser_current.view.size.height], $browser_current.view.size)
 $browser_current.view.scrollRectToVisible(below, animated: false)
 else
-self.init unless $browser_tree
+A11y::Console.init unless $browser_tree
 $browser_current=$browser_tree unless $browser_current
 found=$browser_current.find(request)
 if found
@@ -72,29 +72,29 @@ if found.subviews.empty?
 $browser_cursor=found
 return found.view.inspect_a11y
 end
-self.init unless A11y::Data[:refresh]
+A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=found
 $browser_path<<found
 end
 end
 $browser_cursor=$browser_current
-self.display_views
+A11y::Console.display_views
 nil
 end
 
 def self.refresh
-self.init
+A11y::Console.init
 $before=$browser_tree.copy unless $before
 unless $browser_tree==$before
 puts "The screen has changed."
-self.browse :top
+A11y::Console.browse :top
 puts "(Main)> "
 end
 $before=$browser_tree.copy
 end
 
-def self.view(request=nil)
-self.init unless A11y::Data[:refresh]
+def view(request=nil)
+A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=$browser_tree unless $browser_current
 $browser_cursor=$browser_tree unless $browser_cursor
 return $browser_cursor.view unless request
@@ -104,6 +104,7 @@ $browser_cursor=result
 result.view
 end
 
+module_function :browse, :view
 alias :b :browse
 alias :v :view
 
