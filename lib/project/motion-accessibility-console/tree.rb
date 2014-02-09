@@ -20,8 +20,7 @@ end
 
 def ==(other)
 	return false if other.nil?
-	puts "self superview=#{self.superview.inspect}"
-	puts "other superview=#{other.superview.inspect}"
+	puts "self superview=#{self.superview.inspect}
 return false unless self.superview.view==other.superview.view
 return false unless self.view==other.view
 return false unless self.subviews.size==other.subviews.size
