@@ -7,5 +7,11 @@ describe "Accessibility::Test" do
 		A11y::Test.accessibility_label(view).should.be.true
 	end
 
+	it "tests for an accessibility frame" do
+		view=UIView.new
+		view.accessibility_frame=CGRectZero
+		A11y::Test.accessibility_frame(view).should.be.true
+	end
+
 end
 
