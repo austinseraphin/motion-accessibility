@@ -41,6 +41,27 @@ end
 			end
 		end
 
+		def self.nsobject(obj)
+			accessibility_label(obj)
+			accessibility_frame(obj)
+			accessibility_activation_point(obj)
+			is_accessibility_element(obj)
+		end
+
 	end
 end
+
+	class NSObject
+
+		def accessible?
+		c=self.class
+		cs=c.to_s.downcase.to_sym
+	until A11y::Test.respond_to?(cs)
+		c=c.superclass
+		cs=c.to_s.downcase.to_sym
+	end
+	A11y::Test.send(cs,self)
+		end
+
+	end
 
