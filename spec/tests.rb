@@ -13,5 +13,11 @@ describe "Accessibility::Test" do
 		A11y::Test.accessibility_frame(view).should.be.true
 	end
 
+	it "tests for an accessibility activation point" do
+		view=UIView.new
+		view.accessibility_activation_point=CGPointZero
+		A11y::Test.accessibility_activation_point(view).should.be.true
+	end
+
 end
 
