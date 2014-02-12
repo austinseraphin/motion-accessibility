@@ -24,8 +24,17 @@ end
 		end
 
 		def self.accessibility_activation_point(obj)
-			unless obj
+			unless obj.accessibility_activation_point
 				report "You must set an accessibility_activation_point so VoiceOver knows where to touch."
+				false
+			else
+				true
+			end
+		end
+
+		def self.is_accessibility_element(obj)
+			unless obj.accessibility_element?
+				report "You must set is_accessibility_element=true to make VoiceOver aware of it."
 				false
 			else
 				true

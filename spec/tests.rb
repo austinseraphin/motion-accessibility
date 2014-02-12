@@ -19,5 +19,13 @@ describe "Accessibility::Test" do
 		A11y::Test.accessibility_activation_point(view).should.be.true
 	end
 
+	it "tests for is_accessibility_element" do
+		view=UIView.new
+		A11y::Test.is_accessibility_element(view).should.be.false
+		view.is_accessibility_element=true
+		A11y::Test.is_accessibility_element(view).should.be.true
+	end
+
+
 end
 
