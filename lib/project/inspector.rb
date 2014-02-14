@@ -13,6 +13,7 @@ next if displayed.member?(ios)
 self.inspect_accessibility_attribute(ios)
 displayed<<ios
 end
+puts "Accessible: "+self.accessible?.to_s
 nil
 end
 
