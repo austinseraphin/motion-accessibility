@@ -35,5 +35,10 @@ describe "Accessibility::Test" do
 		view.should.be.accessible
 	end
 
+	it "UIActionSheet" do
+		action=UIActionSheet.new
+		action.should.be.accessible
+	end
+
 end
 

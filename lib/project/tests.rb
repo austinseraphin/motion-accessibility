@@ -42,10 +42,25 @@ end
 		end
 
 		def self.nsobject(obj)
-			accessibility_label(obj)
-			accessibility_frame(obj)
-			accessibility_activation_point(obj)
-			is_accessibility_element(obj)
+			result=true
+			result&&=accessibility_label(obj)
+			result&&=accessibility_frame(obj)
+			result&&=accessibility_activation_point(obj)
+			result&&=is_accessibility_element(obj)
+			result
+		end
+
+		def self.uiactionsheet(action)
+			result=true
+			if action.accessibility_element?
+				report "A UIActionSheet should have is_accessibility_element set to false." 
+result=false
+			end
+			unless action.accessibility_view_is_modal
+				report "You must set accessibility_view_is_modal to true."
+				result&&=false
+			end
+			result
 		end
 
 	end
