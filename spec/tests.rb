@@ -23,5 +23,9 @@ describe "Accessibility::Test" do
 		indicator.should.be.accessible?
 	end
 
+		it "UIAlertView" do
+			UIAlertView.new.should.be.accessible
+		end
+
 end
 

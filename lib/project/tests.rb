@@ -18,7 +18,8 @@ UIActivityIndicatorView: {
 			accessibility_label: [String, "You must set the accessibility_label to the title of the activity indicator."],
 accessibility_value: [String, "You must set the accessibility_value to the value of the indicator."],
 accessibility_elements_hidden: [true]
-		}
+		},
+			UIAlertView: {}
 		}
 
 		def self.has_test?(classname)
