@@ -1,66 +1,61 @@
 module Accessibility
 	module Test
 
+		Tests = {
+			basic: {
+			accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
+				accessibility_activation_point: [CGPoint, "You must set an accessibility_activation_point so VoiceOver knows where to touch."]
+		},
+			NSObject: {
+			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
+					is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it."]
+		},
+			UIActionSheet: {
+			is_accessibility_element: [false],
+			accessibility_view_is_modal: [true]
+		},
+UIActivityIndicatorView: {
+			accessibility_label: [String, "You must set the accessibility_label to the title of the activity indicator."],
+accessibility_value: [String, "You must set the accessibility_value to the value of the indicator."],
+accessibility_elements_hidden: [true]
+		}
+		}
+
+		def self.has_test?(classname)
+Tests.has_key?(classname.to_s.to_sym)
+		end
+
 		def self.report(message)
 			NSLog(message) unless RUBYMOTION_ENV=='test'
 		end
 
-		def self.accessibility_label(obj)
-unless obj.accessibility_label
-			report "You must set an accessibility label to tell VoiceOver what to read." 
-		false
-else
-	true
+		def self.run(obj)
+classname=obj.class
+classname=classname.superclass until has_test?(classname)
+tests=Tests[:basic].clone
+tests.merge!(Tests[classname.to_s.to_sym])
+result=true
+tests.each_pair do |attribute, test|
+	(expected, message)=test
+	unless obj.respond_to?(attribute)
+		raise "Unknown method #{attribute} for accessibility test for #{classname}. Please submit this bug."
+	end
+	value=obj.send(attribute)
+	if expected.class==Class
+unless value.class==expected
+	result&&=false
+message||="#{attribute} must have an object of type #{expected}"
+report message
 end
+	else
+		unless expected==value
+result&&=false
+message||="#{attribute} must have the value #{expected}"
+report message
 		end
-	
-		def self.accessibility_frame(obj)
-			unless obj.accessibility_frame
-				report "You must set an accessibility_frame to tell VoiceOver the bounds of the view." 
-				false
-			else
-				true
-			end
+	end
 		end
-
-		def self.accessibility_activation_point(obj)
-			unless obj.accessibility_activation_point
-				report "You must set an accessibility_activation_point so VoiceOver knows where to touch."
-				false
-			else
-				true
-			end
-		end
-
-		def self.is_accessibility_element(obj)
-			unless obj.accessibility_element?
-				report "You must set is_accessibility_element=true to make VoiceOver aware of it."
-				false
-			else
-				true
-			end
-		end
-
-		def self.nsobject(obj)
-			result=true
-			result&&=accessibility_label(obj)
-			result&&=accessibility_frame(obj)
-			result&&=accessibility_activation_point(obj)
-			result&&=is_accessibility_element(obj)
-			result
-		end
-
-		def self.uiactionsheet(action)
-			result=true
-			if action.accessibility_element?
-				report "A UIActionSheet should have is_accessibility_element set to false." 
-result=false
-			end
-			unless action.accessibility_view_is_modal
-				report "You must set accessibility_view_is_modal to true."
-				result&&=false
-			end
-			result
+	result
 		end
 
 	end
@@ -69,13 +64,7 @@ end
 	class NSObject
 
 		def accessible?
-		c=self.class
-		cs=c.to_s.downcase.to_sym
-	until A11y::Test.respond_to?(cs)
-		c=c.superclass
-		cs=c.to_s.downcase.to_sym
-	end
-	A11y::Test.send(cs,self)
+			A11y::Test.run(self)
 		end
 
 	end
