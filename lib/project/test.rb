@@ -5,7 +5,7 @@ module Accessibility
 			NSObject: {
 			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
 			accessibility_traits: [0, "You must set accessibility_trait to :none.accessibility_trait"],
-accessibility_value: [nil],
+accessibility_value: nil,
 			accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
 				accessibility_activation_point: [CGPoint, "You must set an accessibility_activation_point so VoiceOver knows where to touch."],
 				accessibility_path: [nil],
@@ -42,8 +42,12 @@ obj_tests
 		def self.run(obj)
 			tests=self.object(obj)
 result=true
-tests.each_pair do |attribute, test|
+tests.each do |attribute, test|
+	if test.kind_of?(Array)
 	(expected, message)=test
+	else
+		expected=test
+	end
 	unless obj.respond_to?(attribute)
 		raise "Unknown method #{attribute} for accessibility test for #{classname}. Please submit this bug."
 	end
