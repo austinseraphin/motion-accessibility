@@ -1,8 +1,7 @@
 describe "Accessibility::Test" do
 
-	it "#has_test?" do
-		A11y::Test.has_test?(NSObject).should.be.true
-		A11y::Test.has_test?(:fail).should.be.false
+	it "object" do
+		A11y::Test.object(UIView.new).class.should.equal(Hash)
 	end
 
 	it "UIView" do
