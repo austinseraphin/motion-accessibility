@@ -40,7 +40,7 @@ when :cgpoint then value="x=#{value.x.round(1)} y=#{value.y.round(1)}"
 when :uibezierpath then value="x=#{value.bounds.origin.x.round(1)} y=#{value.bounds.origin.y.round(1)} width=#{value.bounds.size.width.round(1)} height=#{value.bounds.size.height.round(1)}"
 end
 else
-value="nil"
+value="nil" if value.nil?
 end
 rescue
 value="Error: #{$!}"
