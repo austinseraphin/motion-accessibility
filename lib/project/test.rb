@@ -8,34 +8,37 @@ module Accessibility
 accessibility_value: nil,
 			accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
 				accessibility_activation_point: [CGPoint, "You must set an accessibility_activation_point so VoiceOver knows where to touch."],
-				accessibility_path: [nil],
-accessibility_view_is_modal: [false],
-should_group_accessibility_children: [false],
-accessibility_elements_hidden: [false],
+				accessibility_path: nil,
+accessibility_view_is_modal: false,
+should_group_accessibility_children: false,
+accessibility_elements_hidden: false,
 					is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it."]
 		},
 			UIActionSheet: {
-			accessibility_label: [nil],
-			is_accessibility_element: [false],
-			accessibility_view_is_modal: [true]
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			accessibility_view_is_modal: true
 		},
 UIActivityIndicatorView: {
 			accessibility_label: [String, "You must set the accessibility_label to the title of the activity indicator."],
 accessibility_value: [String, "You must set the accessibility_value to the value of the indicator."],
-accessibility_elements_hidden: [true],
-		is_accessibility_element: [false]
+accessibility_elements_hidden: true,
+		is_accessibility_element: false
 		},
 			UIAlertView: {
-		accessibility_label: [nil],
-		is_accessibility_element: [false]
+		accessibility_label: nil,
+		is_accessibility_element: false
 		}
 		}
+
 		def self.object(obj)
-			obj_tests={}
+			obj_tests=A11y::Test::Tests[:NSObject].clone
 cl=obj.class
 cl=cl.superclass until Tests[cl.to_s.to_sym]
 cl=cl.to_s.to_sym
-			Tests[:NSObject].each {|attribute, test| obj_tests[attribute]=Tests[cl][attribute]||Tests[:NSObject][attribute]}
+			Tests[cl].each do |attribute, test|
+				obj_tests[attribute]=test
+			end
 obj_tests
 		end
 
