@@ -63,6 +63,8 @@ You can  refresh the browser by passing the `:refresh` or `:top` keyword.
 
 You may pass the `:scroll` keyword to scroll a UIScrollView or descendants, such as a UITableView. This still has some minor issues .
 
+You may pass any view as an argument to browse it. Use the `:refresh` or `:top` keywords to switch back to the running application.
+
 #### `view` or `v`
 
 The `view` or `v` command simply returns the current view. If you have just browsed a view, it will return that. Otherwise, you may specify the view you wish to browse. Note that for all the commands, you may either use its number or accessibility label.
@@ -109,19 +111,20 @@ main)>	label=UILabel.alloc.initWithFrame(CGRectMake(0, 0, 100, 100))
 (main)> label.text="Hello!"                                                     
 => "Hello!"                                                                     
 (main)> label.inspect_accessibility                                             
-Accessibility label: "Hello!"                                                   
-Accessibility hint: nil                                                         
-Accessibility traits: Static text                                               
-Accessibility value: nil                                                        
-Accessibility language: nil                                                     
-Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0                       
-Accessibility activation point: x=0.0 y=0.0                                     
+Accessibility label: Hello!
+Accessibility hint: nil
+Accessibility traits: Static text
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=20.0 width=320.0 height=189.3
+Accessibility activation point: x=160.0 y=114.7
 Accessibility path: nil
-Accessibility view is modal: false                                              
-Should group accessibility children: false                                      
-Accessibility elements hidden: false                                            
-Is accessibility element: false                                                 
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements hidden: false
+Is accessibility element: true
 Accessibility identifier: nil
+=> nil
 ```
 
 By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `inspect_a11y` as a shortcut. You can also use this abreviation when referring to the Accessibility class, for instance `A11y::Element`.
