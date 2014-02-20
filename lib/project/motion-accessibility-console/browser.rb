@@ -63,7 +63,7 @@ elsif request==:scroll
 raise "This view cannot scroll" unless A11y::Console.scrollable_view?($browser_current.view)
 below=CGRect.new([0, $browser_current.view.size.height], $browser_current.view.size)
 $browser_current.view.scrollRectToVisible(below, animated: false)
-else
+elsif request.kind_of?(Fixnum)||request.kind_of?(String)
 A11y::Console.init unless $browser_tree
 $browser_current=$browser_tree unless $browser_current
 found=$browser_current.find(request)
@@ -76,6 +76,11 @@ A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=found
 $browser_path<<found
 end
+elsif request.respond_to?(:view)&&request.respond_to?(:subviews)
+	A11y::Console.init(request)
+	$browser_current=$browser_tree
+else
+	puts "Unknown request: #{request.inspect}"
 end
 $browser_cursor=$browser_current
 A11y::Console.display_views
