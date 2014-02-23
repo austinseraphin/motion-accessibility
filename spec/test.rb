@@ -24,7 +24,8 @@ describe "Accessibility::Test" do
 	end
 
 		it "UIAlertView" do
-			UIAlertView.new.should.be.accessible
+			alert=UIAlertView.alloc.initWithTitle("Test", message: "A tset", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: nil)
+			alert.should.be.accessible
 		end
 
 end

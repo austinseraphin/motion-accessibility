@@ -27,7 +27,8 @@ accessibility_elements_hidden: true,
 		},
 			UIAlertView: {
 		accessibility_label: nil,
-		is_accessibility_element: false
+		is_accessibility_element: false,
+		test_subviews: true
 		}
 		}
 
@@ -46,13 +47,14 @@ obj_tests
 			tests=self.object(obj)
 result=true
 tests.each do |attribute, test|
+	next if attribute=~/test/
 	if test.kind_of?(Array)
 	(expected, message)=test
 	else
 		expected=test
 	end
 	unless obj.respond_to?(attribute)
-		raise "Unknown method #{attribute} for accessibility test for #{classname}. Please submit this bug."
+		raise "Unknown method #{attribute}"
 	end
 	value=obj.send(attribute)
 	if expected.class==Class
@@ -69,6 +71,9 @@ NSLog message
 		end
 	end
 		end
+if result&&tests[:test_subviews]
+obj.subviews.each {|view| result=result&&A11y::Test.object(view)}	
+end
 	result
 		end
 
