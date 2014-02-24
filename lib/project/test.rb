@@ -48,6 +48,10 @@ accessibility_elements_hidden: true,
 			_UIDatePickerView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
+		},
+			UIView: {
+			accessibility_label: nil,
+			is_accessibility_element: false
 		}
 		}
 

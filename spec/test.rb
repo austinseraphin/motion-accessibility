@@ -5,14 +5,6 @@ describe "Accessibility::Test" do
 		A11y::Test.object(UIActionSheet.new)[:accessibility_label].should.be.nil
 	end
 
-	it "UIView" do
-		view=UIView.new
-		view.should.not.be.accessible
-		view.accessibility_label="test"
-		view.is_accessibility_element=true
-		view.should.be.accessible
-	end
-
 	it "UIActionSheet" do
 		action=UIActionSheet.new
 		action.should.be.accessible
@@ -47,6 +39,10 @@ describe "Accessibility::Test" do
 		it "UIDatePicker" do
 			picker=UIDatePicker.new
 			picker.should.be.accessible
+		end
+
+		it "UIView" do
+			UIView.new.should.be.accessible
 		end
 
 end
