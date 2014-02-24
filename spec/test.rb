@@ -28,5 +28,12 @@ describe "Accessibility::Test" do
 			alert.should.be.accessible
 		end
 
+		it "UILabel" do
+			label=UILabel.new
+			label.text="Test"
+			label.should.be.accessible
+		end
+
+
 end
 

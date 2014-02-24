@@ -29,6 +29,9 @@ accessibility_elements_hidden: true,
 		accessibility_label: nil,
 		is_accessibility_element: false,
 		test_subviews: true
+		},
+			UILabel: {
+			accessibility_traits: [64, "You must set accessibility_traits to :static_text"]
 		}
 		}
 
