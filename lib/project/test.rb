@@ -72,7 +72,7 @@ NSLog message
 	end
 		end
 if result&&tests[:test_subviews]
-obj.subviews.each {|view| result=result&&A11y::Test.object(view)}	
+obj.subviews.each {|view| result=result&&A11y::Test.run(view)}	
 end
 	result
 		end
