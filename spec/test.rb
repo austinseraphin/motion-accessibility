@@ -28,6 +28,10 @@ describe "Accessibility::Test" do
 			alert.should.be.accessible
 		end
 
+		it "UICollectionReusableView" do
+			UICollectionReusableView.new.should.be.accessible
+		end
+
 		it "UILabel" do
 			label=UILabel.new
 			label.text="Test"
