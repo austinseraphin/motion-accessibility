@@ -45,5 +45,9 @@ describe "Accessibility::Test" do
 			UIView.new.should.be.accessible
 		end
 
+		it "UIPageControl" do
+			UIPageControl.new.should.be.accessible
+		end
+
 end
 

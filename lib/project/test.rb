@@ -4,7 +4,7 @@ module Accessibility
 		Tests = {
 			NSObject: {
 			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
-			accessibility_traits: [0, "You must set accessibility_trait to :none.accessibility_trait"],
+			accessibility_traits: [UIAccessibilityTraitNone, "You must set accessibility_trait to :none.accessibility_trait"],
 accessibility_value: nil,
 			accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
 				accessibility_activation_point: [CGPoint, "You must set an accessibility_activation_point so VoiceOver knows where to touch."],
@@ -38,7 +38,7 @@ accessibility_elements_hidden: true,
 			accessibility_label: nil,
 			is_accessibility_element: false},
 			UILabel: {
-			accessibility_traits: [64, "You must set accessibility_traits to :static_text"]
+			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
 		},
 			UIDatePicker: {
 			accessibility_label: nil,
@@ -48,6 +48,12 @@ accessibility_elements_hidden: true,
 			_UIDatePickerView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
+		},
+			UIPageControl: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
+			accessibility_traits: UIAccessibilityTraitUpdatesFrequently
 		},
 			UIView: {
 			accessibility_label: nil,
