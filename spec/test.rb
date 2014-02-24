@@ -28,6 +28,12 @@ describe "Accessibility::Test" do
 			alert.should.be.accessible
 		end
 
+		it "UIButton" do
+			button=UIButton.buttonWithType(UIButtonTypeRoundedRect)
+			button.setTitle("Test", forState: UIControlStateNormal)
+			button.should.be.accessible
+		end
+
 		it "UICollectionReusableView" do
 			UICollectionReusableView.new.should.be.accessible
 		end
@@ -38,6 +44,10 @@ describe "Accessibility::Test" do
 			label.should.be.accessible
 		end
 
+		it "UIDatePicker" do
+			picker=UIDatePicker.new
+			picker.should.be.accessible
+		end
 
 end
 
