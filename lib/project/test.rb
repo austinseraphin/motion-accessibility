@@ -60,6 +60,11 @@ accessibility_elements_hidden: true,
 			is_accessibility_element: false,
 			should_group_accessibility_children: true
 		},
+			UISlider: {
+			accessibility_label: nil,
+			accessibility_value: String,
+			accessibility_traits: UIAccessibilityTraitAdjustable
+		},
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false

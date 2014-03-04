@@ -54,14 +54,20 @@ describe "Accessibility::Test" do
 			UIPageControl.new.should.be.accessible
 		end
 
+		it "UIRefreshControl" do
+			UIRefreshControl.new.should.be.accessible
+		end
+
 		it "UISegmentedControl" do
 			seg=UISegmentedControl.alloc.initWithItems(["Test 1", "Test 2","Test 3"])
 								   seg.should.be.accessible
 		end
 
-		it "UIRefreshControl" do
-			UIRefreshControl.new.should.be.accessible
-		end
+it "UISlider" do
+slider=UISlider.new
+slider.value=0.5
+slider.should.be.accessible
+end
 
 		it "UIView" do
 			UIView.new.should.be.accessible
