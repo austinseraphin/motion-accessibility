@@ -25,11 +25,6 @@ accessibility_value: [String, "You must set the accessibility_value to the value
 accessibility_elements_hidden: true,
 		is_accessibility_element: false
 		},
-			UIAlertView: {
-		accessibility_label: nil,
-		is_accessibility_element: false,
-		test_subviews: true
-		},
 			UIButton: {
 			accessibility_traits: UIAccessibilityTraitButton,
 			is_accessibility_element: false
@@ -39,15 +34,6 @@ accessibility_elements_hidden: true,
 			is_accessibility_element: false},
 			UILabel: {
 			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
-		},
-			UIDatePicker: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			test_subviews: true
-		},
-			_UIDatePickerView: {
-			accessibility_label: nil,
-			is_accessibility_element: false
 		},
 			UIImage: {
 			accessibility_label: nil,
