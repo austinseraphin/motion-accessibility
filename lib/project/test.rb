@@ -50,6 +50,16 @@ accessibility_elements_hidden: true,
 			accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
 			accessibility_traits: UIAccessibilityTraitUpdatesFrequently
 		},
+			UISegment: {
+			accessibility_label: String,
+			accessibility_traits: [UIAccessibilityTraitButton, "You must make this a button by setting accessibility_trait to :button"],
+			accessibility_value: String
+		},
+			UISegmentedControl: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			should_group_accessibility_children: true
+		},
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false

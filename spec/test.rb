@@ -30,6 +30,11 @@ describe "Accessibility::Test" do
 			UICollectionReusableView.new.should.be.accessible
 		end
 
+		it "UIDatePicker" do
+			picker=UIDatePicker.new
+			picker.should.be.accessible
+		end
+
 		it "UIImage" do
 			image=UIImage.imageNamed "Default-568h@2x.png"
 			image.should.be.accessible
@@ -39,28 +44,27 @@ describe "Accessibility::Test" do
 			UIImageView.new.should.be.accessible
 		end
 
-
 		it "UILabel" do
 			label=UILabel.new
 			label.text="Test"
 			label.should.be.accessible
 		end
 
-		it "UIDatePicker" do
-			picker=UIDatePicker.new
-			picker.should.be.accessible
-		end
-
-		it "UIView" do
-			UIView.new.should.be.accessible
-		end
-
 		it "UIPageControl" do
 			UIPageControl.new.should.be.accessible
 		end
 
+		it "UISegmentedControl" do
+			seg=UISegmentedControl.alloc.initWithItems(["Test 1", "Test 2","Test 3"])
+								   seg.should.be.accessible
+		end
+
 		it "UIRefreshControl" do
 			UIRefreshControl.new.should.be.accessible
+		end
+
+		it "UIView" do
+			UIView.new.should.be.accessible
 		end
 
 end
