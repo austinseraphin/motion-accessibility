@@ -49,6 +49,10 @@ accessibility_elements_hidden: true,
 			accessibility_label: nil,
 			is_accessibility_element: false
 		},
+			UIImage: {
+			accessibility_label: nil,
+			is_accessibility_element: false
+		},
 			UIPageControl: {
 			accessibility_label: nil,
 			is_accessibility_element: false,
@@ -90,17 +94,19 @@ tests.each do |attribute, test|
 unless value.class==expected
 	result&&=false
 message||="#{attribute} must have an object of type #{expected}"
+message=obj.inspect+": "+message
 NSLog message
 end
 	else
 		unless expected==value
 result&&=false
 message||="#{attribute} must have the value #{expected}"
+message=obj.inspect+": "+message
 NSLog message
 		end
 	end
 		end
-if result&&tests[:test_subviews]
+if result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run(view)}	
 end
 	result

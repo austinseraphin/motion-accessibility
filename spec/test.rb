@@ -30,6 +30,11 @@ describe "Accessibility::Test" do
 			UICollectionReusableView.new.should.be.accessible
 		end
 
+		it "UIImage" do
+			image=UIImage.imageNamed "Default-568h@2x.png"
+			image.should.be.accessible
+		end
+
 		it "UILabel" do
 			label=UILabel.new
 			label.text="Test"
@@ -47,6 +52,10 @@ describe "Accessibility::Test" do
 
 		it "UIPageControl" do
 			UIPageControl.new.should.be.accessible
+		end
+
+		it "UIRefreshControl" do
+			UIRefreshControl.new.should.be.accessible
 		end
 
 end
