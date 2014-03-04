@@ -53,6 +53,11 @@ accessibility_elements_hidden: true,
 			accessibility_label: nil,
 			is_accessibility_element: false
 		},
+			UIImageView: {
+			accessibility_label: nil,
+			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
+		is_accessibility_element: false
+		},
 			UIPageControl: {
 			accessibility_label: nil,
 			is_accessibility_element: false,

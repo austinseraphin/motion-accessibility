@@ -35,6 +35,11 @@ describe "Accessibility::Test" do
 			image.should.be.accessible
 		end
 
+		it "UIImageView" do
+			UIImageView.new.should.be.accessible
+		end
+
+
 		it "UILabel" do
 			label=UILabel.new
 			label.text="Test"
