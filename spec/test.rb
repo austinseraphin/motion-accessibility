@@ -59,7 +59,7 @@ describe "Accessibility::Test" do
 		end
 
 		it "UISegmentedControl" do
-			seg=UISegmentedControl.alloc.initWithItems(["Test 1", "Test 2","Test 3"])
+			seg=UISegmentedControl.alloc.initWithItems(["1","2","3"])
 								   seg.should.be.accessible
 		end
 
@@ -67,6 +67,11 @@ it "UISlider" do
 slider=UISlider.new
 slider.value=0.5
 slider.should.be.accessible
+end
+
+it "UIStepper" do
+	stepper=UIStepper.new
+	stepper.should.be.accessible
 end
 
 		it "UIView" do

@@ -65,6 +65,10 @@ accessibility_elements_hidden: true,
 			accessibility_value: String,
 			accessibility_traits: UIAccessibilityTraitAdjustable
 		},
+			_UIStepperButton: {
+			accessibility_traits: ->(trait) {trait==UIAccessibilityTraitButton||trait==UIAccessibilityTraitButton|UIAccessibilityTraitNotEnabled},
+		is_accessibility_element: false
+		},
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
@@ -86,7 +90,6 @@ obj_tests
 			tests=self.object(obj)
 result=true
 tests.each do |attribute, test|
-	next if attribute=~/test/
 	if test.kind_of?(Array)
 	(expected, message)=test
 	else
@@ -103,6 +106,14 @@ message||="#{attribute} must have an object of type #{expected}"
 message=obj.inspect+": "+message
 NSLog message
 end
+	elsif expected.kind_of?(Proc)
+		r=expected.call(value)
+		result=result&&r
+		unless r
+			message||="The test function for #{attribute} failed."
+			message=obj.inspect+": "+message
+			NSLog message
+		end
 	else
 		unless expected==value
 result&&=false
