@@ -74,6 +74,14 @@ it "UIStepper" do
 	stepper.should.be.accessible
 end
 
+it "UISwitch" do
+	switch=UISwitch.new
+	switch.on=true
+	switch.should.be.accessible
+	switch.on=false
+	switch.should.be.accessible
+end
+
 		it "UIView" do
 			UIView.new.should.be.accessible
 		end

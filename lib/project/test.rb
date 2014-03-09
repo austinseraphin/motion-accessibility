@@ -66,9 +66,17 @@ accessibility_elements_hidden: true,
 			accessibility_traits: UIAccessibilityTraitAdjustable
 		},
 			_UIStepperButton: {
-			accessibility_traits: ->(trait) {trait==UIAccessibilityTraitButton||trait==UIAccessibilityTraitButton|UIAccessibilityTraitNotEnabled},
+			accessibility_traits: [->(trait) {trait==UIAccessibilityTraitButton||trait==UIAccessibilityTraitButton|UIAccessibilityTraitNotEnabled},
+				"You must set the accessibility_traits to either :adjustable or :adjustable, :not_enabled"],
 		is_accessibility_element: false
 		},
+			UISwitch: {
+			accessibility_label: nil,
+			accessibility_traits: [->(t) {t&UIAccessibilityTraitButton>0},
+				"You must set the accessibility_trait to :button"],
+				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
+		},
+
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
