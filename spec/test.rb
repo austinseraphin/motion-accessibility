@@ -82,6 +82,12 @@ it "UISwitch" do
 	switch.should.be.accessible
 end
 
+it "UITextField" do
+	textfield=UITextField.new
+	textfield.text="Test"
+	textfield.should.be.accessible
+end
+
 		it "UIView" do
 			UIView.new.should.be.accessible
 		end

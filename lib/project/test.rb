@@ -72,7 +72,7 @@ accessibility_elements_hidden: true,
 		},
 			UISwitch: {
 			accessibility_label: nil,
-			accessibility_traits: [->(t) {t&UIAccessibilityTraitButton>0},
+			accessibility_traits: [->(t){t>65536||t==UIAccessibilityTraitButton},
 				"You must set the accessibility_trait to :button"],
 				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 		},
