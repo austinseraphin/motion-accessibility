@@ -1,7 +1,7 @@
 module Accessibility
 	module Test
 
-		Tests = {
+		Standard_Tests = {
 			NSObject: {
 			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
 			accessibility_traits: [UIAccessibilityTraitNone, "You must set accessibility_trait to :none.accessibility_trait"],
@@ -83,19 +83,26 @@ accessibility_elements_hidden: true,
 		}
 		}
 
-		def self.object(obj)
-			obj_tests=A11y::Test::Tests[:NSObject].clone
+		Custom_Tests = {
+		}
+
+		def self.find_tests(obj)
+			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
 cl=obj.class
-cl=cl.superclass until Tests[cl.to_s.to_sym]
-cl=cl.to_s.to_sym
-			Tests[cl].each do |attribute, test|
+class_name=cl.to_s.to_sym
+until Standard_Tests[class_name]||Custom_Tests[class_name] do
+	cl=cl.superclass
+class_name=cl.to_s.to_sym
+end
+t=Standard_Tests[class_name]||Custom_Tests[class_name]
+			t.each do |attribute, test|
 				obj_tests[attribute]=test
 			end
 obj_tests
 		end
 
 		def self.run(obj)
-			tests=self.object(obj)
+			tests=self.find_tests(obj)
 result=true
 tests.each do |attribute, test|
 	if test.kind_of?(Array)

@@ -1,8 +1,8 @@
 describe "Accessibility::Test" do
 
-	it "object" do
-		A11y::Test.object(UIView.new).class.should.equal(Hash)
-		A11y::Test.object(UIActionSheet.new)[:accessibility_label].should.be.nil
+	it "find_tests" do
+		A11y::Test.find_tests(UIView.new).class.should.equal(Hash)
+		A11y::Test.find_tests(UIActionSheet.new)[:accessibility_label].should.be.nil
 	end
 
 	it "UIActionSheet" do
