@@ -2,6 +2,7 @@ describe "Accessibility::Test" do
 
 	it "find_tests" do
 		A11y::Test.find_tests(UIView.new).class.should.equal(Hash)
+		A11y::Test.find_tests(UIView).class.should.equal(Hash)
 		A11y::Test.find_tests(UIActionSheet.new)[:accessibility_label].should.be.nil
 	end
 
@@ -12,7 +13,7 @@ describe "Accessibility::Test" do
 
 	it "UIActivityIndicatorView" do
 		indicator=UIActivityIndicatorView.new
-		indicator.should.be.accessible?
+		indicator.should.be.accessible
 	end
 
 		it "UIAlertView" do
@@ -60,7 +61,7 @@ describe "Accessibility::Test" do
 
 		it "UISegmentedControl" do
 			seg=UISegmentedControl.alloc.initWithItems(["1","2","3"])
-								   seg.should.be.accessible
+seg.should.be.accessible
 		end
 
 it "UISlider" do

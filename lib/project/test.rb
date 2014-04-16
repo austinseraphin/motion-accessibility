@@ -86,23 +86,32 @@ accessibility_elements_hidden: true,
 		Custom_Tests = {
 		}
 
-		def self.find_tests(obj)
+		def self.find_tests(obj, accessibility_test=nil)
 			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
 cl=obj.class
 class_name=cl.to_s.to_sym
-until Standard_Tests[class_name]||Custom_Tests[class_name] do
+if accessibility_test
+	tests=self::Custom_Tests[class_name]||self::Standard_Tests[class_name]
+else
+	tests=self::Standard_Tests[class_name]
+end
+until tests do
 	cl=cl.superclass
 class_name=cl.to_s.to_sym
+if accessibility_test
+	tests=self::Custom_Tests[class_name]||self::Standard_Tests[class_name]
+else
+	tests=self::Standard_Tests[class_name]
 end
-t=Standard_Tests[class_name]||Custom_Tests[class_name]
-			t.each do |attribute, test|
+end
+			tests.each do |attribute, test|
 				obj_tests[attribute]=test
 			end
 obj_tests
 		end
 
-		def self.run(obj)
-			tests=self.find_tests(obj)
+		def self.run(obj, accessibility_test=nil)
+			tests=self.find_tests(obj, accessibility_test)
 result=true
 tests.each do |attribute, test|
 	if test.kind_of?(Array)
