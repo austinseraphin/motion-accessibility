@@ -4,6 +4,9 @@ describe "Accessibility::Test" do
 		A11y::Test.find_tests(UIView.new).class.should.equal(Hash)
 		A11y::Test.find_tests(UIView).class.should.equal(Hash)
 		A11y::Test.find_tests(UIActionSheet.new)[:accessibility_label].should.be.nil
+		custom=A11y::Test.find_tests(UIView.new, UIView)
+			custom.class.should.equal Hash
+			custom[:is_accessibility_element].should.not.be.nil
 	end
 
 	it "UIActionSheet" do

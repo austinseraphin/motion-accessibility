@@ -84,6 +84,8 @@ accessibility_elements_hidden: true,
 		}
 
 		Custom_Tests = {
+			accessibility_label: [true, "Set the accessibility_label to tell VoiceOver what to say."],
+			is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
 		}
 
 		def self.find_tests(obj, accessibility_test=nil)
