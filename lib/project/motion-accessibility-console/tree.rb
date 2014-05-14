@@ -27,6 +27,12 @@ self.subviews.each_index {|index| return false unless self.subviews[index]==othe
 return true
 end
 
+def [](n)
+	a=[@view]
+	a+=@subviews if @subviews
+	a[n]
+end
+
 def browsable_nodes
 nodes=[@superview]
 if @subviews

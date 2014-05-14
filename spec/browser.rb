@@ -50,4 +50,9 @@ other.subviews.pop
 @tree.should.not==other
 end
 
+it "#[]" do
+	@tree[0].should==@tree.view
+	@tree[1].should==@tree.subviews[0]
+end
+
 end
