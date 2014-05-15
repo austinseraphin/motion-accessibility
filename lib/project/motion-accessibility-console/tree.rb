@@ -86,7 +86,8 @@ display.join(" ")
 end
 
 def self.accessible_view?(view)
-return view.accessibility_element?||view.accessibility_label||view.accessibility_value||view.accessibility_traits
+result= view.accessibility_element?||view.accessibility_label||view.accessibility_value||view.accessibility_traits
+(result)?true:false
 end
 
 def self.ignore_view?(view)
