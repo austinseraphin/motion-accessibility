@@ -35,10 +35,6 @@ accessibility_elements_hidden: true,
 			UILabel: {
 			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
 		},
-			UIImage: {
-			accessibility_label: nil,
-			is_accessibility_element: false
-		},
 			UIImageView: {
 			accessibility_label: nil,
 			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
@@ -76,7 +72,9 @@ accessibility_elements_hidden: true,
 				"You must set the accessibility_trait to :button"],
 				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 		},
-
+UITextField: {
+			accessibility_value: [->(value) {value}, "You must set the text of the textfield."]
+		},
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false

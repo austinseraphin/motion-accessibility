@@ -41,7 +41,7 @@ describe "Accessibility::Test" do
 
 		it "UIImage" do
 			image=UIImage.imageNamed "Default-568h@2x.png"
-			image.should.be.accessible
+			image.should.not.be.accessible
 		end
 
 		it "UIImageView" do
@@ -88,6 +88,7 @@ end
 
 it "UITextField" do
 	textfield=UITextField.new
+	textfield.should.not.be.accessible
 	textfield.text="Test"
 	textfield.should.be.accessible
 end

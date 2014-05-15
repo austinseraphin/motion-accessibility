@@ -51,6 +51,7 @@ self
 end
 
 def inspect_accessibility_traits
+	return accessibility_traits if accessibility_traits>Accessibility::Traits.values.max
 traits=[]
 Accessibility::Traits.each do |trait, bitmask|
 if self.accessibility_traits&bitmask>0
