@@ -84,9 +84,13 @@ accessibility_elements_hidden: true,
 		}
 
 		Custom_Tests = {
+			UIView: {
 			accessibility_label: [true, "Set the accessibility_label to tell VoiceOver what to say."],
 			is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
 		}
+		}
+
+		Messages=Array.new
 
 		def self.find_tests(obj, accessibility_test=nil)
 			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
@@ -113,6 +117,7 @@ obj_tests
 		end
 
 		def self.run(obj, accessibility_test=nil)
+			Messages.clear
 			tests=self.find_tests(obj, accessibility_test)
 result=true
 tests.each do |attribute, test|
@@ -130,7 +135,7 @@ unless value.class==expected
 	result&&=false
 message||="#{attribute} must have an object of type #{expected}"
 message=obj.inspect+": "+message
-NSLog message
+Messages<<message
 end
 	elsif expected.kind_of?(Proc)
 		r=expected.call(value)
@@ -138,14 +143,14 @@ end
 		unless r
 			message||="The test function for #{attribute} failed."
 			message=obj.inspect+": "+message
-			NSLog message
+			Messages<<message
 		end
 	else
 		unless expected==value
 result&&=false
 message||="#{attribute} must have the value #{expected}"
 message=obj.inspect+": "+message
-NSLog message
+Messages<<message
 		end
 	end
 		end
@@ -156,6 +161,13 @@ end
 		end
 
 	end
+
+def self.doctor(view=nil)
+view.accessible? if view
+	A11y::Test::Messages.each {|message| NSLog(message)}
+	A11y::Test::Messages.empty?
+end
+
 end
 
 	class NSObject
