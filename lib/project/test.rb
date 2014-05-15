@@ -73,7 +73,10 @@ accessibility_elements_hidden: true,
 				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 		},
 UITextField: {
-			accessibility_value: [->(value) {value}, "You must set the text of the textfield."]
+			accessibility_label: nil,
+			accessibility_traits: [262144, "Apple has this set to a non-standard value."],
+			accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
+		is_accessibility_element: false
 		},
 			UIView: {
 			accessibility_label: nil,
@@ -137,8 +140,10 @@ Messages<<message
 end
 	elsif expected.kind_of?(Proc)
 		r=expected.call(value)
-		result=result&&r
-		unless r
+		if r
+			result&=true
+		else 
+			result&=false
 			message||="The test function for #{attribute} failed."
 			message=obj.inspect+": "+message
 			Messages<<message

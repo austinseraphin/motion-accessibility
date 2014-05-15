@@ -88,7 +88,6 @@ end
 
 it "UITextField" do
 	textfield=UITextField.new
-	textfield.should.not.be.accessible
 	textfield.text="Test"
 	textfield.should.be.accessible
 end
