@@ -93,11 +93,11 @@ UITextField: {
 
 		Messages=Array.new
 
-		def self.find_tests(obj, accessibility_test=nil)
+		def self.find_tests(obj)
 			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
 cl=obj.class
 class_name=cl.to_s.to_sym
-if accessibility_test
+if obj.accessibility_test
 	tests=self::Custom_Tests[class_name]||self::Standard_Tests[class_name]
 else
 	tests=self::Standard_Tests[class_name]
@@ -117,9 +117,9 @@ end
 obj_tests
 		end
 
-		def self.run(obj, accessibility_test=nil)
+		def self.run(obj)
 			Messages.clear
-			tests=self.find_tests(obj, accessibility_test)
+			tests=self.find_tests(obj)
 result=true
 tests.each do |attribute, test|
 	if test.kind_of?(Array)
@@ -174,6 +174,18 @@ end
 end
 
 	class NSObject
+
+		attr_reader :accessibility_test
+
+		def accessibility_test=(test)
+			test=test.to_s.to_sym unless test.kind_of?(Symbol)
+if A11y::Test::Custom_Tests[test]
+	@accessibility_test=test
+	true
+else
+	false
+end
+		end
 
 		def accessible?
 			A11y::Test.run(self)
