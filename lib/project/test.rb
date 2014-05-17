@@ -1,6 +1,10 @@
 module Accessibility
 	module Test
 
+		Options = {
+			recurse: true
+		}
+
 		Standard_Tests = {
 			NSObject: {
 			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
@@ -28,18 +32,31 @@ accessibility_elements_hidden: true,
 			UIButton: {
 			accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
 			accessibility_traits: UIAccessibilityTraitButton,
-			is_accessibility_element: false
 		},
 			UICollectionReusableView: {
 			accessibility_label: nil,
 			is_accessibility_element: false},
+			UIImageView: {
+			accessibility_label: nil,
+			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
+		is_accessibility_element: false
+		},
 			UILabel: {
 			accessibility_label: [String, "You must set the accessibility_label. You can use the text method to do this."],
 			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
 		},
-			UIImageView: {
+			UINavigationBar: {
+accessibility_label: nil,
+accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+accessibility_elements_hidden: false,
+should_group_accessibility_children: true,
+accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
+is_accessibility_element: false
+		},
+			_UINavigationBarBackground: {
 			accessibility_label: nil,
-			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
+			accessibility_traits: UIAccessibilityTraitImage,
+			accessibility_elements_hidden: true,
 		is_accessibility_element: false
 		},
 			UIPageControl: {
@@ -119,7 +136,7 @@ end
 obj_tests
 		end
 
-		def self.run(obj)
+		def self.run_tests(obj)
 			Messages.clear
 			tests=self.find_tests(obj)
 result=true
@@ -160,7 +177,7 @@ Messages<<message
 	end
 		end
 if result&&obj.respond_to?(:subviews)&&obj.subviews
-obj.subviews.each {|view| result=result&&A11y::Test.run(view)}	
+obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end
 	result
 		end
@@ -186,7 +203,7 @@ end
 		end
 
 		def accessible?
-			A11y::Test.run(self)
+			A11y::Test.run_tests(self)
 		end
 
 	end
