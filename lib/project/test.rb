@@ -136,46 +136,50 @@ end
 obj_tests
 		end
 
-		def self.run_tests(obj)
-			Messages.clear
-			tests=self.find_tests(obj)
-result=true
-tests.each do |attribute, test|
-	if test.kind_of?(Array)
-	(expected, message)=test
-	else
-		expected=test
-	end
-	unless obj.respond_to?(attribute)
-		raise "Unknown method #{attribute}"
-	end
-	value=obj.send(attribute)
+		def self.run_test(obj, attribute, expected, message=nil)
+	value=obj.send(attribute) if obj.respond_to?(attribute)
+	result=true
 	if expected.class==Class
-unless value.class==expected
-	result&&=false
+if value.class!=expected
+	result=false
 message||="#{attribute} must have an object of type #{expected}"
 message=obj.inspect+": "+message
 Messages<<message
 end
 	elsif expected.kind_of?(Proc)
 		r=expected.call(value)
-		if r
-			result&=true
-		else 
-			result&=false
+		unless r
+			result=false
 			message||="The test function for #{attribute} failed."
 			message=obj.inspect+": "+message
 			Messages<<message
 		end
 	else
 		unless expected==value
-result&&=false
+result=false
 message||="#{attribute} must have the value #{expected}"
 message=obj.inspect+": "+message
 Messages<<message
 		end
 	end
+	result
 		end
+
+		def self.run_tests(obj)
+			Messages.clear
+			tests=self.find_tests(obj)
+	tests[:options]||={}
+	tests[:options]=self::Options.merge(tests[:options])
+result=true
+tests.each do |attribute, test|
+	next if attribute==:options
+	if test.kind_of?(Array)
+	(expected, message)=test
+	result=result&&self.run_test(obj, attribute, expected, message)
+	else
+	result=result&&self.run_test(obj, attribute, test)
+	end
+end
 if result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end
