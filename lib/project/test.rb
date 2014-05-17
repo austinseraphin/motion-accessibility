@@ -54,12 +54,6 @@ accessibility_identifier: [String, "You must set the accessibility_identifier to
 is_accessibility_element: false,
 options: {recurse: false}
 		},
-			_UINavigationBarBackground: {
-			accessibility_label: nil,
-			accessibility_traits: UIAccessibilityTraitImage,
-			accessibility_elements_hidden: true,
-		is_accessibility_element: false
-		},
 			UIPageControl: {
 			accessibility_label: nil,
 			is_accessibility_element: false,
@@ -79,12 +73,13 @@ options: {recurse: false}
 			UISlider: {
 			accessibility_label: nil,
 			accessibility_value: String,
-			accessibility_traits: UIAccessibilityTraitAdjustable
+			accessibility_traits: UIAccessibilityTraitAdjustable,
+		options: {recurse: false}
 		},
-			_UIStepperButton: {
-			accessibility_traits: [->(trait) {trait==UIAccessibilityTraitButton||trait==UIAccessibilityTraitButton|UIAccessibilityTraitNotEnabled},
-				"You must set the accessibility_traits to either :adjustable or :adjustable, :not_enabled"],
-		is_accessibility_element: false
+			UIStepper: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+		options: {recurse: false}
 		},
 			UISwitch: {
 			accessibility_label: nil,
