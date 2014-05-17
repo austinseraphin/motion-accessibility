@@ -178,6 +178,7 @@ end
 		attr_reader :accessibility_test
 
 		def accessibility_test=(t)
+			t=t.to_s.to_sym if t.kind_of?(Class)
 			@accessibility_test=t if A11y::Test::Custom_Tests[t]||A11y::Test::Standard_Tests[t]
 			@accessibility_test
 		end
