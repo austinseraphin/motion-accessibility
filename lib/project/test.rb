@@ -26,6 +26,7 @@ accessibility_elements_hidden: true,
 		is_accessibility_element: false
 		},
 			UIButton: {
+			accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
 			accessibility_traits: UIAccessibilityTraitButton,
 			is_accessibility_element: false
 		},
@@ -33,6 +34,7 @@ accessibility_elements_hidden: true,
 			accessibility_label: nil,
 			is_accessibility_element: false},
 			UILabel: {
+			accessibility_label: [String, "You must set the accessibility_label. You can use the text method to do this."],
 			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
 		},
 			UIImageView: {
@@ -74,7 +76,7 @@ accessibility_elements_hidden: true,
 		},
 UITextField: {
 			accessibility_label: nil,
-			accessibility_traits: [262144, "Apple has this set to a non-standard value."],
+			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
 			accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
 		is_accessibility_element: false
 		},
