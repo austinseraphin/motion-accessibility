@@ -177,14 +177,9 @@ end
 
 		attr_reader :accessibility_test
 
-		def accessibility_test=(test)
-			test=test.to_s.to_sym unless test.kind_of?(Symbol)
-if A11y::Test::Custom_Tests[test]
-	@accessibility_test=test
-	true
-else
-	false
-end
+		def accessibility_test=(t)
+			@accessibility_test=t if A11y::Test::Custom_Tests[t]
+			@accessibility_test
 		end
 
 		def accessible?

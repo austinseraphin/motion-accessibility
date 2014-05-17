@@ -13,6 +13,7 @@ next if displayed.member?(ios)
 self.inspect_accessibility_attribute(ios)
 displayed<<ios
 end
+puts "Accessibility test: "+self.accessibility_test if self.accessibility_test
 puts "Accessible: "+self.accessible?.to_s
 A11y.doctor
 nil
