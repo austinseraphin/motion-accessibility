@@ -178,7 +178,7 @@ end
 		attr_reader :accessibility_test
 
 		def accessibility_test=(t)
-			@accessibility_test=t if A11y::Test::Custom_Tests[t]
+			@accessibility_test=t if A11y::Test::Custom_Tests[t]||A11y::Test::Standard_Tests[t]
 			@accessibility_test
 		end
 
