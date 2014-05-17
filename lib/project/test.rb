@@ -51,7 +51,8 @@ accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
 accessibility_elements_hidden: false,
 should_group_accessibility_children: true,
 accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
-is_accessibility_element: false
+is_accessibility_element: false,
+options: {recurse: false}
 		},
 			_UINavigationBarBackground: {
 			accessibility_label: nil,
@@ -180,7 +181,7 @@ tests.each do |attribute, test|
 	result=result&&self.run_test(obj, attribute, test)
 	end
 end
-if result&&obj.respond_to?(:subviews)&&obj.subviews
+if tests[:options][:recurse]&&result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end
 	result
