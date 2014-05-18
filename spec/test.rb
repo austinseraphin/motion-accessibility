@@ -106,6 +106,11 @@ def pickerView(view, numberOfRowsInComponent: component)
 10
 end
 
+it "UIProgressView" do
+	progress=UIProgressView.alloc.initWithProgressViewStyle(0)
+		progress.frame=CGRect.new([0,0],[100,100])
+	progress.should.be.accessible
+end
 
 		it "UIRefreshControl" do
 			refresh=UIRefreshControl.new

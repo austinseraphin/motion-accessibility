@@ -75,6 +75,12 @@ options: {recurse: false}
 			test: :pickerView
 		}
 		},
+			UIProgressView: {
+			accessibility_label: String,
+		accessibility_traits: UIAccessibilityTraitUpdatesFrequently,
+		accessibility_value: [String, "The accessibility_value should contain a textual representation of the progress, for instance \"50%\""],
+		is_accessibility_element: false
+		},
 			UISegment: {
 			accessibility_label: String,
 			accessibility_traits: [UIAccessibilityTraitButton, "You must make this a button by setting accessibility_trait to :button"],
@@ -169,7 +175,7 @@ obj_tests
 	if expected.class==Class
 if value.class!=expected
 	result=false
-message||="#{attribute} must have an object of type #{expected}"
+message||="#{attribute} must have an object of type #{expected} instead of #{value}"
 message=obj.inspect+": "+message
 Messages<<message
 end
@@ -184,7 +190,7 @@ end
 	else
 		unless expected==value
 result=false
-message||="#{attribute} must have the value #{expected}"
+message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value}\""
 message=obj.inspect+": "+message
 Messages<<message
 		end
