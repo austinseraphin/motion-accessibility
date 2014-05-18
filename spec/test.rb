@@ -160,6 +160,12 @@ it "UISwitch" do
 	switch.should.be.accessible
 end
 
+it "UITabBar" do
+	tab=UITabBar.new
+	A11y.doctor tab
+	tab.should.be.accessible
+end
+
 it "UITextField" do
 	textfield=UITextField.new
 		textfield.frame=CGRect.new([0,0],[100,100])

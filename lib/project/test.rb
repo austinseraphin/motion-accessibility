@@ -108,6 +108,12 @@ options: {recurse: false}
 				"You must set the accessibility_trait to :button"],
 				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 		},
+			UITabBar: {
+			accessibility_label: nil,
+			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+		should_group_accessibility_children: true,
+		is_accessibility_element: false
+		},
 UITextField: {
 			accessibility_label: nil,
 			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
