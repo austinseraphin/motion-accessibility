@@ -114,6 +114,15 @@ options: {recurse: false}
 		should_group_accessibility_children: true,
 		is_accessibility_element: false
 		},
+			UITabBarButton: {
+			accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
+		accessibility_traits: Fixnum
+		},
+			UITabBarItem: {
+			title: [String, "Set the title to tell VoiceOver what to say."],
+			accessibility_label: nil,
+			is_accessibility_element: false
+		},
 UITextField: {
 			accessibility_label: nil,
 			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],

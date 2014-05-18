@@ -162,6 +162,10 @@ end
 
 it "UITabBar" do
 	tab=UITabBar.new
+	item=UITabBarItem.alloc.initWithTitle("Test", image: nil, tag: 1)
+	A11y.doctor item
+	item.should.be.accessible
+	tab.setItems([item], animated: false)
 	A11y.doctor tab
 	tab.should.be.accessible
 end
