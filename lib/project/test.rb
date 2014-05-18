@@ -176,6 +176,7 @@ tests.each do |attribute, test|
 	result=result&&self.run_test(obj, attribute, test)
 	end
 end
+result=result&&self.send(tests[:options][:test])  if tests[:options][:test]&&self.respond_to?(tests[:options][:test])
 if tests[:options][:recurse]&&result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end

@@ -86,6 +86,27 @@ test_nav.navigationBar.should.be.accessible
 			page.should.be.accessible
 		end
 
+it "UIPickerView" do
+picker=UIPickerView.new
+picker.delegate=self
+picker.dataSource=self
+picker.should.be.accessible
+A11y.doctor
+end
+
+def numberOfComponentsInPickerView(view)
+1
+end
+
+def pickerView(view, titleForRow: row, forComponent: component)
+"Row #{row.to_s}"
+end
+
+def pickerView(view, numberOfRowsInComponent: component)
+10
+end
+
+
 		it "UIRefreshControl" do
 			refresh=UIRefreshControl.new
 		refresh.frame=CGRect.new([0,0],[100,100])
