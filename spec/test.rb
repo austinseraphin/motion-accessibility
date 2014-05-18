@@ -106,6 +106,10 @@ def pickerView(view, numberOfRowsInComponent: component)
 10
 end
 
+it "UIPopoverBackgroundView" do
+	UIPopoverBackgroundView.new.should.be.accessible
+end
+
 it "UIProgressView" do
 	progress=UIProgressView.alloc.initWithProgressViewStyle(0)
 		progress.frame=CGRect.new([0,0],[100,100])
@@ -116,6 +120,16 @@ end
 			refresh=UIRefreshControl.new
 		refresh.frame=CGRect.new([0,0],[100,100])
 			refresh.should.be.accessible
+		end
+
+		it "UIScrollView" do
+			scroll=UIScrollView.new
+		scroll.frame=CGRect.new([0,0],[100,100])
+			scroll.should.be.accessible
+		end
+
+		it "UISearchBar" do
+			UISearchBar.new.should.be.accessible
 		end
 
 		it "UISegmentedControl" do
