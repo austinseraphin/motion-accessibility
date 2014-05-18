@@ -90,8 +90,8 @@ it "UIPickerView" do
 picker=UIPickerView.new
 picker.delegate=self
 picker.dataSource=self
+A11y.doctor(picker)
 picker.should.be.accessible
-A11y.doctor
 end
 
 def numberOfComponentsInPickerView(view)

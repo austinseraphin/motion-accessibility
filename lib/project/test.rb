@@ -36,6 +36,13 @@ accessibility_elements_hidden: true,
 			UICollectionReusableView: {
 			accessibility_label: nil,
 			is_accessibility_element: false},
+			UIDatePicker: {
+accessibility_label: nil,
+			is_accessibility_element: false,
+options: {
+			recurse: false
+		}
+		},
 			UIImageView: {
 			accessibility_label: nil,
 			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
@@ -59,6 +66,14 @@ options: {recurse: false}
 			is_accessibility_element: false,
 			accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
 			accessibility_traits: UIAccessibilityTraitUpdatesFrequently
+		},
+			UIPickerView: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			options: {
+			recurse: false,
+			test: :pickerView
+		}
 		},
 			UISegment: {
 			accessibility_label: String,
@@ -107,6 +122,22 @@ UITextField: {
 		}
 
 		Messages=Array.new
+
+		def self.pickerView(picker)
+			result=true
+picker.numberOfComponents.times do |component|
+picker.numberOfRowsInComponent(component).times do |row|
+title=picker.delegate.pickerView(view, titleForRow: row, forComponent: component)
+view=picker.	viewForRow(row, forComponent: component)
+if !title&&!view.accessible?
+	NSLog(picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")
+	A11y.doctor
+	result=false
+end
+end
+end
+			      result
+		end
 
 		def self.find_tests(obj)
 			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
@@ -176,7 +207,8 @@ tests.each do |attribute, test|
 	result=result&&self.run_test(obj, attribute, test)
 	end
 end
-result=result&&self.send(tests[:options][:test])  if tests[:options][:test]&&self.respond_to?(tests[:options][:test])
+after=tests[:options][:test]
+self.send(after, obj) if after&&self.respond_to?(after)
 if tests[:options][:recurse]&&result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end
