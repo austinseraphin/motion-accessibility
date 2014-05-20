@@ -32,7 +32,7 @@ accessibility_elements_hidden: true,
 			UIBarItem: {
 			title: [String, "Set the title to tell VoiceOver what to say."],
 			accessibility_label: nil,
-			is_accessibility_element: false
+			is_accessibility_element: false,
 		},
 			UIButton: {
 			accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
@@ -64,7 +64,10 @@ accessibility_elements_hidden: false,
 should_group_accessibility_children: true,
 accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
 is_accessibility_element: false,
-options: {recurse: false}
+options: {
+			recurse: false,
+		test: :bar
+		}
 		},
 			UIPageControl: {
 			accessibility_label: nil,
@@ -117,7 +120,10 @@ options: {recurse: false}
 			accessibility_label: nil,
 			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
 		should_group_accessibility_children: true,
-		is_accessibility_element: false
+		is_accessibility_element: false,
+		options: {
+			test: :bar
+		}
 		},
 			UITabBarButton: {
 			accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
@@ -161,6 +167,12 @@ UITableViewHeaderFooterView: {
 		}
 
 		Messages=Array.new
+
+		def self.bar(obj)
+			result=true
+			obj.items {|item| result=result&&item.accessible?}
+			result
+		end
 
 		def self.pickerView(picker)
 			result=true
