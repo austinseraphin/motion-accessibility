@@ -171,6 +171,12 @@ it "UITabBar" do
 	tab.should.be.accessible
 end
 
+it "UITableView" do
+	controller=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
+	A11y.doctor controller.view
+	controller.view.should.be.accessible
+end
+
 it "UITextField" do
 	textfield=UITextField.new
 		textfield.frame=CGRect.new([0,0],[100,100])

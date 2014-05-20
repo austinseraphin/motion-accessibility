@@ -123,6 +123,21 @@ options: {recurse: false}
 			accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
 		accessibility_traits: Fixnum
 		},
+			UITableView: {
+			accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
+			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+			should_group_accessibility_children: true,
+			is_accessibility_element: false
+		},
+			UITableViewCell: {
+			accessibility_label: :ignore,
+			accessibility_value: :ignore,
+			is_accessibility_element: false,
+			options: {
+			recurse: false,
+			test: :tableViewCell
+		}
+		},
 UITextField: {
 			accessibility_label: nil,
 			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
@@ -160,6 +175,12 @@ end
 			      result
 		end
 
+		def self.tableViewCell(cell)
+			return true if cell.accessibility_label||cell.textLabel.text
+			NSLog("Please set the accessibility_label of the UITableViewCell. You can do this by setting the textLabel.text property.")
+			false
+		end
+
 		def self.find_tests(obj)
 			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
 cl=obj.class
@@ -185,6 +206,7 @@ obj_tests
 		end
 
 		def self.run_test(obj, attribute, expected, message=nil)
+			return true if expected==:ignore
 	value=obj.send(attribute) if obj.respond_to?(attribute)
 	result=true
 	if expected.class==Class
