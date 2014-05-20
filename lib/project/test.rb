@@ -169,6 +169,29 @@ UITableViewHeaderFooterView: {
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
+		},
+			UIViewController: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			options: {
+			test: :viewController
+		}
+		},
+		UIWebView: {
+			accessibility_label: nil,
+			is_accessibility_element: false,
+			options: {
+			recurse: false
+		}
+		},
+		UIWindow: {
+			accessibility_label: nil,
+			accessibility_elements_hidden: true,
+			is_accessibility_element: false,
+			options: {
+			recurse: false,
+			test: :window
+		}
 		}
 		}
 
@@ -207,6 +230,14 @@ end
 			return true if cell.accessibility_label||cell.textLabel.text
 			NSLog("Please set the accessibility_label of the UITableViewCell. You can do this by setting the textLabel.text property.")
 			false
+		end
+
+		def self.viewController(controller)
+			controller.view.accessible?
+		end
+
+		def self.window(window)
+			window.rootViewController.accessible?
 		end
 
 		def self.find_tests(obj)
@@ -279,7 +310,7 @@ tests.each do |attribute, test|
 	end
 end
 after=tests[:options][:test]
-self.send(after, obj) if after&&self.respond_to?(after)
+result=result&&self.send(after, obj) if after&&self.respond_to?(after)
 if tests[:options][:recurse]&&result&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 end

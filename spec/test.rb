@@ -199,7 +199,6 @@ it "UIToolbar" do
 	item=UIBarButtonItem.alloc.initWithTitle("Test", style: 0, target: self, action: 'tap_button')
 	toolbar=UIToolbar.new
 	toolbar.items=[item]
-	A11y.doctor toolbar
 	toolbar.should.be.accessible
 end
 
@@ -207,6 +206,18 @@ end
 			view=UIView.new
 		view.frame=CGRect.new([0,0],[100,100])
 			view.should.be.accessible
+		end
+
+		it "UIWebView" do
+			web=UIWebView.new
+			web.should.be.accessible
+		end
+
+		it "UIWindow" do
+			window=UIWindow.new
+			window.rootViewController=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
+			A11y.doctor window
+			window.should.be.accessible
 		end
 
 end
