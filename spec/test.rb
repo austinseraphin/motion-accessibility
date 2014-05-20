@@ -195,6 +195,14 @@ it "UITextField" do
 	textfield.should.be.accessible
 end
 
+it "UIToolbar" do
+	item=UIBarButtonItem.alloc.initWithTitle("Test", style: 0, target: self, action: 'tap_button')
+	toolbar=UIToolbar.new
+	toolbar.items=[item]
+	A11y.doctor toolbar
+	toolbar.should.be.accessible
+end
+
 		it "UIView" do
 			view=UIView.new
 		view.frame=CGRect.new([0,0],[100,100])

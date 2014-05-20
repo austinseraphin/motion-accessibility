@@ -153,6 +153,19 @@ UITableViewHeaderFooterView: {
 			accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
 		is_accessibility_element: false
 		},
+			UIToolbar: {
+			accessibility_label: nil,
+			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+			should_group_accessibility_children: true,
+			is_accessibility_element:false,
+			options: {
+			test: :bar
+		}
+		},
+			UIToolbarButton: {
+			accessibility_label: [String, "You must set the accessibility_label. You can do this by setting the UIBarButtonItem's title with the setTItle:style:target:action: method."],
+			accessibility_traits: UIAccessibilityTraitButton
+		},
 			UIView: {
 			accessibility_label: nil,
 			is_accessibility_element: false
