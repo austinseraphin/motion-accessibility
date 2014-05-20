@@ -177,6 +177,12 @@ it "UITableView" do
 	controller.view.should.be.accessible
 end
 
+it "UITableViewCell" do
+	cell=UITableViewCell.new
+	cell.accessibility_label="Test"
+	cell.should.be.accessible
+end
+
 it "UITextField" do
 	textfield=UITextField.new
 		textfield.frame=CGRect.new([0,0],[100,100])
