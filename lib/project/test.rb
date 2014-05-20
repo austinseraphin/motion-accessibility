@@ -29,6 +29,11 @@ accessibility_value: [String, "You must set the accessibility_value to the value
 accessibility_elements_hidden: true,
 		is_accessibility_element: false
 		},
+			UIBarItem: {
+			title: [String, "Set the title to tell VoiceOver what to say."],
+			accessibility_label: nil,
+			is_accessibility_element: false
+		},
 			UIButton: {
 			accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
 			accessibility_traits: UIAccessibilityTraitButton,
@@ -117,11 +122,6 @@ options: {recurse: false}
 			UITabBarButton: {
 			accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
 		accessibility_traits: Fixnum
-		},
-			UITabBarItem: {
-			title: [String, "Set the title to tell VoiceOver what to say."],
-			accessibility_label: nil,
-			is_accessibility_element: false
 		},
 UITextField: {
 			accessibility_label: nil,

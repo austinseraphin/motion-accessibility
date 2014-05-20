@@ -4,6 +4,7 @@ describe "Accessibility::Test" do
 		A11y::Test.find_tests(UIView.new).class.should.equal(Hash)
 		A11y::Test.find_tests(UIView).class.should.equal(Hash)
 		A11y::Test.find_tests(UIActionSheet.new)[:accessibility_label].should.be.nil
+		A11y::Test.find_tests(UITabBarItem.new).should==A11y::Test.find_tests(UIBarButtonItem.new)
 		custom=UIView.new
 custom.accessibility_test=UIView		
 		custom=A11y::Test.find_tests(custom)
