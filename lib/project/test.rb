@@ -148,7 +148,7 @@ UITextField: {
 			result=true
 picker.numberOfComponents.times do |component|
 picker.numberOfRowsInComponent(component).times do |row|
-title=picker.delegate.pickerView(view, titleForRow: row, forComponent: component)
+title=picker.delegate.pickerView(picker, titleForRow: row, forComponent: component)
 view=picker.	viewForRow(row, forComponent: component)
 if !title&&!view.accessible?
 	NSLog(picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")

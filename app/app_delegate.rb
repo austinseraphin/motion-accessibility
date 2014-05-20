@@ -1,5 +1,6 @@
 class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
+	  return true if RUBYMOTION_ENV=='test'
 @window=UIWindow.alloc.initWithFrame(UIScreen.mainScreen.applicationFrame)
 @window.makeKeyAndVisible
 test_controller=TestController.alloc.initWithNibName(nil, bundle: nil)
