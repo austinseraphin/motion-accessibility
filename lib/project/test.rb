@@ -138,7 +138,10 @@ options: {recurse: false}
 			test: :tableViewCell
 		}
 		},
-UITextField: {
+UITableViewHeaderFooterView: {
+			accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to read. You can do this with the textLabel.text property."]
+		},
+			UITextField: {
 			accessibility_label: nil,
 			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
 			accessibility_value: [->(value) {value}, "You must set the text of the textfield."],

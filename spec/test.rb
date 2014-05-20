@@ -173,7 +173,6 @@ end
 
 it "UITableView" do
 	controller=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
-	A11y.doctor controller.view
 	controller.view.should.be.accessible
 end
 
@@ -181,6 +180,12 @@ it "UITableViewCell" do
 	cell=UITableViewCell.new
 	cell.accessibility_label="Test"
 	cell.should.be.accessible
+end
+
+it "UITableViewHeaderFooterView" do
+	header=UITableViewHeaderFooterView.new
+	header.textLabel.text="Hello"
+	header.should.be.accessible
 end
 
 it "UITextField" do
