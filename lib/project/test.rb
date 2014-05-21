@@ -56,6 +56,13 @@ module Accessibility
 				accessibility_elements_hidden: true,
 				is_accessibility_element: false
 			},
+				UIApplication: {
+				accessibility_label: [String,"You must set the accessibility_label. Setting the app's title will do this."],
+				is_accessibility_element: false,
+				options: {
+				test: :application
+			}
+			},
 				UIBarItem: {
 				title: [String, "Set the title to tell VoiceOver what to say."],
 				accessibility_label: nil,
@@ -259,6 +266,10 @@ module Accessibility
 			end
 			def self.debug=(d)
 				Data[:debug]=d
+			end
+
+			def self.application(app)
+				self.run_tests(app.keyWindow)
 			end
 
 			def self.bar(obj)
