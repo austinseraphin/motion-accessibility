@@ -1,223 +1,244 @@
 module Accessibility
 	module Test
 
-		Options = {
-			recurse: true
-		}
+		class Log
 
-		Standard_Tests = {
-			NSObject: {
-			accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
-			accessibility_traits: [UIAccessibilityTraitNone, "You must set accessibility_trait to :none.accessibility_trait"],
-accessibility_value: nil,
-			accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
+			Events=Array.new
+			attr_reader :path, :message
+
+			def initialize(path, message)
+				@path=path||Array.new
+				@message=message
+			end
+
+			def to_s
+				@path.join(" -> ")+": "+@message
+			end
+
+			def self.add(path, name)
+				event=self.new(path.clone, name)
+				Events<<event
+			end
+
+		end
+
+			Path=Array.new
+			Data= {
+				depth: 0
+			}
+
+			Options = {
+				recurse: true
+			}
+
+			Standard_Tests = {
+				NSObject: {
+				accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
+				accessibility_traits: [UIAccessibilityTraitNone, "You must set accessibility_trait to :none.accessibility_trait"],
+				accessibility_value: nil,
+				accessibility_frame: [CGRect, "You must set an accessibility_frame to tell VoiceOver the bounds of the view." ],
 				accessibility_activation_point: [CGPoint, "You must set an accessibility_activation_point so VoiceOver knows where to touch."],
 				accessibility_path: nil,
-accessibility_view_is_modal: false,
-should_group_accessibility_children: false,
-accessibility_elements_hidden: false,
-					is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it."]
-		},
-			UIActionSheet: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			accessibility_view_is_modal: true
-		},
-UIActivityIndicatorView: {
-			accessibility_label: [String, "You must set the accessibility_label to the title of the activity indicator."],
-accessibility_value: [String, "You must set the accessibility_value to the value of the indicator."],
-accessibility_elements_hidden: true,
-		is_accessibility_element: false
-		},
-			UIBarItem: {
-			title: [String, "Set the title to tell VoiceOver what to say."],
-			accessibility_label: nil,
-			is_accessibility_element: false,
-		},
+				accessibility_view_is_modal: false,
+				should_group_accessibility_children: false,
+				accessibility_elements_hidden: false,
+				is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it."]
+			},
+				UIActionSheet: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				accessibility_view_is_modal: true
+			},
+				UIActivityIndicatorView: {
+				accessibility_label: [String, "You must set the accessibility_label to the title of the activity indicator."],
+				accessibility_value: [String, "You must set the accessibility_value to the value of the indicator."],
+				accessibility_elements_hidden: true,
+				is_accessibility_element: false
+			},
+				UIBarItem: {
+				title: [String, "Set the title to tell VoiceOver what to say."],
+				accessibility_label: nil,
+				is_accessibility_element: false,
+			},
 			UIButton: {
-			accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
-			accessibility_traits: UIAccessibilityTraitButton,
-		},
+				accessibility_label: [String,"You must set the accessibility_label. You can use the setTitle:forState method to do this on a button."],
+				accessibility_traits: UIAccessibilityTraitButton,
+			},
 			UICollectionReusableView: {
-			accessibility_label: nil,
-			is_accessibility_element: false},
-			UIDatePicker: {
-accessibility_label: nil,
-			is_accessibility_element: false,
-options: {
-			recurse: false
-		}
-		},
-			UIImageView: {
-			accessibility_label: nil,
-			accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
-		is_accessibility_element: false
-		},
-			UILabel: {
-			accessibility_label: [String, "You must set the accessibility_label. You can use the text method to do this."],
-			accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
-		},
-			UINavigationBar: {
-accessibility_label: nil,
-accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
-accessibility_elements_hidden: false,
-should_group_accessibility_children: true,
-accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
-is_accessibility_element: false,
-options: {
-			recurse: false,
-		test: :bar
-		}
-		},
-			UINavigationTransitionView: {
-			accessibility_label: nil,
-			should_group_accessibility_children: true,
-			is_accessibility_element: false
-		},
-			UIPageControl: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
-			accessibility_traits: UIAccessibilityTraitUpdatesFrequently
-		},
-			UIPickerView: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			options: {
-			recurse: false,
-			test: :pickerView
-		}
-		},
-			UIProgressView: {
-			accessibility_label: String,
-		accessibility_traits: UIAccessibilityTraitUpdatesFrequently,
-		accessibility_value: [String, "The accessibility_value should contain a textual representation of the progress, for instance \"50%\""],
-		is_accessibility_element: false
-		},
-			UISegment: {
-			accessibility_label: String,
-			accessibility_traits: [UIAccessibilityTraitButton, "You must make this a button by setting accessibility_trait to :button"],
-			accessibility_value: String
-		},
-			UISegmentedControl: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			should_group_accessibility_children: true
-		},
-			UISlider: {
-			accessibility_label: nil,
-			accessibility_value: String,
-			accessibility_traits: UIAccessibilityTraitAdjustable,
-		options: {recurse: false}
-		},
-			UIStepper: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-		options: {recurse: false}
-		},
-			UISwitch: {
-			accessibility_label: nil,
-			accessibility_traits: [->(t){t>65536||t==UIAccessibilityTraitButton},
-				"You must set the accessibility_trait to :button"],
-				accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
-		},
-			UITabBar: {
-			accessibility_label: nil,
-			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
-		should_group_accessibility_children: true,
-		is_accessibility_element: false,
-		options: {
-			test: :bar
-		}
-		},
-			UITabBarButton: {
-			accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
-		accessibility_traits: Fixnum
-		},
-			UITableView: {
-			accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
-			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
-			should_group_accessibility_children: true,
-			is_accessibility_element: false
-		},
-			UITableViewCell: {
-			accessibility_label: :ignore,
-			accessibility_value: :ignore,
-			is_accessibility_element: false,
-			options: {
-			recurse: false,
-			test: :tableViewCell
-		}
-		},
-UITableViewHeaderFooterView: {
-			accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to read. You can do this with the textLabel.text property."]
-		},
-			UITextField: {
-			accessibility_label: nil,
-			accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
-			accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
-		is_accessibility_element: false
-		},
-			UIToolbar: {
-			accessibility_label: nil,
-			accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
-			should_group_accessibility_children: true,
-			is_accessibility_element:false,
-			options: {
-			test: :bar
-		}
-		},
-			UIToolbarButton: {
-			accessibility_label: [String, "You must set the accessibility_label. You can do this by setting the UIBarButtonItem's title with the setTItle:style:target:action: method."],
-			accessibility_traits: UIAccessibilityTraitButton
-		},
-			UIView: {
-			accessibility_label: nil,
-			is_accessibility_element: false
-		},
-			UIViewController: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			options: {
-			test: :viewController
-		}
-		},
-			UIViewControllerWrapperView: {
-			accessibility_label: nil,
-			should_group_accessibility_children: true,
-		is_accessibility_element: false
-		},
-		UIWebView: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			options: {
-			recurse: false
-		}
-		},
-		UIWindow: {
-			accessibility_label: nil,
-			is_accessibility_element: false,
-			options: {
-			test: :window
-		}
-		}
-		}
+				accessibility_label: nil,
+				is_accessibility_element: false},
+				UIDatePicker: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				recurse: false
+			}
+			},
+				UIImageView: {
+				accessibility_label: nil,
+				accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
+				is_accessibility_element: false
+			},
+				UILabel: {
+				accessibility_label: [String, "You must set the accessibility_label. You can use the text method to do this."],
+				accessibility_traits: [UIAccessibilityTraitStaticText, "You must set accessibility_traits to :static_text"]
+			},
+				UINavigationBar: {
+				accessibility_label: nil,
+				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				accessibility_elements_hidden: false,
+				should_group_accessibility_children: true,
+				accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
+				is_accessibility_element: false,
+				options: {
+				recurse: false,
+				test: :bar
+			}
+			},
+				UINavigationTransitionView: {
+				accessibility_label: nil,
+				should_group_accessibility_children: true,
+				is_accessibility_element: false
+			},
+				UIPageControl: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
+				accessibility_traits: UIAccessibilityTraitUpdatesFrequently
+			},
+				UIPickerView: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				recurse: false,
+				test: :pickerView
+			}
+			},
+				UIProgressView: {
+				accessibility_label: String,
+				accessibility_traits: UIAccessibilityTraitUpdatesFrequently,
+				accessibility_value: [String, "The accessibility_value should contain a textual representation of the progress, for instance \"50%\""],
+				is_accessibility_element: false
+			},
+				UISegment: {
+				accessibility_label: String,
+				accessibility_traits: [UIAccessibilityTraitButton, "You must make this a button by setting accessibility_trait to :button"],
+				accessibility_value: String
+			},
+				UISegmentedControl: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				should_group_accessibility_children: true
+			},
+				UISlider: {
+				accessibility_label: nil,
+				accessibility_value: String,
+				accessibility_traits: UIAccessibilityTraitAdjustable,
+				options: {recurse: false}
+			},
+				UIStepper: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {recurse: false}
+			},
+				UISwitch: {
+				accessibility_label: nil,
+				accessibility_traits: [->(t){t>65536||t==UIAccessibilityTraitButton},
+					"You must set the accessibility_trait to :button"],
+					accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
+			},
+				UITabBar: {
+				accessibility_label: nil,
+				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				should_group_accessibility_children: true,
+				is_accessibility_element: false,
+				options: {
+				test: :bar
+			}
+			},
+				UITabBarButton: {
+				accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
+				accessibility_traits: Fixnum
+			},
+				UITableView: {
+				accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
+				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				should_group_accessibility_children: true,
+				is_accessibility_element: false
+			},
+				UITableViewCell: {
+				accessibility_label: :ignore,
+				accessibility_value: :ignore,
+				is_accessibility_element: false,
+				options: {
+				recurse: false,
+				test: :tableViewCell
+			}
+			},
+				UITableViewHeaderFooterView: {
+				accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to read. You can do this with the textLabel.text property."]
+			},
+				UITextField: {
+				accessibility_label: nil,
+				accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
+				accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
+				is_accessibility_element: false
+			},
+				UIToolbar: {
+				accessibility_label: nil,
+				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				should_group_accessibility_children: true,
+				is_accessibility_element:false,
+				options: {
+				test: :bar
+			}
+			},
+				UIToolbarButton: {
+				accessibility_label: [String, "You must set the accessibility_label. You can do this by setting the UIBarButtonItem's title with the setTItle:style:target:action: method."],
+				accessibility_traits: UIAccessibilityTraitButton
+			},
+				UIView: {
+				accessibility_label: nil,
+				is_accessibility_element: false
+			},
+				UIViewController: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				test: :viewController
+			}
+			},
+				UIViewControllerWrapperView: {
+				accessibility_label: nil,
+				should_group_accessibility_children: true,
+				is_accessibility_element: false
+			},
+				UIWebView: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				recurse: false
+			}
+			},
+				UIWindow: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				test: :window
+			}
+			}
+			}
 
-		Custom_Tests = {
-			UIView: {
-			accessibility_label: [true, "Set the accessibility_label to tell VoiceOver what to say."],
-			is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
-		}
-		}
+			Custom_Tests = {
+				UIView: {
+				accessibility_label: [true, "Set the accessibility_label to tell VoiceOver what to say."],
+				is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
+			}
+			}
 
-		Messages=Array.new
-		Data= {
-			depth: 0
-		}
-
-		def self.bar(obj)
-			result=true
-			obj.items {|item| result=result&&self.run_tests(item)}
+			def self.bar(obj)
+				result=true
+				obj.items {|item| result=result&&self.run_tests(item)}
 			result
 		end
 
@@ -296,15 +317,16 @@ result=false
 message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value}\""
 		end
 	end
-	Messages.last<<message unless result
+	A11y::Test::Log.add(Path, message) unless result
 	result
 		end
 
 		def self.run_tests(obj)
 			if Data[:depth]==0
-			Messages.clear
+			A11y::Test::Log::Events.clear
+			Path.clear
 			end
-			Messages<<["Accessibility doctor: #{obj.inspect}"]
+			Path<<obj
 			tests=self.find_tests(obj)
 	tests[:options]||={}
 	tests[:options]=self::Options.merge(tests[:options])
@@ -329,7 +351,7 @@ if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 Data[:depth]=Data[:depth]-1
 end
-Messages.pop if result
+Path.pop
 	result
 		end
 
@@ -337,9 +359,9 @@ Messages.pop if result
 
 def self.doctor(view=nil)
 view.accessible? if view
-return true unless A11y::Test::Messages
-	A11y::Test::Messages.each do |event|
-	       event.each 	{|message| NSLog(message)}
+return if A11y::Test::Log::Events.empty?
+	A11y::Test::Log::Events.each do |event|
+	       NSLog(event.to_s)
 	end
 	false
 end
