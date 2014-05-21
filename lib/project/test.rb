@@ -93,7 +93,7 @@ module Accessibility
 			},
 				UINavigationBar: {
 				accessibility_label: nil,
-				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
 				accessibility_elements_hidden: false,
 				should_group_accessibility_children: true,
 				accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
@@ -165,7 +165,7 @@ module Accessibility
 			},
 				UITabBar: {
 				accessibility_label: nil,
-				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
 				should_group_accessibility_children: true,
 				is_accessibility_element: false,
 				options: {
@@ -175,7 +175,7 @@ module Accessibility
 			},
 				UITabBarButton: {
 				accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
-				accessibility_traits: Fixnum
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Bignum, custom: UIAccessibilityTraitButton, message: "Apple has this set to a non-standard value. You can use :button.")},
 			},
 				UITabBarController: {
 				accessibility_label: nil,
@@ -187,7 +187,7 @@ module Accessibility
 			},
 				UITableView: {
 				accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
-				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
 				should_group_accessibility_children: true,
 				is_accessibility_element: false
 			},
@@ -211,7 +211,7 @@ module Accessibility
 			},
 				UIToolbar: {
 				accessibility_label: nil,
-				accessibility_traits: [Bignum, "Apple has this set to a non-standard value."],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
 				should_group_accessibility_children: true,
 				is_accessibility_element:false,
 				options: {
@@ -266,6 +266,16 @@ module Accessibility
 			end
 			def self.debug=(d)
 				Data[:debug]=d
+			end
+
+			def self.nonstandard(value, options={})
+				options[:apple]||=Bignum
+				options[:custom]||=:none.accessibility_trait
+				return true if value.class==options[:apple]||value==options[:custom]
+				options[:attribute]||=:accessibility_traits
+				options[:message]||="Apple has this set to a non-standard value. Hopefully you can get away with using :none."
+				options[:message]="#{options[:attribute]}: #{options[:message]}"
+A11y::Test::Log.add(Path, options[:message])
 			end
 
 			def self.application(app)
