@@ -16,7 +16,6 @@ end
 puts "Accessibility test: #{self.accessibility_test}" if self.accessibility_test
 puts "Accessible: #{self.accessible?}"
 A11y.doctor
-nil
 end
 
 alias :inspect_a11y :inspect_accessibility

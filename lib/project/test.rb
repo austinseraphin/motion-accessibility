@@ -43,7 +43,7 @@ module Accessibility
 				accessibility_view_is_modal: false,
 				should_group_accessibility_children: false,
 				accessibility_elements_hidden: false,
-				is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it."]
+				is_accessibility_element: [true, "You must set is_accessibility_element=true to make VoiceOver aware of it. This will often happen automatically when a view becomes visible by giving it a frame and adding it to a subview."]
 			},
 				UIActionSheet: {
 				accessibility_label: nil,
@@ -256,7 +256,7 @@ module Accessibility
 
 			Custom_Tests = {
 				UIView: {
-				accessibility_label: [true, "Set the accessibility_label to tell VoiceOver what to say."],
+				accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to say."],
 				is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
 			}
 			}
