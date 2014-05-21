@@ -69,6 +69,11 @@ options: {
 		test: :bar
 		}
 		},
+			UINavigationTransitionView: {
+			accessibility_label: nil,
+			should_group_accessibility_children: true,
+			is_accessibility_element: false
+		},
 			UIPageControl: {
 			accessibility_label: nil,
 			is_accessibility_element: false,
@@ -177,6 +182,11 @@ UITableViewHeaderFooterView: {
 			test: :viewController
 		}
 		},
+			UIViewControllerWrapperView: {
+			accessibility_label: nil,
+			should_group_accessibility_children: true,
+		is_accessibility_element: false
+		},
 		UIWebView: {
 			accessibility_label: nil,
 			is_accessibility_element: false,
@@ -186,10 +196,8 @@ UITableViewHeaderFooterView: {
 		},
 		UIWindow: {
 			accessibility_label: nil,
-			accessibility_elements_hidden: true,
 			is_accessibility_element: false,
 			options: {
-			recurse: false,
 			test: :window
 		}
 		}
@@ -203,10 +211,13 @@ UITableViewHeaderFooterView: {
 		}
 
 		Messages=Array.new
+		Data= {
+			depth: 0
+		}
 
 		def self.bar(obj)
 			result=true
-			obj.items {|item| result=result&&item.accessible?}
+			obj.items {|item| result=result&&self.run_tests(item)}
 			result
 		end
 
@@ -216,7 +227,7 @@ picker.numberOfComponents.times do |component|
 picker.numberOfRowsInComponent(component).times do |row|
 title=picker.delegate.pickerView(picker, titleForRow: row, forComponent: component)
 view=picker.	viewForRow(row, forComponent: component)
-if !title&&!view.accessible?
+if !title&&!self.run_tests(view)
 	NSLog(picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")
 	A11y.doctor
 	result=false
@@ -233,11 +244,11 @@ end
 		end
 
 		def self.viewController(controller)
-			controller.view.accessible?
+			self.run_tests(controller.view)
 		end
 
 		def self.window(window)
-			window.rootViewController.accessible?
+			self.run_tests(window.rootViewController)
 		end
 
 		def self.find_tests(obj)
@@ -272,30 +283,28 @@ obj_tests
 if value.class!=expected
 	result=false
 message||="#{attribute} must have an object of type #{expected} instead of #{value}"
-message=obj.inspect+": "+message
-Messages<<message
 end
 	elsif expected.kind_of?(Proc)
 		r=expected.call(value)
 		unless r
 			result=false
 			message||="The test function for #{attribute} failed."
-			message=obj.inspect+": "+message
-			Messages<<message
 		end
 	else
 		unless expected==value
 result=false
 message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value}\""
-message=obj.inspect+": "+message
-Messages<<message
 		end
 	end
+	Messages.last<<message unless result
 	result
 		end
 
 		def self.run_tests(obj)
+			if Data[:depth]==0
 			Messages.clear
+			end
+			Messages<<["Accessibility doctor: #{obj.inspect}"]
 			tests=self.find_tests(obj)
 	tests[:options]||={}
 	tests[:options]=self::Options.merge(tests[:options])
@@ -310,10 +319,17 @@ tests.each do |attribute, test|
 	end
 end
 after=tests[:options][:test]
-result=result&&self.send(after, obj) if after&&self.respond_to?(after)
-if tests[:options][:recurse]&&result&&obj.respond_to?(:subviews)&&obj.subviews
+ if after&&self.respond_to?(after)
+			Data[:depth]=Data[:depth]+1
+	 result=result&&self.send(after, obj)
+			Data[:depth]=Data[:depth]-1
+ end
+if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews
+	Data[:depth]=Data[:depth]+1
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
+Data[:depth]=Data[:depth]-1
 end
+Messages.pop if result
 	result
 		end
 
@@ -321,8 +337,11 @@ end
 
 def self.doctor(view=nil)
 view.accessible? if view
-	A11y::Test::Messages.each {|message| NSLog(message)}
-	A11y::Test::Messages.empty?
+return true unless A11y::Test::Messages
+	A11y::Test::Messages.each do |event|
+	       event.each 	{|message| NSLog(message)}
+	end
+	false
 end
 
 end
@@ -338,6 +357,7 @@ end
 		end
 
 		def accessible?
+			A11y::Test::Data[:depth]=0
 			A11y::Test.run_tests(self)
 		end
 

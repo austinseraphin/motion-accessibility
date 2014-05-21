@@ -215,7 +215,12 @@ end
 
 		it "UIWindow" do
 			window=UIWindow.new
-			window.rootViewController=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
+			controller=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
+			nav_controller=UINavigationController.alloc.initWithRootViewController(controller)
+tab_controller=UITabBarController.alloc.initWithNibName(nil, bundle: nil)
+tab_controller.viewControllers=[nav_controller]
+			window.rootViewController=tab_controller
+			window.makeKeyAndVisible
 			A11y.doctor window
 			window.should.be.accessible
 		end
