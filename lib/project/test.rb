@@ -95,11 +95,6 @@ module Accessibility
 				test: :bar
 			}
 			},
-				UINavigationTransitionView: {
-				accessibility_label: nil,
-				should_group_accessibility_children: true,
-				is_accessibility_element: false
-			},
 				UINavigationController: {
 				accessibility_label: nil,
 				is_accessibility_element: false,
@@ -107,6 +102,11 @@ module Accessibility
 				recurse: false,
 				test: :navigationViewController
 			}
+			},
+				UINavigationTransitionView: {
+				accessibility_label: nil,
+				should_group_accessibility_children: true,
+				is_accessibility_element: false
 			},
 				UIPageControl: {
 				accessibility_label: nil,
@@ -274,7 +274,6 @@ title=picker.delegate.pickerView(picker, titleForRow: row, forComponent: compone
 view=picker.	viewForRow(row, forComponent: component)
 if !title&&!self.run_tests(view)
 	A11y::Test::Log(Path, picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")
-	A11y.doctor
 	result=false
 end
 end
@@ -308,16 +307,12 @@ result
 cl=obj.class
 class_name=cl.to_s.to_sym
 if obj.accessibility_test
-	tests=self::Custom_Tests[class_name]||self::Standard_Tests[class_name]
+	tests=self::Custom_Tests[obj.accessibility_test]||self::Standard_Tests[obj.accessibility_test]
 else
 	tests=self::Standard_Tests[class_name]
-end
 until tests do
 	cl=cl.superclass
 class_name=cl.to_s.to_sym
-if accessibility_test
-	tests=self::Custom_Tests[class_name]||self::Standard_Tests[class_name]
-else
 	tests=self::Standard_Tests[class_name]
 end
 end
@@ -395,7 +390,7 @@ return if A11y::Test::Log::Events.empty?
 	A11y::Test::Log::Events.each do |event|
 	       NSLog(event.to_s)
 	end
-	false
+	A11y::Test::Log::Events.last.path.last
 end
 
 end

@@ -35,6 +35,9 @@ custom.accessibility_test=UIView
 		custom=A11y::Test.find_tests(custom)
 			custom.class.should.equal Hash
 			custom[:is_accessibility_element].should.not.be.nil
+			button=UIView.new
+			button.accessibility_test=UIButton
+			A11y::Test.find_tests(button).should.equal A11y::Test.find_tests(UIButton.new)
 	end
 
 	it "Object#accessibility_test=" do
