@@ -159,8 +159,7 @@ module Accessibility
 			},
 				UISwitch: {
 				accessibility_label: nil,
-				accessibility_traits: [->(t){t>65536||t==UIAccessibilityTraitButton},
-					"You must set the accessibility_trait to :button"],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t, custom: UIAccessibilityTraitButton, message: "You can use :button.")},
 					accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 			},
 				UITabBar: {
@@ -175,7 +174,7 @@ module Accessibility
 			},
 				UITabBarButton: {
 				accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Bignum, custom: UIAccessibilityTraitButton, message: "Apple has this set to a non-standard value. You can use :button.")},
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Bignum, custom: UIAccessibilityTraitButton, message: "You can use :button.")},
 			},
 				UITabBarController: {
 				accessibility_label: nil,
@@ -205,8 +204,8 @@ module Accessibility
 			},
 				UITextField: {
 				accessibility_label: nil,
-				accessibility_traits: [->(t){t==262144||t==UIAccessibilityTraitNone}, "Apple has this set to a non-standard value. If making a custom view you can just use :none"],
-				accessibility_value: [->(value) {value}, "You must set the text of the textfield."],
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_value: [:something, "You must set the text of the textfield."],
 				is_accessibility_element: false
 			},
 				UIToolbar: {
@@ -273,8 +272,9 @@ module Accessibility
 				options[:custom]||=:none.accessibility_trait
 				return true if value.class==options[:apple]||value==options[:custom]
 				options[:attribute]||=:accessibility_traits
-				options[:message]||="Apple has this set to a non-standard value. Hopefully you can get away with using :none."
-				options[:message]="#{options[:attribute]}: #{options[:message]}"
+				message="Apple has this set to a non-standard value."
+options[:message]||="Hopefully you can get away with using :none."
+				options[:message]="#{options[:attribute]}: #{message} #{options[:message]}"
 A11y::Test::Log.add(Path, options[:message])
 			end
 
@@ -355,6 +355,7 @@ obj_tests
 		def self.run_test(obj, attribute, expected, message=nil)
 			return true if expected==:ignore
 	value=obj.send(attribute) if obj.respond_to?(attribute)
+	return value if expected==:something
 	result=true
 	if expected.class==Class
 if value.class!=expected
