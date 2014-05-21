@@ -24,7 +24,8 @@ module Accessibility
 
 			Path=Array.new
 			Data= {
-				depth: 0
+				depth: 0,
+				debug: false
 			}
 
 			Options = {
@@ -253,6 +254,13 @@ module Accessibility
 			}
 			}
 
+			def self.debug
+				Data[:debug]
+			end
+			def self.debug=(d)
+				Data[:debug]=d
+			end
+
 			def self.bar(obj)
 				result=true
 				obj.items {|item| result=result&&self.run_tests(item)}
@@ -345,10 +353,12 @@ message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value
 		end
 	end
 	A11y::Test::Log.add(Path, message) unless result
+	puts "Testing #{attribute}... #{result}" if Data[:debug]
 	result
 		end
 
 		def self.run_tests(obj)
+			puts "Entering run_tests: #{obj.inspect}" if Data[:debug]
 			if Data[:depth]==0
 			A11y::Test::Log::Events.clear
 			Path.clear
@@ -370,17 +380,20 @@ tests.each do |attribute, test|
 end
 after=tests[:options][:test]
  if after&&self.respond_to?(after)
+	 puts "Running the after test: #{after}" if Data[:debug]
 			Data[:depth]=Data[:depth]+1
 	 this_result=self.send(after, obj)
 	 result=result&&this_result
 			Data[:depth]=Data[:depth]-1
  end
 if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews
+	puts "Recursing..." if Data[:debug]
 	Data[:depth]=Data[:depth]+1
 obj.subviews.each {|view| result=result&&A11y::Test.run_tests(view)}	
 Data[:depth]=Data[:depth]-1
 end
 Path.pop
+puts "Returning #{result}" if Data[:debug]
 	result
 		end
 
