@@ -106,6 +106,12 @@ test_nav=UINavigationController.alloc.initWithRootViewController(test_controller
 test_nav.navigationBar.should.be.accessible
 		end
 
+		it "UINavigationController" do
+			controller=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
+			nav_controller=UINavigationController.alloc.initWithRootViewController(controller)
+			nav_controller.should.be.accessible
+		end
+
 		it "UIPageControl" do
 			page=UIPageControl.new
 		page.frame=CGRect.new([0,0],[100,100])

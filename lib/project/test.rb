@@ -100,6 +100,14 @@ module Accessibility
 				should_group_accessibility_children: true,
 				is_accessibility_element: false
 			},
+				UINavigationController: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				recurse: false,
+				test: :navigationViewController
+			}
+			},
 				UIPageControl: {
 				accessibility_label: nil,
 				is_accessibility_element: false,
@@ -153,12 +161,21 @@ module Accessibility
 				should_group_accessibility_children: true,
 				is_accessibility_element: false,
 				options: {
+				recurse: false,
 				test: :bar
 			}
 			},
 				UITabBarButton: {
 				accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
 				accessibility_traits: Fixnum
+			},
+				UITabBarController: {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				recurse: false,
+				test: :tabBarViewController
+			}
 			},
 				UITableView: {
 				accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
@@ -242,6 +259,13 @@ module Accessibility
 			result
 		end
 
+		def self.navigationViewController(controller)
+			result=true
+			result&&self.run_tests(controller.navigationBar)
+controller.viewControllers.each {|c| result=result&&self.run_tests(c)}
+result
+		end
+
 		def self.pickerView(picker)
 			result=true
 picker.numberOfComponents.times do |component|
@@ -249,7 +273,7 @@ picker.numberOfRowsInComponent(component).times do |row|
 title=picker.delegate.pickerView(picker, titleForRow: row, forComponent: component)
 view=picker.	viewForRow(row, forComponent: component)
 if !title&&!self.run_tests(view)
-	NSLog(picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")
+	A11y::Test::Log(Path, picker.inspect+": component #{component} row #{row} not accessible. You can use the pickerView:titleForRow:forComponent or pickerView:accessibility_label_for_component methods to do this.")
 	A11y.doctor
 	result=false
 end
@@ -258,9 +282,16 @@ end
 			      result
 		end
 
+		def self.tabBarViewController(controller)
+			result=true
+			result&&self.run_tests(controller.tabBar)
+controller.viewControllers.each {|c| result=result&&self.run_tests(c)}
+result
+		end
+
 		def self.tableViewCell(cell)
 			return true if cell.accessibility_label||cell.textLabel.text
-			NSLog("Please set the accessibility_label of the UITableViewCell. You can do this by setting the textLabel.text property.")
+			A11y::Test::Log.add(Path, "Please set the accessibility_label of the UITableViewCell. You can do this by setting the textLabel.text property.")
 			false
 		end
 
@@ -290,6 +321,7 @@ else
 	tests=self::Standard_Tests[class_name]
 end
 end
+return self.find_tests(tests) if tests.kind_of?(Symbol)
 			tests.each do |attribute, test|
 				obj_tests[attribute]=test
 			end
