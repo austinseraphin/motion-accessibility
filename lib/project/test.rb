@@ -362,15 +362,17 @@ tests.each do |attribute, test|
 	next if attribute==:options
 	if test.kind_of?(Array)
 	(expected, message)=test
-	result=result&&self.run_test(obj, attribute, expected, message)
+	this_result=self.run_test(obj, attribute, expected, message)
 	else
-	result=result&&self.run_test(obj, attribute, test)
+	this_result=self.run_test(obj, attribute, test)
 	end
+	result=result&&this_result
 end
 after=tests[:options][:test]
  if after&&self.respond_to?(after)
 			Data[:depth]=Data[:depth]+1
-	 result=result&&self.send(after, obj)
+	 this_result=self.send(after, obj)
+	 result=result&&this_result
 			Data[:depth]=Data[:depth]-1
  end
 if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews
