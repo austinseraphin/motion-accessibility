@@ -3,10 +3,7 @@
 # Making accessibility more accessible.
 
 https://github.com/austinseraphin/motion-accessibility
-
-Motion-Accessibility wraps the UIAccessibility protocols in nice
-ruby. I hope that making them easier will encourage developers to use it
-more and make their apps accessible. The gem also includes an accessibility inspector and a text console to aide blind iOS developers.
+Motion-accessibility provides the tools needed for sighted and blind iOS developers to make their apps more accessible. It wraps Apple’s UIAccessibility protocols in Ruby, and provides an accessibility inspector. It has a console for blind developers, since the iOS simulator doesn’t work well with VoiceOver. It also has automated accessibility testing for your views, and the accessibility doctor will help diagnose your problems and tell you how to fix them. You can build accessibility testing into your specs, so you will never break VoiceOver compatibility!
 
 ## Installation
 
