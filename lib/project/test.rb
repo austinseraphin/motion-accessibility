@@ -11,7 +11,7 @@ module Accessibility
 				recurse: true
 			}
 
-			Standard_Tests = {
+			Tests = {
 				NSObject: {
 				accessibility_label: [String, "You must set an accessibility label to tell VoiceOver what to read."],
 				accessibility_traits: [UIAccessibilityTraitNone, "You must set accessibility_trait to :none.accessibility_trait"],
@@ -232,13 +232,6 @@ module Accessibility
 			}
 			}
 
-			Custom_Tests = {
-				UIView: {
-				accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to say."],
-				is_accessibility_element: [true, "Set is_accessibility_element to true to tell VoiceOver it can access this element."]
-			}
-			}
-
 			def self.debug
 				Data[:debug]
 			end
@@ -311,17 +304,17 @@ result
 		end
 
 		def self.find_tests(obj)
-			obj_tests=A11y::Test::Standard_Tests[:NSObject].clone
+			obj_tests=A11y::Test::Tests[:NSObject].clone
 cl=obj.class
 class_name=cl.to_s.to_sym
 if obj.accessibility_test
-	tests=self::Custom_Tests[obj.accessibility_test]||self::Standard_Tests[obj.accessibility_test]
+	tests=Tests[obj.accessibility_test]
 else
-	tests=self::Standard_Tests[class_name]
+	tests=Tests[class_name]
 until tests do
 	cl=cl.superclass
 class_name=cl.to_s.to_sym
-	tests=self::Standard_Tests[class_name]
+	tests=Tests[class_name]
 end
 end
 return self.find_tests(tests) if tests.kind_of?(Symbol)
@@ -417,7 +410,7 @@ end
 
 		def accessibility_test=(t)
 			t=t.to_s.to_sym if t.kind_of?(Class)
-			@accessibility_test=t if A11y::Test::Custom_Tests[t]||A11y::Test::Standard_Tests[t]
+			@accessibility_test=t if A11y::Test::Tests[t]
 			@accessibility_test
 		end
 
