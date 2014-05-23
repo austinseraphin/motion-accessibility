@@ -183,7 +183,7 @@ module Accessibility
 			},
 				UITextField: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Fixnum)},
 				accessibility_value: [:something, "You must set the text of the textfield."],
 				is_accessibility_element: false
 			},
@@ -248,6 +248,7 @@ module Accessibility
 options[:message]||="Hopefully you can get away with using :none."
 				options[:message]="#{options[:attribute]}: #{message} #{options[:message]}"
 A11y::Test::Log.add(Path, options[:message])
+false
 			end
 
 			def self.application(app)
