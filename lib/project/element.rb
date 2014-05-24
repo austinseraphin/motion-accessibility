@@ -55,3 +55,13 @@ end
 end
 
 Accessibility::Element=UIAccessibilityElement
+
+class NSObject
+
+	def each_accessibility_element
+		return unless A11y::Element.container?(self)
+		self.accessibility_element_count.times {|n| yield(self.accessibility_element_at_index(n))}
+	end
+
+end
+

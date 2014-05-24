@@ -109,6 +109,13 @@ def self.build(view=nil, superview=nil)
 tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
+if A11y::Element.container?(view)
+	view.each_accessibility_element do |element|
+subview_tree=self.build(element, tree)
+subviews<<subview_tree
+	end
+end
+if view.respond_to?(:subviews)
 view.subviews.each do |subview|
 subview_tree=self.build(subview, tree)
 if self.ignore_view?(subview)
@@ -116,6 +123,7 @@ subview_tree.subviews.each {|v| v.superview=tree}
 subviews=subviews+subview_tree.subviews
 else
 subviews<<subview_tree
+end
 end
 end
 tree.view=view
