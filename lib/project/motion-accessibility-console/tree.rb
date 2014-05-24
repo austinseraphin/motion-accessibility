@@ -91,7 +91,7 @@ result= view.accessibility_element?||view.accessibility_label||view.accessibilit
 end
 
 def self.ignore_view?(view)
-return true if view.subviews.empty?&&!self.accessible_view?(view)
+return true if view.subviews.empty?&&!view.accessible?
 if view.superview
 sv=view.superview
 while sv&&self.ignore_view?(sv)

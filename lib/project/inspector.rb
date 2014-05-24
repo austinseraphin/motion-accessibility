@@ -18,6 +18,7 @@ self.inspect_accessibility_attribute(ios)
 displayed<<ios
 end
 puts "Accessibility test: #{self.accessibility_test}" if self.accessibility_test
+puts "Accessibility container: #{self.accessibility_element_count} elements" if A11y::Element.container?(self)
 puts "Accessible: #{self.accessible?}"
 A11y.doctor
 end

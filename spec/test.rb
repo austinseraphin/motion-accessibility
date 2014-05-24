@@ -44,6 +44,13 @@ a.is_accessibility_element=true
 a.should.be.accessible
 	end
 
+	it "UIAccessibilityContainer" do
+		container=Container_Test.new
+		container.init_data
+		container.frame=CGRectMake(0,0,100,100)
+		container.should.be.accessible
+	end
+
 		it "UIAlertView" do
 			alert=UIAlertView.alloc.initWithTitle("Test", message: "A test", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: nil)
 		alert.frame=CGRect.new([0,0],[100,100])

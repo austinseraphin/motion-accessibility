@@ -15,6 +15,7 @@ describe "A11y::Test::Log" do
 	end
 
 	it "Log.add" do
+		A11y::Test::Log::Events.clear
 		A11y::Test::Log.add (@log.path, @log.message)
 		A11y::Test::Log::Events.length.should.equal 1
 		A11y::Test::Log.add([UIView.new], "Another Test")

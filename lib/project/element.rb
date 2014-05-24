@@ -48,6 +48,10 @@ define_method(ruby) { self.send(ios)}
 end
 end
 
+def self.container?(obj)
+	!obj.accessibility_element_at_index(0).nil?
+end
+
 end
 
 Accessibility::Element=UIAccessibilityElement

@@ -109,6 +109,11 @@ module Accessibility
 				test: :pickerView
 			}
 			},
+				UIAccessibilityPickerComponent: {
+				accessibility_label: nil,
+				accessibility_traits: Fixnum,
+			accessibility_value: String
+			},
 				UIProgressView: {
 				accessibility_label: String,
 				accessibility_traits: UIAccessibilityTraitUpdatesFrequently,
@@ -178,6 +183,18 @@ module Accessibility
 				test: :tableViewCell
 			}
 			},
+				UITableViewCellAccessibilityElement: {
+				accessibility_label: :ignore,
+				accessibility_traits: :ignore,
+				accessibility_value: String,
+				should_group_accessibility_children: :ignore,
+			is_accessibility_element: :ignore
+			},
+				UITableTextAccessibilityElement: {
+				accessibility_label: [String, "Set the accessibility_label to the text of the view."],
+				accessibility_traits: UIAccessibilityTraitStaticText,
+				accessibility_value: String,
+			},
 				UITableViewHeaderFooterView: {
 				accessibility_label: [String, "Set the accessibility_label to tell VoiceOver what to read. You can do this with the textLabel.text property."]
 			},
@@ -186,6 +203,12 @@ module Accessibility
 				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Fixnum)},
 				accessibility_value: [:something, "You must set the text of the textfield."],
 				is_accessibility_element: false
+			},
+				UIAccessibilityTextFieldElement: {
+				accessibility_label: nil,
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Fixnum)},
+				accessibility_value: [:something, "You must set the text of the textfield."],
+				is_accessibility_element: true
 			},
 				UIToolbar: {
 				accessibility_label: nil,
@@ -261,6 +284,11 @@ false
 			result
 		end
 
+			def self.container(container)
+				container.accessibility_element_count.times {|n| return false unless container.accessibility_element_at_index(n).accessible?}
+				true
+			end
+
 		def self.navigationViewController(controller)
 			result=true
 			result&&self.run_tests(controller.navigationBar)
@@ -305,6 +333,7 @@ result
 		end
 
 		def self.find_tests(obj)
+			return Tests[obj] if obj.kind_of?(Symbol)
 			obj_tests=A11y::Test::Tests[:NSObject].clone
 cl=obj.class
 class_name=cl.to_s.to_sym
@@ -380,6 +409,9 @@ after=tests[:options][:test]
 	 this_result=self.send(after, obj)
 	 result=result&&this_result
 			Data[:depth]=Data[:depth]-1
+ end
+ if result&&A11y::Element.container?(obj)
+	 result=result&&self.container(obj)
  end
 if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews
 	puts "Recursing..." if Data[:debug]
