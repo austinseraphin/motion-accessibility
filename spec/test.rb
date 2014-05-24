@@ -35,6 +35,15 @@ custom.accessibility_test=UIView
 		indicator.should.be.accessible
 	end
 
+	it "UIAccessibilityElement" do
+		a=A11y::Element.init_with_accessibility_container(self)
+		a.accessibility_test=:UILabel
+		a.label="Test"
+a.traits=:static_text
+a.is_accessibility_element=true
+a.should.be.accessible
+	end
+
 		it "UIAlertView" do
 			alert=UIAlertView.alloc.initWithTitle("Test", message: "A test", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: nil)
 		alert.frame=CGRect.new([0,0],[100,100])

@@ -42,22 +42,19 @@ Attributes = {
 Element_Attributes = {
 :container => :accessibilityContainer,
 :container= => :setAccessibilityContainer,
-:frame => :accessibilityFrame,
-:frame= => :setAccessibilityFrame,
-:hint => :accessibilityHint,
-:hint= => :setAccessibilityHint,
 :label => :accessibilityLabel,
 :label= => :setAccessibilityLabel,
+:hint => :accessibilityHint,
+:hint= => :setAccessibilityHint,
 :traits => :accessibilityTraits,
 :value => :accessibilityValue,
 :value= => :setAccessibilityValue,
+:frame => :accessibilityFrame,
+:frame= => :setAccessibilityFrame,
 :did_become_focused => :accessibilityElementDidBecomeFocused,
 :did_lose_focus => :accessibilityElementDidLoseFocus,
 :is_focused => :accessibilityElementIsFocused,
-:focused? => :accessibilityElementIsFocused,
-:is_accessibility_element => :isAccessibilityElement,
-:is_accessibility_element= => :setIsAccessibilityElement,
-:accessibility_element? => :isAccessibilityElement
+:focused? => :accessibilityElementIsFocused
 }
 
 Traits = {

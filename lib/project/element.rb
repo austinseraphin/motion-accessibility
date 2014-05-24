@@ -1,11 +1,8 @@
 class UIAccessibilityElement
 
-def initialize(container)
-raise "Please initialize with a container, usually self." unless container
-UIAccessibilityElement.alloc.initWithAccessibilityContainer(self)
+def self.init_with_accessibility_container(container)
+	UIAccessibilityElement.alloc.initWithAccessibilityContainer(container)
 end
-
-alias :init_with_accessibility_container :initialize
 
 Accessibility::Element_Attributes.each do |ruby,ios|
 if ruby=~/=$/
@@ -22,18 +19,8 @@ define_method(ruby) {self.send(ios)}
 end
 end
 
-def accessibility_traits=(traits)
-bits=0
-if traits.kind_of?(Fixnum)
-bits=traits
-elsif traits.kind_of?(Symbol)
-bits=traits.accessibility_trait
-elsif traits.kind_of?(Array)
-traits.each {|trait| bits|=trait.accessibility_trait}
-else
-raise "Pass a bitmask, a symbol, or an array to accessibility_traits="
-end
-OAself.accessibilityTraits=bits
+def traits=(traits)
+	self.accessibility_traits=traits
 end
 
 if self.respond_to?(:method_added)

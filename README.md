@@ -3,6 +3,7 @@
 # Making accessibility more accessible.
 
 https://github.com/austinseraphin/motion-accessibility
+
 Motion-accessibility provides the tools needed for sighted and blind iOS developers to make their apps more accessible. It wraps Apple’s UIAccessibility protocols in Ruby, and provides an accessibility inspector. It has a console for blind developers, since the iOS simulator doesn’t work well with VoiceOver. It also has automated accessibility testing for your views, and the accessibility doctor will help diagnose your problems and tell you how to fix them. You can build accessibility testing into your specs, so you will never break VoiceOver compatibility!
 
 ## Installation
@@ -35,24 +36,23 @@ The `browse` or `b` command lets you examine the view hierarchy in a speech-frie
 The following examples come from the sample app included with motion-accessibility.
 
 ```
-(main)>	browse                                                                  
-Browsing  UIWindow                                                              
-1 UILabel Hello!                                                                
-2 Touchable UITextField                                                         
-3 Touchable UIRoundedRectButton Update                                          
-4 UINavigationBar                                                               
-5 UITabBar with 2 subviews                                                      
+(main)> browse
+Browsing  UIWindow
+1 UIView with 3 subviews
+2 UINavigationBar with 2 subviews
+3 UITabBar with 3 subviews
 => nil
 ```
 
 If a view has subviews, you can browse that view.
 
 ```
-(main)>	b 5                                                                     
-Browsing  UITabBar                                                              
-0 Superview UIWindow                                                            
-1 Touchable UITabBarButton Test App                                             
-2 Touchable UITabBarButton Table                                                
+((main)> b 1
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Hello! 
+2 Touchable UITextField  
+3 Touchable UIButton Update 
 => nil
 ```
 
@@ -65,34 +65,32 @@ You may pass the `:scroll` keyword to scroll a UIScrollView or descendants, such
 The `view` or `v` command simply returns the current view. If you have just browsed a view, it will return that. Otherwise, you may specify the view you wish to browse. Note that for all the commands, you may either use its number or accessibility label.
 
 ```
-(main)>	v 1                                                                     
-=> #<UITabBarButton:0x9380560>
+(main)> v 1
+=> #<UILabel:0x8feda00>
 ```
 
 #### `touch`
 The `touch` command lets you interact with the various controls. It works on all standard UIControls. `touch` can accept an argument depending on the type of control. For example, you can pass a UITextField a string to set its value.
 
 ```
-(main)>	touch 2,"motion-accessibility rocks!"                                   
-Browsing  UIWindow                                                              
-1 UILabel Hello!                                                                
-2 Touchable UITextField motion-accessibility rocks!                             
-3 Touchable UIRoundedRectButton Update                                          
-4 UINavigationBar                                                               
-5 UITabBar with 2 subviews                                                      
+(main)> touch 2,"Motion-accessibility rocks!"
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Hello! 
+2 Touchable UITextField Motion-accessibility rocks! 
+3 Touchable UIButton Update 
 => nil
 ```
 
 UIButtons can take a UIControlEvent, but default to `UIControlEventTouchUpInside`. Note here the use of an accessibility label to reference the view.
 
 ```
-(main)>	touch "update"                                                          
-Browsing  UIWindow                                                              
-1 UILabel motion-accessibility rocks!                                           
-2 Touchable UITextField motion-accessibility rocks!                             
-3 Touchable UIRoundedRectButton Update                                          
-4 UINavigationBar                                                               
-5 UITabBar with 2 subviews                                                      
+(main)> touch "update"
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Motion-accessibility rocks! 
+2 Touchable UITextField Motion-accessibility rocks! 
+3 Touchable UIButton Update 
 => nil
 ```
 
@@ -101,24 +99,27 @@ Browsing  UIWindow
 You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` method on any object.
 
 ```
-main)>	label=UILabel.alloc.initWithFrame(CGRectMake(0, 0, 100, 100))           
-=> #<UILabel:0xb062870>                                                         
-(main)> label.text="Hello!"                                                     
-=> "Hello!"                                                                     
-(main)> label.inspect_accessibility                                             
-Accessibility label: "Hello!"                                                   
-Accessibility hint: nil                                                         
-Accessibility traits: Static text                                               
-Accessibility value: nil                                                        
-Accessibility language: nil                                                     
-Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0                       
-Accessibility activation point: x=0.0 y=0.0                                     
+(main)> label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [100,100]))
+=> #<UILabel:0x103b8c40>
+(main)> label.text="Hello!"
+=> "Hello!"
+(main)> label.inspect_accessibility
+#<UILabel:0x103b8c40>
+Accessibility label: Hello!
+Accessibility hint: nil
+Accessibility traits: Static text
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0
+Accessibility activation point: x=50.0 y=50.0
 Accessibility path: nil
-Accessibility view is modal: false                                              
-Should group accessibility children: false                                      
-Accessibility elements hidden: false                                            
-Is accessibility element: false                                                 
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements hidden: false
+Is accessibility element: true
 Accessibility identifier: nil
+Accessible: true
+=> nil
 ```
 
 By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `inspect_a11y` as a shortcut. You can also use this abreviation when referring to the Accessibility class, for instance `A11y::Element`.
@@ -246,7 +247,7 @@ Ignores elements within views which are siblings of the receiver. If you present
 
 ####  `group_accessibility_children?` or `should_group_accessibility_children`
 
-VoiceOver gives two ways to browse the screen. The user can drag their finger around the screen and hear the contents. They can also swipe right or left with one finger to hear the next or previous element. Normally, VoiceOver reads from left to right, and from top to bottom. Sometimes this can get confusing, depending on the layout of the screen. Setting this to true tells VoiceOver to read the views in the order defined in the subviews array.
+VoiceOver gives two ways to browse the screen. The user can drag their finger around the screen and hear the contents. They can also swipe right or left with one finger to hear the next or previous element. When swiping to the next element, VoiceOver reads the elements from left to right, and from top to bottom. Sometimes this can get confusing, depending on the layout of the screen. Setting this to true tells VoiceOver to read the views in the order defined in the subviews array.
 
 #### `accessibility_elements_hidden?` or `accessibility_elements_hidden`
 
@@ -443,6 +444,8 @@ iOS 7 adds some speech attributes to use in attributed strings. To get them, jus
 - `:punctuation`
 - `:language`
 - `:pitch`
+
+### Automated Accessibility Testing
 
 ## contributing
 
