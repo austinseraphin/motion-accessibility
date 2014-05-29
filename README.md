@@ -124,6 +124,36 @@ Accessible: true
 
 By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `inspect_a11y` as a shortcut. You can also use this abreviation when referring to the Accessibility class, for instance `A11y::Element`.
 
+### Automated Accessibility Testing
+
+Below  you will find detailed documentation about all of the accessibility protocols. Don’t feel overwhelmed. The accessibility testing features will tell you exactly what you have to do. The accessibility inspector integrates all of these features. Let’s start by creating an unlabeled button, the bane of all VOiceOver users.
+
+```
+(main)> button=UIButton.new
+=> #<UIButton:0xd7831a0>
+(main)> button.inspect_a11y
+#<UIButton:0xd7831a0>
+Accessibility label: nil
+Accessibility hint: nil
+Accessibility traits: Button
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=0.0 width=0.0 height=0.0
+Accessibility activation point: x=0.0 y=0.0
+Accessibility path: nil
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements hidden: false
+Is accessibility element: false
+Accessibility identifier: nil
+Accessible: false
+2014-05-27 19:02:50.209 motion-accessibility[8851:70b] #<UIButton:0xd7831a0>: You must set the accessibility_label. You can use the setTitle:forState method to do this on a button.
+2014-05-27 19:02:50.223 motion-accessibility[8851:70b] #<UIButton:0xd7831a0>: You must set is_accessibility_element=true to make VoiceOver aware of it. This will often happen automatically when a view becomes visible by giving it a frame and adding it to a subview.
+=> #<UIButton:0xd7831a0>
+```
+
+
+
 ### UIAccessibility Informal Protocol
 
 This informal protocol describes how to convey proper information to VoiceOver, the piece of software which allows the blind to read the screen. All of the UIAccessibility attributes   now have Ruby-like names. Just like the protocol, these methods belong to the NSObject class, so you can use them anywhere. Usually, you will define them for a UIView.
@@ -166,15 +196,15 @@ Hints describe the results of performing an action. Only provide one when not ob
 #### `accessibility_traits`
 
 Traits describe an element's state, behavior, or usage. They tell
-VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator.
+VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator. Remembr to call `super.accessibility_traits` if defining them in a method.
 
-The `accessibility_attribute=` method accepts a symbol or array of symbols, and applies the accessibility_attribute method to them. For example, if a view displays an image  that opens a link, you can do this.
+The `accessibility_traits=` method also accepts a symbol or array of symbols, and applies the accessibility_traits method to them. For example, if a view displays an image  that opens a link, you can do this.
 
 ```
 class ImageLinkView < UIView
 # ....  
 def accessibility_traits
-:image.accessibility_trait|:link.accessibility_trait
+super.accessibility_traits|:image.accessibility_trait|:link.accessibility_trait
 end
 end
 ```
@@ -308,9 +338,9 @@ Increments the value of the accessibility element. Make sure to have the :adjust
 
 Decrements the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
 
-### UIAccessibilityElement
+### Accessibility::Element
 
-If you have something in your view that does not inherit from UIView or UIControl and you want to make it accessible, you need to define it as an accessibility element. Accessibility elements belong to an accessibility container, in other words the view which contains them. To create one, just call `Accessibility::Element.new` with the container, usually self. Like a UIView, an accessibility element has attributes, and you get and set them in exactly the same way.
+If you have something in your view that does not inherit from UIView or UIControl and you want to make it accessible, you need to define it as an accessibility element. Accessibility elements belong to an accessibility container, in other words the view which contains them. To create one, just call `Accessibility::Element.init_with_accessibility_container` with the container, usually self. Like a UIView, an accessibility element has attributes, and you get and set them in exactly the same way.
 
 ```
 class CustomView < UIView
@@ -320,6 +350,7 @@ super
 # …
 accessibility=Accessibility::Element.new(self)
 accessibility.label="Hello."
+accessibility.hint=“Presses the magic button”
 accessibility.frame=view.frame
 accessibility.traits=:button
 end
@@ -444,8 +475,6 @@ iOS 7 adds some speech attributes to use in attributed strings. To get them, jus
 - `:punctuation`
 - `:language`
 - `:pitch`
-
-### Automated Accessibility Testing
 
 ## contributing
 

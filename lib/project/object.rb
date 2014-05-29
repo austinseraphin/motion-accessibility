@@ -50,19 +50,6 @@ self.accessibilityTraits=bits
 self
 end
 
-def inspect_accessibility_traits
-	return accessibility_traits if accessibility_traits>Accessibility::Traits.values.max
-traits=[]
-Accessibility::Traits.each do |trait, bitmask|
-if self.accessibility_traits&bitmask>0
-name=trait.gsub(/_/,' ').capitalize
-traits<<name
-end
-end
-traits=["None"] if traits.empty?
-	traits.join(', ')
-end
-
 if self.respond_to?(:method_added)
 class << self
 alias :method_added_motion_accessibility :method_added

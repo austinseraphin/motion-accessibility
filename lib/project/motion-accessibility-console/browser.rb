@@ -70,7 +70,7 @@ found=$browser_current.find(request)
 if found
 if found.subviews.empty?
 $browser_cursor=found
-return found.view.inspect_a11y
+return A11y.inspect found.view
 end
 A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=found
