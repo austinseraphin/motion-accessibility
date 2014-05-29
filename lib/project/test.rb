@@ -4,6 +4,7 @@ module Accessibility
 			Path=Array.new
 			Data= {
 				depth: 0,
+quiet: false,
 				debug: false
 			}
 
@@ -449,7 +450,9 @@ end
 
 		def accessible?
 			A11y::Test::Data[:depth]=0
-			A11y::Test.run_tests(self)
+			result=A11y::Test.run_tests(self)
+A11y.doctor if RUBYMOTION_ENV=='test'&&!A11y::Test::Data[:quiet]
+result
 		end
 
 	end

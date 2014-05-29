@@ -106,6 +106,7 @@ A11y::Ignored_Views.member?(class_name)
 end
 
 def self.build(view=nil, superview=nil)
+A11y::Test::Data[:quiet]=true
 tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
@@ -129,6 +130,7 @@ end
 tree.view=view
 tree.subviews=subviews
 tree.superview=superview
+A11y::Test::Data[:quiet]=false
 tree
 end
 

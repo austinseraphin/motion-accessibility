@@ -182,7 +182,7 @@ end
 You may not want to do this however, because it can get confusing navigating down subview hierarchies, though it will report the path taken. Still, better to do that then nothing at all.
 
 #### `Accessibility.doctor`
-The accessibility doctor will report on what you have to do. It writes this to the NSLog. If given no arguments it will report on the last object called with the `accessible?` predicate. It returns the object with the problem, or nil if it finds nothing wrong. The accessibility inspector returns this as well. If a spec fails remember to put this before the test.
+The accessibility doctor will report on what you have to do. It writes this to the NSLog. If given no arguments it will report on the last object called with the `accessible?` predicate. It returns the object with the problem, or nil if it finds nothing wrong. The accessibility inspector returns this as well. If a spec fails, `accessible?` will call this automatically..
 
 #### `accessibility_test`
 Finally, you can specify which accessibility test applies to an object by setting this value. You may do this in the same way you set other attributes. You can use a setter:
