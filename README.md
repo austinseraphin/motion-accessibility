@@ -96,14 +96,14 @@ Browsing  UIView
 
 ### The Accessibility Inspector
 
-You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call the `inspect_accessibility` method on any object.
+You can easily see the state of any of the following attributes and methods by using the accessibility inspector. Just call `Accessibility.inspect` and pass any object as an argument.
 
 ```
 (main)> label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [100,100]))
 => #<UILabel:0x103b8c40>
 (main)> label.text="Hello!"
 => "Hello!"
-(main)> label.inspect_accessibility
+(main)> Accessibility.inspect label
 #<UILabel:0x103b8c40>
 Accessibility label: Hello!
 Accessibility hint: nil
@@ -122,16 +122,16 @@ Accessible: true
 => nil
 ```
 
-By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `inspect_a11y` as a shortcut. You can also use this abreviation when referring to the Accessibility class, for instance `A11y::Element`.
+By the way, `a11y` stands for `accessibility`, because it has a, then 11 letters, then y. Hence, you can use `A11y.inspect` as a shortcut.
 
 ### Automated Accessibility Testing
 
-Below  you will find detailed documentation about all of the accessibility protocols. Don’t feel overwhelmed. The accessibility testing features will tell you exactly what you have to do. The accessibility inspector integrates all of these features. Let’s start by creating an unlabeled button, the bane of all VOiceOver users.
+Below  you will find detailed documentation about all of the accessibility protocols. Don’t feel overwhelmed. The accessibility inspector will tell you exactly what you have to do. Let’s start by creating an unlabeled button, the bane of all VOiceOver users.
 
 ```
 (main)> button=UIButton.new
 => #<UIButton:0xd7831a0>
-(main)> button.inspect_a11y
+(main)> A11y.inspect button
 #<UIButton:0xd7831a0>
 Accessibility label: nil
 Accessibility hint: nil
@@ -152,7 +152,56 @@ Accessible: false
 => #<UIButton:0xd7831a0>
 ```
 
+This incorporates two features discussed below.
 
+#### `accessible?`
+Call the `accessible?` predicate on any object to determine its accessibility. Like all predicates it returns true or false. You can include this in your specs. If you build in accessibility testing you will never break accessibility, something even worse than no accessibility at all. For example, if you have a variable `@label` which contains a label, you could write:
+```
+@label.should.be.accessible
+```
+So simple! This works recursively. Say you run some functional tests on a view controller.
+
+```
+tests Test_Controller
+it “#accessible?`
+controller.should.be.accessible
+end
+```
+
+Or for the ultimate in laziness:
+
+```
+before do
+@app=UIApplication.sharedApplication
+end
+
+it “accessible?” do
+@app.should.be.accessible
+end
+```
+You may not want to do this however, because it can get confusing navigating down subview hierarchies, though it will report the path taken. Still, better to do that then nothing at all.
+
+#### `Accessibility.doctor`
+The accessibility doctor will report on what you have to do. It writes this to the NSLog. If given no arguments it will report on the last object called with the `accessible?` predicate. It returns the object with the problem, or nil if it finds nothing wrong. The accessibility inspector returns this as well. If a spec fails remember to put this before the test.
+
+#### `accessibility_test`
+Finally, you can specify which accessibility test applies to an object by setting this value. You may do this in the same way you set other attributes. You can use a setter:
+
+```
+view=UIView.new
+view.accessibility_test=:UILabel
+```
+
+Or you may define it in a class. If you do this make sure that it returns a symbol of the class you want to test against, since it has no error checking unlike the setter.
+```
+class Custom_View < UIView
+
+def accessibility_test
+:UILabel
+end
+
+end
+```
 
 ### UIAccessibility Informal Protocol
 
@@ -196,7 +245,7 @@ Hints describe the results of performing an action. Only provide one when not ob
 #### `accessibility_traits`
 
 Traits describe an element's state, behavior, or usage. They tell
-VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator. Remembr to call `super.accessibility_traits` if defining them in a method.
+VoiceOver how to respond to a view. To combine them, use the single vertical bar  `|` binary or operator. Remember to call `super.accessibility_traits` if defining them in a method.
 
 The `accessibility_traits=` method also accepts a symbol or array of symbols, and applies the accessibility_traits method to them. For example, if a view displays an image  that opens a link, you can do this.
 
