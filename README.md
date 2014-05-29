@@ -4,7 +4,7 @@
 
 https://github.com/austinseraphin/motion-accessibility
 
-Motion-accessibility provides the tools needed for sighted and blind iOS developers to make their apps more accessible. It wraps Apple’s UIAccessibility protocols in Ruby, and provides an accessibility inspector. It has a console for blind developers, since the iOS simulator doesn’t work well with VoiceOver. It also has automated accessibility testing for your views, and the accessibility doctor will help diagnose your problems and tell you how to fix them. You can build accessibility testing into your specs, so you will never break VoiceOver compatibility!
+Motion-accessibility provides the tools needed for sighted and blind iOS RubyMotion developers to make their apps more accessible. It wraps Apple’s UIAccessibility protocols in Ruby, and provides an accessibility inspector. It has a console for blind developers, since the iOS simulator doesn’t work well with VoiceOver. It also has automated accessibility testing for your views, and the accessibility doctor will help diagnose your problems and tell you how to fix them. You can build accessibility testing into your specs, so you will never break VoiceOver compatibility!
 
 ## Installation
 
@@ -202,6 +202,10 @@ end
 
 end
 ```
+
+### Accessibility vs. Usability
+
+A difference exists between accessibility and usability, though often the two get lumped together under the umbrella of the former. Accessibility refers to whether or not a user can view and interact with something in a meaningful way. In this case, this means making VoiceOver aware of the different elements of your app. Usability gets into more intangible realms, and has to do with whether or not it actually makes sense to a user. In this case this means a blind human using VoiceOver, and only a blind human using VoiceOver can tell you this. A computer can test for accessibility, but only a human can test for usability.
 
 ### UIAccessibility Informal Protocol
 
@@ -533,3 +537,7 @@ iOS 7 adds some speech attributes to use in attributed strings. To get them, jus
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## A Special Offer for You
+
+I do [freelance accessibility consulting.](austinseraphin.com) If you use my gem I will give you a discount. Contact me for more information.
