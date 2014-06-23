@@ -50,7 +50,7 @@ A11y::Console.init unless $browser_current
 A11y::Console.start_refreshing
 request=0 if request==:back
 if request.nil?
-elsif request==:top||request==:refresh
+elsif request==:top
 A11y::Console.init
 $browser_current=$browser_tree
 $browser_path.clear
@@ -59,6 +59,9 @@ raise "You cannot go back any further" if $browser_path.length<2
 $browser_path.pop
 $browser_current=$browser_path.last
 A11y::Console.init unless A11y::Data[:refresh]
+elsif request==:refresh
+	raise "This view cannot refresh." unless $browser_current.view.respond_to?(:reloadData)
+	$browser_current.view.reloadData
 elsif request==:scroll
 raise "This view cannot scroll" unless A11y::Console.scrollable_view?($browser_current.view)
 below=CGRect.new([0, $browser_current.view.size.height], $browser_current.view.size)
