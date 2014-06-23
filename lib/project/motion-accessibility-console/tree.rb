@@ -59,7 +59,7 @@ display=Array.new
 control=@view.class.to_s
 control=nil if A11y::View_Names[control]
 control="Superview #{control}" if index==0
-control.sub!(/UITableViewCell(AccessibilityElement)?/, "Table cell")
+control.sub!(/UITableViewCell(AccessibilityElement)?/, "Table cell") if control
 if @view.class==UITableViewCell
 name=view.text
 elsif @view.class==UITableViewCellAccessibilityElement

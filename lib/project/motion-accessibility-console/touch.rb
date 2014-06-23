@@ -47,7 +47,7 @@ when "UITableViewCellAccessibilityElement"
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
 index=options[:index]||sv.indexPathForCell(view.tableViewCell)
 raise "Could not get the index" unless index
-sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
+view.container.delegate.tableView(view.container, didSelectRowAtIndexPath: index)
 when "UINavigationItemButtonView"
 view.superview.delegate.popViewControllerAnimated(true)
 else
