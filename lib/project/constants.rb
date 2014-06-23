@@ -199,13 +199,13 @@ end
 
 Touchable_Types = ["UITextField", "UIButton", "UIPickerView", "UIDatePicker",
 "UISegmentedControl", "UISlider", "UIStepper", "UISwitch",
-"UITableViewCell", "UITabBarButton","UINavigationItemButtonView"]
+"UITableViewCell", "UITableViewCellAccessibilityElement", "UITabBarButton","UINavigationItemButtonView"]
 
 Ignored_Views = ["UILayoutContainerView", "UITransitionView", "UINavigationTransitionView", "UIViewControllerWrapperView", "UITableViewCellContentView", "UINavigationItemView", "UITableViewWrapperView"]
 
 Ignored_ImageViews = ["UINavigationBar", "UITabBar", "UITableView"]
 
-Reverse_Views = ["UITableView", "UINavigationBar", "UITabBar"]
+Reverse_Views = ["UINavigationBar", "UITabBar"]
 
 View_Names = {"UINavigationItemButtonView" => "Back Button"}
 

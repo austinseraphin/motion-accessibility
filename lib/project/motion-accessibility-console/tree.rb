@@ -59,13 +59,11 @@ display=Array.new
 control=@view.class.to_s
 control=nil if A11y::View_Names[control]
 control="Superview #{control}" if index==0
+control.sub!(/UITableViewCell(AccessibilityElement)?/, "Table cell")
 if @view.class==UITableViewCell
-label=@view.subviews.first
-while label&&!label.kind_of?(UILabel)
-label=label.subviews.first
-end
-raise "Could not find the UITableViewCell's label" unless label.kind_of?(UILabel)
-name=label.text
+name=view.text
+elsif @view.class==UITableViewCellAccessibilityElement
+name=view.tableViewCell.text
 elsif @view.class==UITextField
 name=@view.text
 else
@@ -114,8 +112,7 @@ if A11y::Element.container?(view)
 subview_tree=self.build(element, tree)
 subviews<<subview_tree
 	end
-end
-if view.respond_to?(:subviews)
+	elsif view.respond_to?(:subviews)
 view.subviews.each do |subview|
 subview_tree=self.build(subview, tree)
 if self.ignore_view?(subview)
