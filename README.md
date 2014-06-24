@@ -56,7 +56,9 @@ Browsing  UIView
 => nil
 ```
 
-You can  refresh the browser by passing the `:refresh` or `:top` keyword. 
+You can return to the top of the view hierarchy by using `:top`. This also refreshes the browser.
+
+You can refresh a table with `:refresh`.
 
 You may pass the `:scroll` keyword to scroll a UIScrollView or descendants, such as a UITableView. This still has some minor issues .
 
