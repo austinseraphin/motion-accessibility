@@ -451,6 +451,8 @@ Accepts an integer and returns the accessibility element. You can  use the stand
 Returns the number of accessible elements. You can use `Array#length` for this.
 #### `index_of_accessibility_element`
 Accepts an accessibility element and returns its index as an integer. You can use the `Array#index` method for this.
+#### `accessibility_element_container?`
+Returns true if the object behaves like a container.
 
 ### UIAccessibilityFocus Informal Protocol
 
