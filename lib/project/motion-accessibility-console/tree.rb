@@ -108,7 +108,7 @@ A11y::Test::Data[:quiet]=true
 tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
-if A11y::Element.container?(view)
+if view.accessibility_element_container?
 	view.each_accessibility_element do |element|
 subview_tree=self.build(element, tree)
 subviews<<subview_tree

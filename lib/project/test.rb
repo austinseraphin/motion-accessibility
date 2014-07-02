@@ -418,7 +418,7 @@ after=tests[:options][:test]
 	 result=result&&this_result
 			Data[:depth]=Data[:depth]-1
  end
- if result&&A11y::Element.container?(obj)
+ if result&&obj.accessibility_element_container?
 	 result=result&&self.container(obj)
  end
 if result&&tests[:options][:recurse]&&obj.respond_to?(:subviews)&&obj.subviews

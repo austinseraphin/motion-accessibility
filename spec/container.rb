@@ -54,9 +54,9 @@ describe "Accessibility Container" do
 		@container.index_of_accessibility_element(@container.data.first).should.equal 0
 	end
 
-	it "A11y::Element.container?" do
-		A11y::Element.container?(@container).should.be.true
-		A11y::Element.container?(nil).should.not.be.true
+	it "Object.container" do
+		@container.should.be.accessibility_element_container
+		nil.should.not.be.accessibility_element_container
 	end
 
 end

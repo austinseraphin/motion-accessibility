@@ -18,7 +18,7 @@ self.inspect_accessibility_attribute(obj,ios)
 displayed<<ios
 end
 puts "Accessibility test: #{obj.accessibility_test}" if obj.accessibility_test
-puts "Accessibility container: #{obj.accessibility_element_count} elements" if A11y::Element.container?(obj)
+puts "Accessibility container: #{obj.accessibility_element_count} elements" if obj.accessibility_element_container?
 puts "Accessible: #{obj.accessible?}"
 A11y.doctor
 end

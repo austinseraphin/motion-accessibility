@@ -48,18 +48,18 @@ define_method(ruby) { self.send(ios)}
 end
 end
 
-def self.container?(obj)
-	!obj.accessibility_element_at_index(0).nil?
-end
-
 end
 
 Accessibility::Element=UIAccessibilityElement
 
 class NSObject
 
+def accessibility_element_container?
+	!self.accessibility_element_at_index(0).nil?
+end
+
 	def each_accessibility_element
-		return unless A11y::Element.container?(self)
+		return unless self.accessibility_element_container?
 		self.accessibility_element_count.times {|n| yield(self.accessibility_element_at_index(n))}
 	end
 
