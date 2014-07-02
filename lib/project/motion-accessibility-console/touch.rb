@@ -39,11 +39,13 @@ when "UISwitch"
 arg||=!view.arg
 view.on=arg
 when "UITableViewCell"
+	raise "You cannot touch cells in this table." unless sv.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
 index=options[:index]||sv.indexPathForCell(view)
 raise "Could not get the index" unless index
 sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
 when "UITableViewCellAccessibilityElement" 
+	raise "You cannot touch cells in this table." unless view.container.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
 index=options[:index]||sv.indexPathForCell(view.tableViewCell)
 raise "Could not get the index" unless index

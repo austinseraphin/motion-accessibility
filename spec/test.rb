@@ -78,7 +78,12 @@ a.should.be.accessible
 
 		it "UIImage" do
 			image=UIImage.imageNamed "Default-568h@2x.png"
+			A11y::Test.quiet=true
 			image.should.not.be.accessible
+			A11y::Test.quiet=false
+			image.accessibility_label="test"
+			image.is_accessibility_element=true
+			image.should.be.accessible
 		end
 
 		it "UIImageView" do

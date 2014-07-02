@@ -11,7 +11,7 @@ self.view.addSubview(@table)
 @data=("A".."Z").to_a
 end
 
-def tableView(tableVview, numberOfRowsInSection: section)
+def tableView(tableView, numberOfRowsInSection: section)
 @data.count
 end
 

@@ -8,6 +8,13 @@ quiet: false,
 				debug: false
 			}
 
+			def self.quiet
+				Data[:quiet]
+			end
+			def self.quiet=(q)
+				Data[:quiet]=q
+			end
+
 			Options = {
 				recurse: true
 			}

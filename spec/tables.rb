@@ -16,4 +16,16 @@ A11y::Console.touch(cell, UIControlEventTouchUpInside, {superview: controller.ta
 $touched_table.should==cell.textLabel.text
 end
 
+it "touches a UITableViewAccessibilityElement" do
+index=NSIndexPath.indexPathForRow(0, inSection: 0)
+	controller.accessibility_element_count.should.> 0
+cell=controller.table.accessibility_element_at_index(0)
+cell.class.should==UITableViewCellAccessibilityElement
+$touched_table=nil
+A11y::Console.touch(cell, UIControlEventTouchUpInside, {superview: controller.table, index: index})
+cell.accessibility_element_count.should > 0
+text=cell.accessibility_element_at_index(0)
+$touched_table.should==text.accessibility_label
+end
+
 end

@@ -9,6 +9,9 @@ control=view.class
 until A11y::Touchable_Types.member?(control.to_s)||control.nil?
 control=control.superclass
 end
+if control.class==UITableViewCell
+	control=nil unless controll.respond_to?("tableView:didSelectRowAtIndexPath")
+end
 control
 end
 
@@ -105,11 +108,20 @@ def view(request=nil)
 A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=$browser_tree unless $browser_current
 $browser_cursor=$browser_tree unless $browser_cursor
-return $browser_cursor.view unless request
+result=nil
+if request
 result=$browser_current.find(request)
 raise "Unknown view" unless result
 $browser_cursor=result
-result.view
+result=result.view
+else
+result=$browser_cursor.view 
+result
+end
+if result.class==UITableViewCellAccessibilityElement
+result=result.tableViewCell
+end
+result
 end
 
 module_function :browse, :view

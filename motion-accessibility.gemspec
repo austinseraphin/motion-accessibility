@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-VERSION = "3.0.3"
+VERSION = "3.0.4"
 
 Gem::Specification.new do |spec|
   spec.name          = "motion-accessibility"
