@@ -18,13 +18,28 @@ self.subviews.each {|subview| other.subviews<<subview.clone}
 other
 end
 
+def self.container_equals(v1, v2, depth=0)
+	return false unless v1==v2
+	return false unless v1.accessibility_element_count==v2.accessibility_element_count
+	if v1.accessibility_element_container?
+	v1.accessibility_element_count.times do |element_index|
+return false unless self.container_equals(v1.accessibility_element_at_index(element_index), v2.accessibility_element_at_index(element_index), depth+1)
+	end
+	end
+	true
+end
+
 def ==(other)
 	return false if other.nil?
 return false if self.superview&&other.superview&&self.superview.view!=other.superview.view
+if self.view.accessibility_element_container?
+	A11y::Console::Tree.container_equals(self.view, other.view)
+else
 return false unless self.view==other.view
 return false unless self.subviews.size==other.subviews.size
 self.subviews.each_index {|index| return false unless self.subviews[index]==other.subviews[index]}
 return true
+end
 end
 
 def [](n)
@@ -108,7 +123,20 @@ A11y::Test::Data[:quiet]=true
 tree=self.new
 view=UIApplication.sharedApplication.keyWindow if view.nil?
 subviews=[]
-if view.accessibility_element_container?
+if view.respond_to?(:numberOfSections)
+	view.numberOfSections.times do |section_number|
+		section=self.new(view: view, superview: tree)
+		view.numberOfRowsInSection(section_number).times do |row_number|
+			index_path=NSIndexPath.indexPathForRow(row_number, inSection: section_number)
+cell=view.delegate.tableView(view, cellForRowAtIndexPath: index_path)
+raise "Could not get the cell" unless cell
+cell_node=self.build(cell, section)
+section.subviews<<cell_node
+		end
+subviews<<section
+	end
+	subviews=subviews.first.subviews if subviews.size==1
+elsif view.accessibility_element_container?
 	view.each_accessibility_element do |element|
 subview_tree=self.build(element, tree)
 subviews<<subview_tree

@@ -1,11 +1,12 @@
 module Accessibility
 module Console
 
-def self.touch(view, arg=nil, options={})
+def self.touch(request, arg=nil, options={})
 self.start_refreshing
 $browser_current=$browser_tree unless $browser_current
+view=nil
 unless RUBYMOTION_ENV=='test'
-found=$browser_current.find(view)
+found=$browser_current.find(request)
 raise "Could not find the view" unless found
       view=found.view
 end
@@ -41,14 +42,19 @@ view.on=arg
 when "UITableViewCell"
 	raise "You cannot touch cells in this table." unless sv.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
-index=options[:index]||sv.indexPathForCell(view)
+index=options[:index]||NSIndexPath.indexPathForRow(request-1, inSection: 0)
+puts "index=#{index.inspect}"
 raise "Could not get the index" unless index
 sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
 when "UITableViewCellAccessibilityElement" 
 	raise "You cannot touch cells in this table." unless view.container.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
-raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
-index=options[:index]||sv.indexPathForCell(view.tableViewCell)
+if options[:index]
+	index=options[:index]
+else
+raise "Invalid number" if request>view.container.delegate.accessibility_element_count
+index=view.container.indexPathForCell(view.tableViewCell)
 raise "Could not get the index" unless index
+end
 view.container.delegate.tableView(view.container, didSelectRowAtIndexPath: index)
 when "UINavigationItemButtonView"
 view.superview.delegate.popViewControllerAnimated(true)
