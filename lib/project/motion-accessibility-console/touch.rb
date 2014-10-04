@@ -42,10 +42,18 @@ view.on=arg
 when "UITableViewCell"
 	raise "You cannot touch cells in this table." unless sv.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
 raise "Could not get the UITableView" unless sv.kind_of?(UITableView)
+if sv.respond_to?(:numberOfSections)
+	sections=sv.numberOfSections
+else
+	sections=1
+end
+if sections>1
+index=options[:index]||NSIndexPath.indexPathForRow(request-1, inSection: $browser_last-1)
+else
 index=options[:index]||NSIndexPath.indexPathForRow(request-1, inSection: 0)
-puts "index=#{index.inspect}"
+end
 raise "Could not get the index" unless index
-sv.delegate.tableView(self, didSelectRowAtIndexPath: index)
+sv.delegate.tableView(sv.delegate, didSelectRowAtIndexPath: index)
 when "UITableViewCellAccessibilityElement" 
 	raise "You cannot touch cells in this table." unless view.container.delegate.respond_to?("tableView:didSelectRowAtIndexPath")
 if options[:index]

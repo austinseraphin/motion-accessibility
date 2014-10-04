@@ -21,21 +21,27 @@ view.addSubview(@table)
 end
 
 def tableView(view, numberOfRowsInSection: section)
-@data.count
+@data.count/2
+end
+
+def numberOfSectionsInTableView(view)
+	2
 end
 
 def tableView(view, cellForRowAtIndexPath: index)
+	letter=(index.section*13)+index.row
 @reuse_identifier||="CELL_IDENTIFIER"
 cell=view.dequeueReusableCellWithIdentifier(@reuse_identifier)
 cell=UITableViewCell.alloc.initWithStyle(0, reuseIdentifier: @reuse_identifier)
 cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator
-cell.textLabel.text=@data[index.row]
+cell.textLabel.text=@data[letter]
 cell
 end
 
 def tableView(view, didSelectRowAtIndexPath: index)
-letter=@data[index.row]
-phonetic=Phonetics[index.row]
+	letter_index=(index.section*13)+index.row
+letter=@data[letter_index]
+phonetic=Phonetics[letter_index]
 controller=UIViewController.alloc.initWithNibName(nil, bundle: nil)
 controller.title=letter
 label=UILabel.alloc.initWithFrame(CGRectZero)

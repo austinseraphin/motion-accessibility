@@ -79,6 +79,8 @@ if @view.class==UITableViewCell
 name=view.text
 elsif @view.class==UITableViewCellAccessibilityElement
 name=view.tableViewCell.text
+elsif view.respond_to?(:text)
+	name=view.text
 elsif @view.class==UITextField
 name=@view.text
 else

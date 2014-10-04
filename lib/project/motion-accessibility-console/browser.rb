@@ -2,6 +2,7 @@ module Accessibility
 module Console
 
 $browser_path=[]
+$browser_last=nil
 Update_Delay=1.0
 
 def self.touchable_type(view)
@@ -81,6 +82,7 @@ end
 A11y::Console.init unless A11y::Data[:refresh]
 $browser_current=found
 $browser_path<<found
+$browser_last=request
 end
 elsif request.respond_to?(:view)&&request.respond_to?(:subviews)
 	A11y::Console.init(request)
