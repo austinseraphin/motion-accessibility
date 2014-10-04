@@ -9,6 +9,8 @@ unless RUBYMOTION_ENV=='test'
 found=$browser_current.find(request)
 raise "Could not find the view" unless found
       view=found.view
+else
+	view=request
 end
 control=A11y::Console.touchable_type(view)
 raise "I don't know how to touch a #{view.class}"  if control.nil?

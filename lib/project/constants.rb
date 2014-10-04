@@ -1,4 +1,4 @@
-class Accessibility
+module Accessibility
 
 Data={}
 
@@ -253,4 +253,4 @@ end
 
 end
 
-A11y=Accessibility unless defined?(A11y)
+A11y=Accessibility unless defined? A11y
