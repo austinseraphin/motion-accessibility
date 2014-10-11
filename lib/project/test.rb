@@ -275,6 +275,11 @@ if UIDevice.currentDevice.systemVersion.to_f>=8.0
 				test: :tableViewCell
 			}
 			}
+				Tests[:UIActionSheet] = {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				accessibility_view_is_modal: false
+			}
 end
 
 			def self.debug
