@@ -264,7 +264,12 @@ quiet: false,
 			}
 
 if UIDevice.currentDevice.systemVersion.to_f>=8.0
-	NSLog("Using iOS 8 tests")
+				Tests[:UITableView] = {
+				accessibility_label: nil,
+				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				should_group_accessibility_children: true,
+				is_accessibility_element: false
+			}
 				Tests[:UITableViewCell] = {
 				accessibility_label: :ignore,
 				accessibility_value: :ignore,
