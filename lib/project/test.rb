@@ -264,6 +264,22 @@ quiet: false,
 			}
 
 if UIDevice.currentDevice.systemVersion.to_f>=8.0
+				Tests[:UIActionSheet] = {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				accessibility_view_is_modal: false
+			}
+				Tests[:UINavigationTransitionView] = {
+				accessibility_label: nil,
+				should_group_accessibility_children: false,
+				is_accessibility_element: false
+			}
+				Tests[:UIPageControl] = {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				accessibility_value: [String, "You must set the accessibility_value to something meaningful, for example 'Page 1 of 1'"],
+				accessibility_traits: UIAccessibilityTraitUpdatesFrequently|UIAccessibilityTraitAdjustable
+			}
 				Tests[:UISlider] = {
 				accessibility_label: nil,
 				accessibility_value: String,
@@ -286,11 +302,6 @@ if UIDevice.currentDevice.systemVersion.to_f>=8.0
 				recurse: false,
 				test: :tableViewCell
 			}
-			}
-				Tests[:UIActionSheet] = {
-				accessibility_label: nil,
-				is_accessibility_element: false,
-				accessibility_view_is_modal: false
 			}
 end
 
