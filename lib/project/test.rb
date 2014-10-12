@@ -264,6 +264,13 @@ quiet: false,
 			}
 
 if UIDevice.currentDevice.systemVersion.to_f>=8.0
+				Tests[:UISlider] = {
+				accessibility_label: nil,
+				accessibility_value: String,
+				accessibility_traits: UIAccessibilityTraitAdjustable,
+				is_accessibility_element: false,
+				options: {recurse: false}
+			}
 				Tests[:UITableView] = {
 				accessibility_label: nil,
 				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
