@@ -36,7 +36,7 @@ custom.accessibility_test=UIView
 	end
 
 	it "UIAccessibilityElement" do
-		a=A11y::Element.init_with_accessibility_container(self)
+		a=A11y::Element.alloc.init_with_accessibility_container(self)
 		a.accessibility_test=:UILabel
 		a.label="Test"
 a.traits=:static_text

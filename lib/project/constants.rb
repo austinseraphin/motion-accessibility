@@ -181,7 +181,7 @@ Default_Type_Values = {
 :fixnum => 23,
 :cgrect=>CGRectMake(0,0,100,100),
 :cgpoint=>CGPointMake(100,100),
-:accessibility_elements => [UIAccessibilityElement.alloc.initWithAccessibilityContainer(self)]
+:accessibility_elements => [UIView.new]
 }
 
 def self.attribute_type(attribute)

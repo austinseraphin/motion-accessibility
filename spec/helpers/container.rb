@@ -4,7 +4,7 @@ class Container_Test < UIView
 
 def init_data
 	@data=(1..10).map do |n|
-		element=A11y::Element.init_with_accessibility_container(self)
+		element=A11y::Element.alloc.init_with_accessibility_container(self)
 		element.accessibility_test=UILabel
 		element.label="Test element #{n}"
 		element.traits=:static_text

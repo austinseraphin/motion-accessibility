@@ -1,7 +1,7 @@
 describe Accessibility::Element do
 
 	before do
-		@a=A11y::Element.init_with_accessibility_container(self)
+		@a=A11y::Element.alloc.init_with_accessibility_container(self)
 		@a.label="Test"
 		@a.hint="Test"
 @a.traits=:button

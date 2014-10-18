@@ -1,6 +1,6 @@
 class UIAccessibilityElement
 
-def self.init_with_accessibility_container(container)
+def init_with_accessibility_container(container)
 	UIAccessibilityElement.alloc.initWithAccessibilityContainer(container)
 end
 
@@ -50,12 +50,12 @@ end
 
 end
 
-Accessibility::Element=UIAccessibilityElement
+Accessibility::Element=UIAccessibilityElement unless defined? Accessibility::Element
 
 class NSObject
 
 def accessibility_element_container?
-	!self.accessibility_element_at_index(0).nil?
+	self.accessibility_element_at_index(0)?true:false
 end
 
 	def each_accessibility_element
