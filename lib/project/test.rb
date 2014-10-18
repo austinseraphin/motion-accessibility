@@ -271,7 +271,7 @@ if UIDevice.currentDevice.systemVersion.to_f>=8.0
 			}
 				Tests[:UINavigationTransitionView] = {
 				accessibility_label: nil,
-				should_group_accessibility_children: false,
+				should_group_accessibility_children: :ignore,
 				is_accessibility_element: false
 			}
 				Tests[:UIPageControl] = {

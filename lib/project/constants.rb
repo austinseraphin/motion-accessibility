@@ -37,6 +37,8 @@ Attributes = {
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
 :is_accessibility_element= => :setIsAccessibilityElement,
+:accessibility_custom_actions => :accessibilityCustomActions,
+:accessibility_custom_actions= => :setAccessibilityCustomActions,
 :accessibility_identifier => :accessibilityIdentifier,
 :accessibility_identifier= => :setAccessibilityIdentifier
 }
@@ -258,3 +260,5 @@ end
 end
 
 A11y=Accessibility unless defined? A11y
+A11y::Custom_Action = UIAccessibilityCustomAction unless defined? A11y::Custom_Action
+
