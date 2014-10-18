@@ -25,6 +25,8 @@ Attributes = {
 :should_group_accessibility_children => :shouldGroupAccessibilityChildren,
 :group_accessibility_children? => :shouldGroupAccessibilityChildren,
 :should_group_accessibility_children= => :setShouldGroupAccessibilityChildren,
+:accessibility_elements => :accessibilityElements,
+:accessibility_elements= => :setAccessibilityElements,
 :accessibility_elements_hidden => :accessibilityElementsHidden,
 :accessibility_elements_hidden? => :accessibilityElementsHidden,
 :accessibility_elements_hidden= => :setAccessibilityElementsHidden,
@@ -35,8 +37,6 @@ Attributes = {
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
 :is_accessibility_element= => :setIsAccessibilityElement,
-:accessibility_elements => :accessibilityElements,
-:accessibility_elements= => :setAccessibilityElements,
 :accessibility_identifier => :accessibilityIdentifier,
 :accessibility_identifier= => :setAccessibilityIdentifier
 }
