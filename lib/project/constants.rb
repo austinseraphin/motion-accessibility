@@ -174,7 +174,8 @@ Attribute_Types = {
 :shouldGroupAccessibilityChildren=>:boolean,
 :accessibilityElementsHidden=>:boolean,
 :isAccessibilityElement=>:boolean,
-:accessibilityElements => :accessibility_elements
+:accessibilityElements => :accessibility_elements,
+:accessibility_custom_actions => :accessibility_custom_actions
 }
 
 Default_Type_Values = {
@@ -183,7 +184,8 @@ Default_Type_Values = {
 :fixnum => 23,
 :cgrect=>CGRectMake(0,0,100,100),
 :cgpoint=>CGPointMake(100,100),
-:accessibility_elements => [UIView.new]
+:accessibility_elements => [UIView.new],
+accessibility_custom_actions: [UIAccessibilityCustomAction.alloc.initWithName("Test", target: self, selector: 'test')]
 }
 
 def self.attribute_type(attribute)
