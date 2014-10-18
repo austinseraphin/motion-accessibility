@@ -35,6 +35,8 @@ Attributes = {
 :accessibility_element? => :isAccessibilityElement,
 :is_accessibility_element => :isAccessibilityElement,
 :is_accessibility_element= => :setIsAccessibilityElement,
+:accessibility_elements => :accessibilityElements,
+:accessibility_elements= => :setAccessibilityElements,
 :accessibility_identifier => :accessibilityIdentifier,
 :accessibility_identifier= => :setAccessibilityIdentifier
 }
@@ -169,7 +171,8 @@ Attribute_Types = {
 :accessibilityViewIsModal=>:boolean,
 :shouldGroupAccessibilityChildren=>:boolean,
 :accessibilityElementsHidden=>:boolean,
-:isAccessibilityElement=>:boolean
+:isAccessibilityElement=>:boolean,
+:accessibilityElements => :accessibility_elements
 }
 
 Default_Type_Values = {
@@ -177,7 +180,8 @@ Default_Type_Values = {
 :boolean => true,
 :fixnum => 23,
 :cgrect=>CGRectMake(0,0,100,100),
-:cgpoint=>CGPointMake(100,100)
+:cgpoint=>CGPointMake(100,100),
+:accessibility_elements => [UIAccessibilityElement.alloc.initWithAccessibilityContainer(self)]
 }
 
 def self.attribute_type(attribute)
