@@ -4,6 +4,10 @@ def init_with_accessibility_container(container)
 	UIAccessibilityElement.alloc.initWithAccessibilityContainer(container)
 end
 
+def inspect
+	self.accessibility_label
+end
+
 Accessibility::Element_Attributes.each do |ruby,ios|
 if ruby=~/=$/
 define_method(ruby) {|value| self.send(ios,value)}
