@@ -40,7 +40,8 @@ value=false if value==0||value.nil?
 when :cgrect then value="x=#{value.origin.x.round(1)} y=#{value.origin.y.round(1)} width=#{value.size.width.round(1)} height=#{value.size.height.round(1)}"
 when :cgpoint then value="x=#{value.x.round(1)} y=#{value.y.round(1)}"
 when :uibezierpath then value="x=#{value.bounds.origin.x.round(1)} y=#{value.bounds.origin.y.round(1)} width=#{value.bounds.size.width.round(1)} height=#{value.bounds.size.height.round(1)}"
-when :accessibility_elements then value.map! {|v| v.accessibility_label}
+when :accessibility_elements then value=value.map {|v| v.accessibility_label}
+when :accessibility_custom_actions then value=value.map {|a| a.name}
 end
 else
 value="nil" if value.nil?

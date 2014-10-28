@@ -57,7 +57,7 @@ def accessibility_custom_actions=(actions)
 			action
 		elsif action.kind_of?(Hash)
 			%w[name target selector].each {|key| raise "You must provide the #{key}" unless action[key.to_sym]}
-A11y::Custom_Action.alloc.initWithName(action[:name], target: action[:target], selector: action[:selector])
+UIAccessibilityCustomAction.alloc.initWithName(action[:name], target: action[:target], selector: action[:selector])
 		else
 			raise "Unknown custom accessibility action #{action.inspect}"
 		end

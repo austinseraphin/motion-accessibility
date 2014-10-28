@@ -175,7 +175,7 @@ Attribute_Types = {
 :accessibilityElementsHidden=>:boolean,
 :isAccessibilityElement=>:boolean,
 :accessibilityElements => :accessibility_elements,
-:accessibility_custom_actions => :accessibility_custom_actions
+:accessibilityCustomActions => :accessibility_custom_actions
 }
 
 Default_Type_Values = {
@@ -263,4 +263,3 @@ end
 
 A11y=Accessibility unless defined? A11y
 A11y::Custom_Action = UIAccessibilityCustomAction unless defined? A11y::Custom_Action
-
