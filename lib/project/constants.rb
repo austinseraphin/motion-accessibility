@@ -185,7 +185,7 @@ Default_Type_Values = {
 :cgrect=>CGRectMake(0,0,100,100),
 :cgpoint=>CGPointMake(100,100),
 :accessibility_elements => [UIView.new],
-accessibility_custom_actions: [UIAccessibilityCustomAction.alloc.initWithName("Test", target: self, selector: 'test')]
+:accessibility_custom_actions => [UIAccessibilityCustomAction.alloc.initWithName("Test", target: self, selector: 'test')]
 }
 
 def self.attribute_type(attribute)
