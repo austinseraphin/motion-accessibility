@@ -24,4 +24,14 @@ end
 nil
 end
 
+it "sets custom accessibility actions" do
+	@view.accessibility_custom_actions=[A11y::Custom_Action.alloc.initWithName("test", target: self, selector: 'test')]
+	@view.accessibility_custom_actions.should.be.kind_of(Array)
+	@view.accessibility_custom_actions[0].should.be.kind_of(A11y::Custom_Action)
+	@view.accessibility_custom_actions = [{name: "Test", target: self, selector: 'test'}]
+	@view.accessibility_custom_actions.should.be.kind_of(Array)
+	@view.accessibility_custom_actions[0].should.be.kind_of(A11y::Custom_Action)
+end
+
+
 end

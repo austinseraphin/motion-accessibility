@@ -50,6 +50,21 @@ self.accessibilityTraits=bits
 self
 end
 
+def accessibility_custom_actions=(actions)
+	raise "You must pass an array to custom_accessibility_actions=" unless actions.kind_of?(Array)
+	actions.map! do |action|
+		if action.kind_of?(A11y::Custom_Action)
+			action
+		elsif action.kind_of?(Hash)
+			%w[name target selector].each {|key| raise "You must provide the #{key}" unless action[key.to_sym]}
+A11y::Custom_Action.alloc.initWithName(action[:name], target: action[:target], selector: action[:selector])
+		else
+			raise "Unknown custom accessibility action #{action.inspect}"
+		end
+	end
+	self.accessibilityCustomActions=actions
+end
+
 if self.respond_to?(:method_added)
 class << self
 alias :method_added_motion_accessibility :method_added
