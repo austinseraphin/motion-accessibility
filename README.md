@@ -33,6 +33,9 @@ The motion-accessibility console gives you a way to interact with a running
 application through a purely textual interface. This works well for blind
 developers and command line users.
 
+Please note that this does *NOT* substitute for testing with VoiceOver on the
+device. You will only truly know if your app works with VoiceOver by using it.
+
 #### Enabling the Console
 
 To enable the console, you can do one of two things. If you would just like to

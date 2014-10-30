@@ -63,6 +63,7 @@ UIAccessibilityCustomAction.alloc.initWithName(action[:name], target: action[:ta
 		end
 	end
 	self.accessibilityCustomActions=actions
+	self
 end
 
 if self.respond_to?(:method_added)
