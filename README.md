@@ -118,12 +118,8 @@ using the accessibility inspector. Just call `Accessibility.inspect` and pass
 any object as an argument.
 
 ```
-(main)> label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [100,100]))
-=> #<UILabel:0x103b8c40>
-(main)> label.text="Hello!"
-=> "Hello!"
-(main)> Accessibility.inspect label
-#<UILabel:0x103b8c40>
+(main)> A11y.inspect label
+#<UILabel:0xb438140>
 Accessibility label: Hello!
 Accessibility hint: nil
 Accessibility traits: Static text
@@ -134,8 +130,10 @@ Accessibility activation point: x=50.0 y=50.0
 Accessibility path: nil
 Accessibility view is modal: false
 Should group accessibility children: false
+Accessibility elements: nil
 Accessibility elements hidden: false
 Is accessibility element: true
+Accessibility custom actions: nil
 Accessibility identifier: nil
 Accessible: true
 => nil
@@ -672,5 +670,4 @@ just call the `speech_attribute` method on the following symbols.
 
 ## A Special Offer for You
 
-I do [freelance accessibility consulting.](austinseraphin.com) If you use my
-gem I will give you a discount. Contact me for more information.
+I do [freelance accessibility consulting.](austinseraphin.com) If you use my gem I will give you a discount. Contact me for more information.
