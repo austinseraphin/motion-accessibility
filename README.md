@@ -416,6 +416,19 @@ bottom. Sometimes this can get confusing, depending on the layout of the
 screen. Setting this to true tells VoiceOver to read the views in the order
 defined in the subviews array.
 
+#### `accessibility_elements`
+
+An array which contains the elements which VoiceOver should access. New in iOS
+8, this offers a much easier way to create accessibility containers and their
+elements. Simply pass an array with the views.
+
+```
+sample=UIView.new
+label=UILabel.new
+button=UIButton.new
+sample.accessibilitly_elements = [label, button]
+```
+
 #### `accessibility_elements_hidden?` or `accessibility_elements_hidden`
 
 A boolean value which tells VoiceOver to hide the subviews of this view.
@@ -424,6 +437,64 @@ A boolean value which tells VoiceOver to hide the subviews of this view.
 
 Tells VoiceOver whether to regard this as something it can read or not.
 Standard views have this set to true. Custom views have this set to false.
+
+#### `accessibility_custom_actions`
+
+iOS 8 offers the ability to allow a VoiceOver user to perform custom actions on
+a view. For example, if you have a view which responds to a non-standard wiping
+gesture which a VoiceOver user cannot execute, you can implement these actions
+to allow them to swipe through a list and select one.
+
+##### Creating a Custom Action
+
+Custom actions belong to the `A11y::Custom_Action` class. Just call the
+`initWithName:target:selector` method. It takes the following parameters:
+- Name: The name of the action read by VoiceOver
+- Target: The object which receives the message to perform the action, usually
+   `self`.
+- Selector: A string containing the name of the method to call when selected
+
+```
+(main)> action=A11y::Custom_Action.alloc.initWithName("Sample Action", target: self, selector: 'sample_action')
+=> #<Accessibility::Custom_Action:0xb42e270>
+```
+
+##### Using a Hash
+
+Instead of passing an array of custom actions to
+`accessibility_custom_actions`, you may provide an array of hashes to create
+them.
+
+```
+(main)> test_view=UIView.new
+=> #<UIView:0xb435030>
+(main)> test_view.accessibility_custom_actions = [{name: 'Test', target: self, selector: 'test_action'}, {name: 'Another test', target: self, selector: 'another_test_action'}]
+=> [#<Accessibility::Custom_Action:0x10c78d90>, #<Accessibility::Custom_Action:0x10c68f10>]
+```
+
+You can then see them in the inspector.
+
+```
+(main)> A11y.inspect test_view
+#<UIView:0xb435030>
+Accessibility label: nil
+Accessibility hint: nil
+Accessibility traits: None
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=0.0 width=0.0 height=0.0
+Accessibility activation point: x=0.0 y=0.0
+Accessibility path: nil
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements: nil
+Accessibility elements hidden: false
+Is accessibility element: false
+Accessibility custom actions: ["Test", "Another test"]
+Accessibility identifier: nil
+Accessible: true
+=> nil
+```
 
 #### `accessibility_identifier`
 
