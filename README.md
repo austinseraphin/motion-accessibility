@@ -27,21 +27,16 @@ Or install it yourself as:
 
     $ gem install motion-accessibility
 
-## Usage ### The Motion-Accessibility Console
+## Usage
+### The Motion-Accessibility Console
 
 The motion-accessibility console gives you a way to interact with a running
 application through a purely textual interface. This works well for blind
 developers and command line users.
 
-Please note that this does *NOT* substitute for testing with VoiceOver on the
-device. You will only truly know if your app works with VoiceOver by using it.
-
 #### Enabling the Console
 
-To enable the console, you can do one of two things. If you would just like to
-try it, type `include Accessibility::Console` at a REPL prompt. If you would
-like to use it in your application, add `require motion-accessibility-console`
-to your Rakefile. You have to do this even if you use bundler.
+To enable the console, you can do one of two things. If you would just like to try it, type `include Accessibility::Console` at a REPL prompt. If you would like to use it in your application, add `require motion-accessibility-console` to your Rakefile. You have to do this even if you use bundler.
 
 #### `browse` or `b`
 
@@ -50,16 +45,22 @@ speech-friendly way. This lets you see all the relevant views displayed in your
 running application. It will detect if the screen has changed and refresh
 itself automatically.
 
-The following examples come from the sample app included with
-motion-accessibility.
+The following examples come from the sample app included with motion-accessibility.
 
 ``` (main)> browse Browsing  UIWindow 1 UIView with 3 subviews 2
 UINavigationBar with 2 subviews 3 UITabBar with 3 subviews => nil ```
 
 If a view has subviews, you can browse that view.
 
-``` ((main)> b 1 Browsing  UIView 0 Superview UIWindow 1 UILabel Hello!  2
-Touchable UITextField  3 Touchable UIButton Update => nil ```
+```
+((main)> b 1
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Hello! 
+2 Touchable UITextField  
+3 Touchable UIButton Update 
+=> nil
+```
 
 You can return to the top of the view hierarchy by using `:top`. This also
 refreshes the browser.
@@ -76,24 +77,39 @@ browsed a view, it will return that. Otherwise, you may specify the view you
 wish to browse. Note that for all the commands, you may either use its number
 or accessibility label.
 
-``` (main)> v 1 => #<UILabel:0x8feda00> ```
+```
+(main)> v 1
+=> #<UILabel:0x8feda00>
+```
 
-#### `touch` The `touch` command lets you interact with the various controls.
-It works on all standard UIControls. `touch` can accept an argument depending
-on the type of control. For example, you can pass a UITextField a string to set
-its value.
+#### `touch`
+The `touch` command lets you interact with the various controls. It works on
+all standard UIControls. `touch` can accept an argument depending on the type
+of control. For example, you can pass a UITextField a string to set its value.
 
-``` (main)> touch 2,"Motion-accessibility rocks!" Browsing  UIView 0 Superview
-UIWindow 1 UILabel Hello!  2 Touchable UITextField Motion-accessibility rocks!
-3 Touchable UIButton Update => nil ```
+```
+(main)> touch 2,"Motion-accessibility rocks!"
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Hello! 
+2 Touchable UITextField Motion-accessibility rocks! 
+3 Touchable UIButton Update 
+=> nil
+```
 
 UIButtons can take a UIControlEvent, but default to
 `UIControlEventTouchUpInside`. Note here the use of an accessibility label to
 reference the view.
 
-``` (main)> touch "update" Browsing  UIView 0 Superview UIWindow 1 UILabel
-Motion-accessibility rocks!  2 Touchable UITextField Motion-accessibility
-rocks!  3 Touchable UIButton Update => nil ```
+```
+(main)> touch "update"
+Browsing  UIView
+0 Superview UIWindow 
+1 UILabel Motion-accessibility rocks! 
+2 Touchable UITextField Motion-accessibility rocks! 
+3 Touchable UIButton Update 
+=> nil
+```
 
 ### The Accessibility Inspector
 
@@ -101,15 +117,29 @@ You can easily see the state of any of the following attributes and methods by
 using the accessibility inspector. Just call `Accessibility.inspect` and pass
 any object as an argument.
 
-``` (main)> label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [100,100])) =>
-#<UILabel:0x103b8c40> (main)> label.text="Hello!" => "Hello!" (main)>
-Accessibility.inspect label #<UILabel:0x103b8c40> Accessibility label: Hello!
-Accessibility hint: nil Accessibility traits: Static text Accessibility value:
-nil Accessibility language: nil Accessibility frame: x=0.0 y=0.0 width=100.0
-height=100.0 Accessibility activation point: x=50.0 y=50.0 Accessibility path:
-nil Accessibility view is modal: false Should group accessibility children:
-false Accessibility elements hidden: false Is accessibility element: true
-Accessibility identifier: nil Accessible: true => nil ```
+```
+(main)> label=UILabel.alloc.initWithFrame(CGRect.new([0,0], [100,100]))
+=> #<UILabel:0x103b8c40>
+(main)> label.text="Hello!"
+=> "Hello!"
+(main)> Accessibility.inspect label
+#<UILabel:0x103b8c40>
+Accessibility label: Hello!
+Accessibility hint: nil
+Accessibility traits: Static text
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=0.0 width=100.0 height=100.0
+Accessibility activation point: x=50.0 y=50.0
+Accessibility path: nil
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements hidden: false
+Is accessibility element: true
+Accessibility identifier: nil
+Accessible: true
+=> nil
+```
 
 By the way, `a11y` stands for `accessibility`, because it has a, then 11
 letters, then y. Hence, you can use `A11y.inspect` as a shortcut.
@@ -121,63 +151,92 @@ protocols. Don’t feel overwhelmed. The accessibility inspector will tell you
 exactly what you have to do. Let’s start by creating an unlabeled button, the
 bane of all VOiceOver users.
 
-``` (main)> button=UIButton.new => #<UIButton:0xd7831a0> (main)> A11y.inspect
-button #<UIButton:0xd7831a0> Accessibility label: nil Accessibility hint: nil
-Accessibility traits: Button Accessibility value: nil Accessibility language:
-nil Accessibility frame: x=0.0 y=0.0 width=0.0 height=0.0 Accessibility
-activation point: x=0.0 y=0.0 Accessibility path: nil Accessibility view is
-modal: false Should group accessibility children: false Accessibility elements
-hidden: false Is accessibility element: false Accessibility identifier: nil
-Accessible: false 2014-05-27 19:02:50.209 motion-accessibility[8851:70b]
-#<UIButton:0xd7831a0>: You must set the accessibility_label. You can use the
-setTitle:forState method to do this on a button.  2014-05-27 19:02:50.223
-motion-accessibility[8851:70b] #<UIButton:0xd7831a0>: You must set
-is_accessibility_element=true to make VoiceOver aware of it. This will often
-happen automatically when a view becomes visible by giving it a frame and
-adding it to a subview.  => #<UIButton:0xd7831a0> ```
+```
+(main)> button=UIButton.new
+=> #<UIButton:0xd7831a0>
+(main)> A11y.inspect button
+#<UIButton:0xd7831a0>
+Accessibility label: nil
+Accessibility hint: nil
+Accessibility traits: Button
+Accessibility value: nil
+Accessibility language: nil
+Accessibility frame: x=0.0 y=0.0 width=0.0 height=0.0
+Accessibility activation point: x=0.0 y=0.0
+Accessibility path: nil
+Accessibility view is modal: false
+Should group accessibility children: false
+Accessibility elements hidden: false
+Is accessibility element: false
+Accessibility identifier: nil
+Accessible: false
+2014-05-27 19:02:50.209 motion-accessibility[8851:70b] #<UIButton:0xd7831a0>: You must set the accessibility_label. You can use the setTitle:forState method to do this on a button.
+2014-05-27 19:02:50.223 motion-accessibility[8851:70b] #<UIButton:0xd7831a0>: You must set is_accessibility_element=true to make VoiceOver aware of it. This will often happen automatically when a view becomes visible by giving it a frame and adding it to a subview.
+=> #<UIButton:0xd7831a0>
+```
 
 This incorporates two features discussed below.
 
-#### `accessible?` Call the `accessible?` predicate on any object to determine
-its accessibility. Like all predicates it returns true or false. You can
-include this in your specs. If you build in accessibility testing you will
-never break accessibility, something even worse than no accessibility at all.
-For example, if you have a variable `@label` which contains a label, you could
-write: ``` @label.should.be.accessible ``` So simple! This works recursively.
-Say you run some functional tests on a view controller.
+#### `accessible?`
+Call the `accessible?` predicate on any object to determine its accessibility.
+Like all predicates it returns true or false. You can include this in your
+specs. If you build in accessibility testing you will never break
+accessibility, something even worse than no accessibility at all. For example,
+if you have a variable `@label` which contains a label, you could write: ```
+@label.should.be.accessible ``` So simple! This works recursively. Say you run
+some functional tests on a view controller.
 
-``` tests Test_Controller it “#accessible?` controller.should.be.accessible end
+```
+tests Test_Controller
+it “#accessible?`
+controller.should.be.accessible
+end
 ```
 
 Or for the ultimate in laziness:
 
-``` before do @app=UIApplication.sharedApplication end
+```
+before do
+@app=UIApplication.sharedApplication
+end
 
-it “accessible?” do @app.should.be.accessible end ``` You may not want to do
-this however, because it can get confusing navigating down subview hierarchies,
-though it will report the path taken. Still, better to do that then nothing at
-all.
+it “accessible?” do
+@app.should.be.accessible
+end
+```
+You may not want to do this however, because it can get confusing navigating
+down subview hierarchies, though it will report the path taken. Still, better
+to do that then nothing at all.
 
-#### `Accessibility.doctor` The accessibility doctor will report on what you
-have to do. It writes this to the NSLog. If given no arguments it will report
-on the last object called with the `accessible?` predicate. It returns the
-object with the problem, or nil if it finds nothing wrong. The accessibility
-inspector returns this as well. If a spec fails, `accessible?` will call this
-automatically..
+#### `Accessibility.doctor`
+The accessibility doctor will report on what you have to do. It writes this to
+the NSLog. If given no arguments it will report on the last object called with
+the `accessible?` predicate. It returns the object with the problem, or nil if
+it finds nothing wrong. The accessibility inspector returns this as well. If a
+spec fails, `accessible?` will call this automatically..
 
-#### `accessibility_test` Finally, you can specify which accessibility test
-applies to an object by setting this value. You may do this in the same way you
-set other attributes. You can use a setter:
+#### `accessibility_test`
+Finally, you can specify which accessibility test applies to an object by
+setting this value. You may do this in the same way you set other attributes.
+You can use a setter:
 
-``` view=UIView.new view.accessibility_test=:UILabel ```
+```
+view=UIView.new
+view.accessibility_test=:UILabel
+```
 
-Or you may define it in a class. If you do this make sure that it returns a
-symbol of the class you want to test against, since it has no error checking
-unlike the setter.  ``` class Custom_View < UIView
 
-def accessibility_test :UILabel end
+Or you may define it in a class. If you do this make sure that it returns a symbol of the class you want to test against, since it has no error checking unlike the setter.
 
-end ```
+```
+class Custom_View < UIView
+
+def accessibility_test
+:UILabel
+end
+
+end
+```
 
 ### Accessibility vs. Usability
 
@@ -204,11 +263,15 @@ Usually, you will define them for a UIView.
 You can define these attributes in one of two ways. Firstly you can define a
 method in a subclass of UIView.
 
-``` class CustomView < UIView
+```
+class CustomView < UIView
 
-def accessibility_label "Hello." end
+def accessibility_label
+"Hello."
+end
 
-end ```
+end
+```
 
 Note that motion-accessibility uses some metaprogramming to accomplish this. It
 tries to play nicely with other gems. If another gem has already defined the
@@ -218,7 +281,10 @@ tries to play nicely with other gems. If another gem has already defined the
 
 You can also set these attributes once you've defined a view.
 
-``` view=UIView.alloc.init view.accessibility_label="Hello." ```
+```
+view=UIView.alloc.init
+view.accessibility_label="Hello."
+```
 
 #### `accessibility_label`
 
@@ -255,36 +321,62 @@ The `accessibility_traits=` method also accepts a symbol or array of symbols,
 and applies the accessibility_traits method to them. For example, if a view
 displays an image  that opens a link, you can do this.
 
-``` class ImageLinkView < UIView # ....  def accessibility_traits
+```
+class ImageLinkView < UIView
+# ....  
+def accessibility_traits
 super.accessibility_traits|:image.accessibility_trait|:link.accessibility_trait
-end end ```
+end
+end
+``uur, to set it in an instance of a view you can do this.
 
-Or, to set it in an instance of a view you can do this.
+```
+view=UIView.alloc.init
+view.accessibility_traits=[:image, :link]
+```
 
-``` view=UIView.alloc.init view.accessibility_traits=[:image, :link] ```
-
-##### :none The element does nothing.  ##### :button The view acts like a
-button.  ##### :link The view opens a link in Safari.  ##### :search_field The
-view acts like a search field.  ##### :image The view displays an image.  #####
-:selected VoiceOver will report the element as selected. For example, a
-selected row in a table, or segment in a segmented control.  #####
-:keyboard_key The view behaves like a keyboard key.  ##### :header The view
-contains a header. VoiceOver will announce this as a heading. VoiceOver allows
-for navigation between headings. This gives quick access to different sections.
-##### :static_text The view displays static text.  ##### :summary_element The
-view provides summary information when the application starts.  #####
-:plays_sound The view plays its own sound when activated.  ####
-:starts_media_session Silences VoiceOver during a media session that should not
-be interrupted. For example, silence VoiceOver speech while the user is
-recording audio.  #### :updates_frequently Tells VoiceOver to avoid handling
-continual notifications. Instead it should poll for changes when it needs
-updated information. You do this with the notifications discussed below.  ####
-:adjustable The view has an adjustable value. Also see the
-`accessibility_increment` and `accessibility_decrement` methods.  ####
-:allows_direct_interaction This tells VoiceOver to allow the user to interact
-directly with the view. For example, a piano keyboard.  #### :causes_page_turn
-Causes an automatic page turn when VoiceOver finishes reading the text within
-it.  #### :not_enabled Not enabled and does not respond to user interaction.
+##### :none
+The element does nothing.
+##### :button
+The view acts like a button.
+##### :link
+The view opens a link in Safari.
+##### :search_field
+The view acts like a search field.
+##### :image
+The view displays an image.
+##### :selected
+VoiceOver will report the element as selected. For example, a selected row in a
+table, or segment in a segmented control.
+##### :keyboard_key
+The view behaves like a keyboard key.
+##### :header
+The view contains a header. VoiceOver will announce this as a heading.
+VoiceOver allows for navigation between headings. This gives quick access to
+different sections.
+##### :static_text
+The view displays static text.
+##### :summary_element
+The view provides summary information when the application starts.
+##### :plays_sound
+The view plays its own sound when activated.
+#### :starts_media_session
+Silences VoiceOver during a media session that should not be interrupted. For
+example, silence VoiceOver speech while the user is recording audio.
+#### :updates_frequently
+Tells VoiceOver to avoid handling continual notifications. Instead it should
+poll for changes when it needs updated information. You do this with the
+notifications discussed below.
+#### :adjustable
+The view has an adjustable value. Also see the `accessibility_increment` and
+`accessibility_decrement` methods.
+#### :allows_direct_interaction
+This tells VoiceOver to allow the user to interact directly with the view. For
+example, a piano keyboard.
+#### :causes_page_turn
+Causes an automatic page turn when VoiceOver finishes reading the text within it.
+#### :not_enabled
+Not enabled and does not respond to user interaction.
 
 #### `accessibility_value`
 
@@ -296,8 +388,7 @@ The language used by VoiceOver to read the view.
 
 #### `accessibility_frame`
 
-The frame of the accessibility element. This defaults to the frame of the view.
-Remember to give it in screen coordinates, not the coordinates of the view.
+The frame of the accessibility element. This defaults to the frame of the view. Remember to give it in screen coordinates, not the coordinates of the view.
 
 #### `accessibility_activation_point`
 
@@ -344,9 +435,10 @@ A unique identifier if you don't want to define the accessibility label.
 
 If desired, you can use these methods to make your picker views more
 accessible. You only need to do this if the picker contains non-standard views.
-#### `accessibility_label_for_component` Accepts an integer and returns the
-accessibility label for the component.  #### `accessibility_hint_for_component
-` Accepts an integer and returns the accessibility hint for the component.
+#### `accessibility_label_for_component`
+Accepts an integer and returns the accessibility label for the component.
+#### `accessibility_hint_for_component `
+Accepts an integer and returns the accessibility hint for the component.
 
 ### UIAccessibility Actions
 
@@ -396,8 +488,7 @@ Increments the value of the accessibility element. Make sure to have the
 
 #### `accessibility_decrement`
 
-Decrements the value of the accessibility element. Make sure to have the
-:adjustable accessibility trait set for this to work.
+Decrements the value of the accessibility element. Make sure to have the :adjustable accessibility trait set for this to work.
 
 ### Accessibility::Element
 
@@ -409,14 +500,21 @@ call `Accessibility::Element.init_with_accessibility_container` with the
 container, usually self. Like a UIView, an accessibility element has
 attributes, and you get and set them in exactly the same way.
 
-``` class CustomView < UIView
+```
+class CustomView < UIView
 
-def initWithFrame(frame) super # …
-accessibility=Accessibility::Element.new(self) accessibility.label="Hello."
-accessibility.hint=“Presses the magic button” accessibility.frame=view.frame
-accessibility.traits=:button end
+def initWithFrame(frame)
+super
+# …
+accessibility=Accessibility::Element.new(self)
+accessibility.label="Hello."
+accessibility.hint=“Presses the magic button”
+accessibility.frame=view.frame
+accessibility.traits=:button
+end
 
-end ```
+end
+```
 
 #### Container
 
@@ -432,8 +530,7 @@ The accessibility hint.
 
 #### `frame`
 
-The frame which VoiceOver should consider as the element. In a UIView this
-would default to the frame of the view.
+The frame which VoiceOver should consider as the element. In a UIView this would default to the frame of the view.
 
 #### `traits`
 
@@ -455,35 +552,38 @@ custom view which acts like a container. It  tells VoiceOver how to read the
 subviews in the proper order. It contains accessibility elements. Just
 implement these methods in a subclass of UIView.
 
-#### `accessibility_element_at_index` Accepts an integer and returns the
-accessibility element. You can  use the standard `Array#[]` method for this.
-#### `accessibility_element_count` Returns the number of accessible elements.
-You can use `Array#length` for this.  #### `index_of_accessibility_element`
+#### `accessibility_element_at_index`
+Accepts an integer and returns the accessibility element. You can  use the standard `Array#[]` method for this.
+#### `accessibility_element_count`
+Returns the number of accessible elements. You can use `Array#length` for this.
+#### `index_of_accessibility_element`
 Accepts an accessibility element and returns its index as an integer. You can
-use the `Array#index` method for this.  #### `accessibility_element_container?`
+use the `Array#index` method for this.
+#### `accessibility_element_container?`
 Returns true if the object behaves like a container.
 
 ### UIAccessibilityFocus Informal Protocol
 
 This protocol lets you take actions if a view gains or loses VoiceOver's focus.
 Note that if you use these in an Accessibility::Element that you can leave off
-the `accessibility_element_` prefix.  ####
-`accessibility_element_did_become_focused` Triggered when the accessibility
-element becomes focused by VoiceOver.  ####
-`accessibility_element_did_lose_focus` Triggered when the accessibility element
-loses VoiceOver's focus.  #### `accessibility_element_focused?` or
-`accessibility_element_is_focused` Returns true if the element currently has
-VoiceOver focus.
+the `accessibility_element_` prefix.
+#### `accessibility_element_did_become_focused`
+Triggered when the accessibility element becomes focused by VoiceOver.
+#### `accessibility_element_did_lose_focus`
+Triggered when the accessibility element loses VoiceOver's focus.
+#### `accessibility_element_focused?` or `accessibility_element_is_focused`
+Returns true if the element currently has VoiceOver focus.
 
 ### UIAccessibilityReadingContent Informal Protocol
 
-This protocol gives a seamless reading experience when dealing with a UIView
-which contains long pieces of text, such as a book.  - ####
-`accessibility_content_for_line_number -` Accepts an integer and returns the
-line of text to read.  #### `accessibility_frame_for_line_number -` Accepts an
-integer and returns the frame which contains it.  ####
-`accessibility_line_number_for_point` Accepts a CGPoint and returns the line
-number of the text to read.
+This protocol gives a seamless reading experience when dealing with
+a UIView which contains long pieces of text, such as a book.  -
+#### `accessibility_content_for_line_number -`
+Accepts an integer and returns the line of text to read.
+#### `accessibility_frame_for_line_number -`
+Accepts an integer and returns the frame which contains it.
+#### `accessibility_line_number_for_point`
+Accepts a CGPoint and returns the line number of the text to read.
 
 ### Notifications
 
@@ -494,37 +594,48 @@ following symbols as a parameter. Many notifications have additional parameters
 as well. Motion-Accessibility adds an accessibility_notification method to the
 Symbol class.
 
-For example, if a view controller removes a subview and adds another, you will
-want to post the screen changed notification. You can do this with
+For example, if a view controller removes a subview and adds another, you will want to post the screen changed notification. You can do this with
 
-``` Accessibility.post_notification(:screen_changed) ```
+```
+Accessibility.post_notification(:screen_changed)
+```
 
 Much easier, don't you think?
 
-#### :layout_changed Your application should post this notification when a
-part of the screen's layout changes. It has one parameter. You can provide a
-string which VoiceOver should speak. You can also provide an accessibility
-element, such as a UIView, and VoiceOver will move there.  #### :screen_changed
+#### :layout_changed
+Your application should post this notification when a  part of the screen's
+layout changes. It has one parameter. You can provide a string which VoiceOver
+should speak. You can also provide an accessibility element, such as a UIView,
+and VoiceOver will move there.
+#### :screen_changed
 Your application should post this notification when a major part of the screen
-changes. It has the same parameter as `:layout_changed`.  #### :page_scrolled
+changes. It has the same parameter as `:layout_changed`.
+#### :page_scrolled
 Post this notification after calling `Accessibility.scroll`. Include a string
-which describes the scrolling action, for example "Page 3 of 10".  ####
-:announcement Post this notification to make VoiceOver output something. Just
-include the string.  #### :announcement_did_finish UIKit posts this
-announcement when VoiceOver finishes announcing something. It accepts a
-dictionary with the following keys as a parameter. Use the zoom_type method on
-these symbols.
+which describes the scrolling action, for example "Page 3 of 10".
+#### :announcement
+Post this notification to make VoiceOver output something. Just include the
+string.
+#### :announcement_did_finish
+UIKit posts this announcement when VoiceOver finishes announcing something. It
+accepts a dictionary with the following keys as a parameter. Use the zoom_type
+method on these symbols.
 - :announcement_key_string_value
-- :announcement_key_was_successful #### :closed_captioning UIKit posts this
-  when the user toggles closed captioning.  #### :guided_access UIKit posts
-this when the user toggles guided access.  #### :inverted_colors UIKit posts
-this when the user toggles inverted colors.  #### :mono_audio UIKit posts this
-when the user toggles mono audio.  #### :voiceover UIKit posts this when the
-user toggles VoiceOver.
+- :announcement_key_was_successful
+#### :closed_captioning
+UIKit posts this when the user toggles closed captioning.
+#### :guided_access
+UIKit posts this when the user toggles guided access.
+#### :inverted_colors
+UIKit posts this when the user toggles inverted colors.
+#### :mono_audio
+UIKit posts this when the user toggles mono audio.
+#### :voiceover
+UIKit posts this when the user toggles VoiceOver.
 
-### Determining the Status of Accessibility Components You can use these handy
-methods to determine the status of different accessibility components. They
-take no parameters and return true or false.
+### Determining the Status of Accessibility Components
+You can use these handy methods to determine the status of different
+accessibility components. They take no parameters and return true or false.
 
 - `Accessibility.voiceover_running?`
 - `Accessibility.closed_captioning_enabled?`
@@ -535,12 +646,12 @@ take no parameters and return true or false.
 Additionally, these two methods relate to the Zoom screen magnification
 software.
 
-#### `Accessibility.zoom_focused_changed` This notifies Zoom that an app's
-focus has changed. It takes a zoom type described above, a frame, and the view
-containing the frame.  ####
-`Accessibility.register_gesture_conflicts_with_zoom` This issues a dialog to
-the user when a three-fingered gesture conflicts with Zoom. It lets them choose
-to disable Zoom or continue.
+#### `Accessibility.zoom_focused_changed`
+This notifies Zoom that an app's focus has changed. It takes a zoom type
+described above, a frame, and the view containing the frame.
+#### `Accessibility.register_gesture_conflicts_with_zoom`
+This issues a dialog to the user when a three-fingered gesture conflicts with
+Zoom. It lets them choose to disable Zoom or continue.
 
 ### Speech Attributes
 
