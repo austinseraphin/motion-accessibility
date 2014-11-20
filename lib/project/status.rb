@@ -26,5 +26,32 @@ def registered_gesture_conflict_with_zoom
 UIAccessibilityRegisterGestureConflictWithZoom()
 end
 
+if UIDevice.currentDevice.systemVersion.to_f>=8.0
+	def darker_system_colors_enabled?
+		UIAccessibilityDarkerSystemColorsEnabled()
+	end
+	def bold_text_enabled?
+		UIAccessibilityIsBoldTextEnabled()
+	end
+	def grayscale_enabled?
+		UIAccessibilityIsGrayscaleEnabled()
+	end
+	def reduce_motion_enabled?
+		UIAccessibilityIsReduceMotionEnabled()
+	end
+	def reduce_transparency_enabled?
+		UIAccessibilityIsReduceTransparencyEnabled()
+	end
+	def speak_screen_enabled?
+		UIAccessibilityIsSpeakScreenEnabled()
+	end
+	def speak_selection_enabled?
+		UIAccessibilityIsSpeakSelectionEnabled()
+	end
+	def switch_control_running?
+		UIAccessibilityIsSwitchControlRunning()
+	end
+end
+
 end
 end
