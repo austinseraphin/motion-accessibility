@@ -735,6 +735,16 @@ accessibility components. They take no parameters and return true or false.
 - `Accessibility.guided_access_enabled?`
 - `Accessibility.invert_colors_enabled?`
 - `Accessibility.mono_audio_enabled?`
+- `Accessibility.darker_system_colors_enabled?`
+	- `Accessibility.bold_text_enabled?`
+- `Accessibility.grayscale_enabled?`
+- `Accessibility.reduce_motion_enabled?`
+- `Accessibility.reduce_transparency_enabled?`
+
+- `Accessibility.speak_selection_enabled?`
+- `Accessibility.speak_screen_enabled?`
+- `Accessibility.switch_control_running?`
+
 
 Additionally, these two methods relate to the Zoom screen magnification
 software.
