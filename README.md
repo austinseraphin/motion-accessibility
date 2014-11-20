@@ -701,6 +701,30 @@ UIKit posts this when the user toggles inverted colors.
 UIKit posts this when the user toggles mono audio.
 #### :voiceover
 UIKit posts this when the user toggles VoiceOver.
+#### :bold_text
+UIKit posts this when the user toggles the Bold Text accessibility setting.
+#### :darker_colors
+UIKit posts this when the user toggles the Darker Colors accessibility setting.
+#### :grayscale
+Posted when the user toggles the Grayscale accessibility setting
+#### :reduce_motion
+Posted when the user toggles the Reduce Motion accessibility seting. This can
+help users who feel dizzy by all the fancy animations.
+#### :reduce_transparency
+Posted when the user toggles the Reduce Transparency accessibility setting.
+#### :speak_selection
+Posted when the user toggles the Speak Selection setting located in Accessibility -> Speech
+#### :speak_screen
+Posted when the user toggles the Speak Screen setting located under Accessibility -> Speech
+#### :switch_control
+Posted when the user toggles use of a switch control
+#### :switch_control_identifier
+Contains the unique identifier of the switch control
+#### :resume_assistive_technology
+Post this notification to resume VoiceOver or other assistive technology
+
+#### :pause_assistive_technology
+Post this notification to pause VoiceOver or other assistive technology
 
 ### Determining the Status of Accessibility Components
 You can use these handy methods to determine the status of different
