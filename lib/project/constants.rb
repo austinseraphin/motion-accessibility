@@ -135,6 +135,23 @@ Notifications = {
 :voiceover => UIAccessibilityVoiceOverStatusChanged
 }
 
+if UIDevice.currentDevice.systemVersion.to_f>=8.0
+IOS8_Notifications = {
+	:bold_text => UIAccessibilityBoldTextStatusDidChangeNotification,
+	:darker_colors => UIAccessibilityDarkerSystemColorsStatusDidChangeNotification,
+	:grayscale => UIAccessibilityGrayscaleStatusDidChangeNotification,
+	:reduce_motion => UIAccessibilityReduceMotionStatusDidChangeNotification,
+	:reduce_transparency => UIAccessibilityReduceTransparencyStatusDidChangeNotification,
+	:speak_screen => UIAccessibilitySpeakScreenStatusDidChangeNotification,
+	:speak_selection => UIAccessibilitySpeakSelectionStatusDidChangeNotification,
+:switch_control => UIAccessibilitySwitchControlStatusDidChangeNotification,
+:switch_control_identifier => UIAccessibilityNotificationSwitchControlIdentifier,
+:pause_assistive_technology => UIAccessibilityPauseAssistiveTechnologyNotification,
+:resume_assistive_technology => UIAccessibilityResumeAssistiveTechnologyNotification
+}
+IOS8_Notifications.each {|ruby,ios| Notifications[ruby]=ios}
+end
+
 def Accessibility.post_notification(notification, *args)
 if(notification.kind_of?(Fixnum))
 UIAccessibilityPostNotification(notification, *args)

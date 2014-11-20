@@ -28,12 +28,12 @@ def traits=(traits)
 end
 
 if self.respond_to?(:method_added)
-alias :method_added_accessibility :method_added
+alias :method_added_accessibility_element :method_added
 end
 
 def self.method_added(name)
 if self.respond_to?(:method_added_accessibility)
-method_added_accessibility(name)
+method_added_accessibility_element(name)
 end
 return if name=~/=$/
 attributes=Accessibility::Element_Attributes
