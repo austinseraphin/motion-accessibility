@@ -313,9 +313,13 @@ end
 			end
 
 			def self.nonstandard(value, options={})
-				options[:apple]||=Bignum
+				if options[:apple]
+					return true if value.class==options[:apple]
+				else
+					return true if [Bignum,Fixnum].include?(value.class)
+				end
 				options[:custom]||=:none.accessibility_trait
-				return true if value.class==options[:apple]||value==options[:custom]
+				return true if value==options[:custom]
 				options[:attribute]||=:accessibility_traits
 				message="Apple has this set to a non-standard value."
 options[:message]||="Hopefully you can get away with using :none."
