@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-VERSION = "3.1.1"
+VERSION = "3.1.2"
 
 Gem::Specification.new do |spec|
   spec.name          = "motion-accessibility"
@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{AA RubyMotion wrapper around the UIAccessibility procotols}
   spec.summary       = %q{This gem provides easy ruby-like wrappers around the protocols which interact with VoiceOver and other assistive technologies. Making accessibility accessible! }
   spec.homepage      = "https://github.com/austinseraphin/motion-accessibility"
-  spec.license       = "GPL"
+  spec.license       = "MIT"
 
   files = []
   files << 'README.md'
