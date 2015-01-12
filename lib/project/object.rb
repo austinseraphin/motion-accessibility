@@ -92,4 +92,8 @@ end
 Accessibility.defined_attribute(self,ios)
 end
 
+def self.respond_to_missing(name,*args)
+	A11y.All_Attributes.has_key?(name)
+end
+
 end
