@@ -61,6 +61,14 @@ Element_Attributes = {
 :focused? => :accessibilityElementIsFocused
 }
 
+Watch_Attributes = {
+:accessibility_label= => :setAccessibilityLabel,
+:accessibility_hint= => :setAccessibilityHint,
+:accessibility_value= => :setAccessibilityValue,
+:is_accessibility_element= => :setIsAccessibilityElement,
+:accessibility_image_regions => :setAccessibilityImageRegions
+}
+
 Traits = {
 none: UIAccessibilityTraitNone,
 button: UIAccessibilityTraitButton,

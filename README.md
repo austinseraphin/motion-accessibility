@@ -236,7 +236,7 @@ end
 end
 ```
 
-### Accessibility vs. Usability
+#### Accessibility vs. Usability
 
 A difference exists between accessibility and usability, though often the two
 get lumped together under the umbrella of the former. Accessibility refers to
@@ -326,7 +326,9 @@ def accessibility_traits
 super.accessibility_traits|:image.accessibility_trait|:link.accessibility_trait
 end
 end
-``uur, to set it in an instance of a view you can do this.
+```
+
+Or, to set it in an instance of a view you can do this.
 
 ```
 view=UIView.alloc.init
@@ -763,6 +765,30 @@ just call the `speech_attribute` method on the following symbols.
 - `:punctuation`
 - `:language`
 - `:pitch`
+
+### The Apple Watch
+
+Currently limited support for the APple Watch exists. For one thing, nobody can
+get one yet. For another, RubyMotion does not yet allow running specs on an
+Apple Watch extension. Currently the gem provides wrappers for the Watchkit
+methods. Note that Watchkit only provides the setters, not the getters, since
+you cannot retrieve values from the running extension.
+
+#### `accessibility_label`
+The accessibility label.
+#### `accessibility_hint`
+The accessibility hint.
+#### accessibility_traits
+The accessibility traits. Takes the same arguments as the standard method.
+#### accessibility_value
+The accessibility value.
+#### `is_accessibility_element`
+Determines if VoiceOver should interact with the element.
+#### `accessibility_image_regions`
+
+Unique to WatchKit, this method accepts an array of Accessibility::Image_Region
+objects. Each of these objects consists of a `label` and a `frame` to define
+the accessible parts of an image.
 
 ## contributing
 
