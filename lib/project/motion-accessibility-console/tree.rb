@@ -77,7 +77,7 @@ control="Superview #{control}" if index==0
 control.sub!(/UITableViewCell(AccessibilityElement)?/, "Table cell") if control
 if @view.class==UITableViewCell
 name=view.text
-elsif @view.class==UITableViewCellAccessibilityElement
+elsif defined?(UITableViewCellAccessibilityElement)&&@view.class==UITableViewCellAccessibilityElement
 name=view.tableViewCell.text
 elsif view.respond_to?(:text)
 	name=view.text

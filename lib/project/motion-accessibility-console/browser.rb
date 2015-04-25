@@ -120,7 +120,7 @@ else
 result=$browser_cursor.view 
 result
 end
-if result.class==UITableViewCellAccessibilityElement
+if defined?(UITableViewCellAccessibilityElement)&&result.class==UITableViewCellAccessibilityElement
 result=result.tableViewCell
 end
 result
