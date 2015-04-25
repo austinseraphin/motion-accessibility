@@ -462,7 +462,7 @@ result=false
 message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value}\""
 		end
 	end
-	A11y::Test::Log.add(Path, message) unless result
+	A11y::Test::Log.add(Path, message) if message&&!result
 	puts "Testing #{attribute}... #{result}" if Data[:debug]
 	result
 		end
