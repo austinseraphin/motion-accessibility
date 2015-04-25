@@ -260,6 +260,13 @@ quiet: false,
 				options: {
 				test: :window
 			}
+			},
+				:"RubyMotionQuery::App" => {
+				accessibility_label: nil,
+				is_accessibility_element: false,
+				options: {
+				test: :rmq_app
+			}
 			}
 			}
 
@@ -417,8 +424,13 @@ true
 			self.run_tests(window.rootViewController)
 		end
 
+		def self.rmq_app(app)
+			self.run_tests(app.window)
+		end
+
 		def self.find_tests(obj)
 			return Tests[obj] if obj.kind_of?(Symbol)
+			return Tests[obj.to_s.to_sym] if obj.is_a?(Class)
 			obj_tests=A11y::Test::Tests[:NSObject].clone
 cl=obj.class
 class_name=cl.to_s.to_sym
@@ -454,7 +466,6 @@ end
 		r=expected.call(obj)
 		unless r
 			result=false
-			message||="The test function for #{attribute} failed."
 		end
 	else
 		unless expected==value
