@@ -1,6 +1,6 @@
 class Table_Test < UIViewController
 
-attr_reader :table
+attr_reader :table, :data
 
 Phonetics = %w[alpha bravo charlie delta echo foxtrat golf hotel india juliet kilo lima mike november oscar papa quebec romeo siera tango uniform victor whiskey x-ray yankee zulu]
 

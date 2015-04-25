@@ -204,6 +204,9 @@ end
 it "UITableView" do
 	controller=Spec_Table_Test.alloc.initWithNibName(nil, bundle: nil)
 	controller.view.should.be.accessible
+	controller.data.clear
+	controller.table.reloadData
+	controller.view.should.be.accessible
 end
 
 it "UITableViewCell" do

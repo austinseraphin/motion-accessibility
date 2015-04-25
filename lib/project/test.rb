@@ -80,7 +80,7 @@ quiet: false,
 			},
 				UINavigationBar: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_traits: :nonstandard,
 				accessibility_elements_hidden: false,
 				should_group_accessibility_children: true,
 				accessibility_identifier: [String, "You must set the accessibility_identifier to the title of the view. You can set the title of the view controller or of the navigation item."],
@@ -151,12 +151,12 @@ quiet: false,
 			},
 				UISwitch: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t, custom: UIAccessibilityTraitButton, message: "You can use :button.")},
+				accessibility_traits: :nonstandard,
 					accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 			},
 				UITabBar: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_traits: :nonstandard,
 				should_group_accessibility_children: true,
 				is_accessibility_element: false,
 				options: {
@@ -166,7 +166,7 @@ quiet: false,
 			},
 				UITabBarButton: {
 				accessibility_label: [String, "You must set the title of this button. You can se tthe title of the UITabBarItem."],
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Bignum, custom: UIAccessibilityTraitButton, message: "You can use :button.")},
+				accessibility_traits: :nonstandard,
 			},
 				UITabBarController: {
 				accessibility_label: nil,
@@ -177,10 +177,10 @@ quiet: false,
 			}
 			},
 				UITableView: {
-				accessibility_label: [String, "You must set the accessibility_label to the default contents of the table view, for example \"Empty List\""],
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_label: ->(t){table_label(t)},
+				accessibility_traits: :nonstandard,
 				should_group_accessibility_children: true,
-				is_accessibility_element: false
+				is_accessibility_element: ->(t){ table_is_element(t)}
 			},
 				UITableViewCell: {
 				accessibility_label: :ignore,
@@ -200,7 +200,7 @@ quiet: false,
 			},
 				UITableTextAccessibilityElement: {
 				accessibility_label: [String, "Set the accessibility_label to the text of the view."],
-				accessibility_traits: UIAccessibilityTraitStaticText,
+				accessibility_traits: :ignore,
 				accessibility_value: String,
 			},
 				UITableViewHeaderFooterView: {
@@ -208,19 +208,19 @@ quiet: false,
 			},
 				UITextField: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Fixnum)},
+				accessibility_traits: :nonstandard,
 				accessibility_value: [:something, "You must set the text of the textfield."],
 				is_accessibility_element: false
 			},
 				UIAccessibilityTextFieldElement: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t, apple: Fixnum)},
+				accessibility_traits: :nonstandard,
 				accessibility_value: [:something, "You must set the text of the textfield."],
 				is_accessibility_element: true
 			},
 				UIToolbar: {
 				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_traits: :nonstandard,
 				should_group_accessibility_children: true,
 				is_accessibility_element:false,
 				options: {
@@ -288,16 +288,17 @@ if UIDevice.currentDevice.systemVersion.to_f>=8.0
 				options: {recurse: false}
 			}
 				Tests[:UITableView] = {
-				accessibility_label: nil,
-				accessibility_traits: ->(t){A11y::Test.nonstandard(t)},
+				accessibility_label: ->(t){table_label(t)},
+				accessibility_traits: :nonstandard,
 				should_group_accessibility_children: true,
-				is_accessibility_element: false
+				is_accessibility_element: ->(t){table_is_element(t)}
 			}
 				Tests[:UITableViewCell] = {
 				accessibility_label: :ignore,
 				accessibility_value: :ignore,
 				should_group_accessibility_children: true,
 				is_accessibility_element: false,
+				accessibility_elements_hidden: :ignore,
 				options: {
 				recurse: false,
 				test: :tableViewCell
@@ -372,6 +373,36 @@ controller.viewControllers.each {|c| result=result&&self.run_tests(c)}
 result
 		end
 
+		def self.table_is_element(table)
+					if table.empty?
+						unless table.accessibility_element?
+							A11y::Test::Log.add(Path, "You must set is_accessibility_element to true for an empty table.")
+							return false
+						end
+					else
+						if table.accessibility_element?
+							A11y::Test::Log.add(Path, "You must set is_accessibility_element to false for a table with data.")
+							return false
+						end
+					end
+					true
+		end
+
+		def self.table_label(table)
+if table.empty?
+	unless table.accessibility_label.is_a?(String)
+		A11y::Test::Log.add(Path, "You must set the accessibility label to what you want VoiceOver to say instead of an empty table.")
+		return false
+	end
+else
+	unless table.accessibility_label.nil?
+		A11y::Test::Log.add(Path, "You must set the accessibility label to nil.")
+		return false
+	end
+end
+true
+		end
+
 		def self.tableViewCell(cell)
 			return true if cell.accessibility_label||cell.textLabel.text
 			A11y::Test::Log.add(Path, "Please set the accessibility_label of the UITableViewCell. You can do this by setting the textLabel.text property.")
@@ -412,6 +443,7 @@ obj_tests
 			return true if expected==:ignore
 	value=obj.send(attribute) if obj.respond_to?(attribute)
 	return value if expected==:something
+	return nonstandard(value) if expected==:nonstandard
 	result=true
 	if expected.class==Class
 if value.class!=expected
@@ -419,7 +451,7 @@ if value.class!=expected
 message||="#{attribute} must have an object of type #{expected} instead of #{value}"
 end
 	elsif expected.kind_of?(Proc)
-		r=expected.call(value)
+		r=expected.call(obj)
 		unless r
 			result=false
 			message||="The test function for #{attribute} failed."
@@ -506,6 +538,18 @@ end
 			result=A11y::Test.run_tests(self)
 A11y.doctor if RUBYMOTION_ENV=='test'&&!A11y::Test::Data[:quiet]
 result
+		end
+
+	end
+
+	class UITableView
+
+		def empty?
+			cells=0
+numberOfSections.times do |section|
+	cells+=numberOfRowsInSection(section)
+end
+cells==0
 		end
 
 	end
