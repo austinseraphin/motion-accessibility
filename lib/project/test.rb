@@ -480,6 +480,7 @@ message||="#{attribute} must have the value \"#{expected}\" instead of \"#{value
 
 		def self.run_tests(obj)
 			puts "Entering run_tests: #{obj.inspect}" if Data[:debug]
+			return self.run_tests(obj.get) if obj.is_a?(RubyMotionQuery::RMQ)
 			if Data[:depth]==0
 			A11y::Test::Log::Events.clear
 			Path.clear

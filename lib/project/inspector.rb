@@ -3,6 +3,7 @@
 module Accessibility
 
 def self.inspect(obj)
+	return self.inspect(obj.get) if obj.is_a?(RubyMotionQuery::RMQ)
 displayed=[]
 if obj.class==Accessibility::Element
 attributes=A11y::Element_Attributes.dup
@@ -56,10 +57,10 @@ end
 end 
 
 def self.inspect_accessibility_traits(obj)
-	return obj.accessibility_traits if obj.accessibility_traits>Accessibility::Traits.values.max
+	return obj.accessibilityTraits if obj.accessibilityTraits>Accessibility::Traits.values.max
 traits=[]
 Accessibility::Traits.each do |trait, bitmask|
-if obj.accessibility_traits&bitmask>0
+if obj.accessibilityTraits&bitmask>0
 name=trait.gsub(/_/,' ').capitalize
 traits<<name
 end
