@@ -801,4 +801,4 @@ the accessible parts of an image.
 
 ## A Special Offer for You
 
-I do [freelance accessibility consulting.](austinseraphin.com) If you use my gem I will give you a discount. Contact me for more information.
+I do [freelance accessibility consulting.](http://austinseraphin.com) If you use my gem I will give you a discount. Contact me for more information.
