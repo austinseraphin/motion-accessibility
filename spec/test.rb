@@ -189,6 +189,8 @@ it "UISwitch" do
 	switch.should.be.accessible
 	switch.on=false
 	switch.should.be.accessible
+	switch.accessibility_label="test"
+	switch.should.be.accessible
 end
 
 it "UITabBar" do
