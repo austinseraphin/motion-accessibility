@@ -52,7 +52,7 @@ quiet: false,
 			},
 				UIBarItem: {
 				title: [String, "Set the title to tell VoiceOver what to say."],
-				accessibility_label: nil,
+				accessibility_label: :ignore,
 				is_accessibility_element: false,
 			},
 			UIButton: {
@@ -63,14 +63,14 @@ quiet: false,
 				accessibility_label: nil,
 				is_accessibility_element: false},
 				UIDatePicker: {
-				accessibility_label: nil,
+				accessibility_label: :ignore,
 				is_accessibility_element: false,
 				options: {
 				recurse: false
 			}
 			},
 				UIImageView: {
-				accessibility_label: nil,
+				accessibility_label: :ignore,
 				accessibility_traits: [UIAccessibilityTraitImage, "You must set accessibility_trait to :image"],
 				is_accessibility_element: false
 			},
@@ -139,7 +139,7 @@ quiet: false,
 				should_group_accessibility_children: true
 			},
 				UISlider: {
-				accessibility_label: nil,
+				accessibility_label: :ignore,
 				accessibility_value: String,
 				accessibility_traits: UIAccessibilityTraitAdjustable,
 				options: {recurse: false}
@@ -150,7 +150,7 @@ quiet: false,
 				options: {recurse: false}
 			},
 				UISwitch: {
-				accessibility_label: nil,
+				accessibility_label: :ignore,
 				accessibility_traits: :nonstandard,
 					accessibility_value: [String, "You must set the accessibility_value to \"1\" or \"0\""]
 			},
