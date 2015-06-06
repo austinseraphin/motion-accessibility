@@ -267,8 +267,7 @@ tab_controller.viewControllers=[nav_controller]
 			buttons.count.should.be>0
 			buttons.should.be.accessible
 			rmq.append(UIButton)
-			buttons=rmq(UIButton)
-			buttons.should.not.be.accessible
+			rmq(UIButton).should.not.be.accessible
 		end
 		end
 
