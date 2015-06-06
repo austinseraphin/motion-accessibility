@@ -260,5 +260,17 @@ tab_controller.viewControllers=[nav_controller]
 			window.should.be.accessible
 		end
 
+		describe "RMQ" do
+			tests TestController
+		it "RubyMotionQuery::RMQ" do
+			buttons=rmq(UIButton)
+			buttons.count.should.be>0
+			buttons.should.be.accessible
+			rmq.append(UIButton)
+			buttons=rmq(UIButton)
+			buttons.should.not.be.accessible
+		end
+		end
+
 end
 

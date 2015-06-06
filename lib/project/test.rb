@@ -267,6 +267,14 @@ quiet: false,
 				options: {
 				test: :rmq_app
 			}
+			},
+				:"RubyMotionQuery::RMQ" => {
+				accessibility_label: :ignore,
+				is_accessibility_element: :ignore,
+				options: {
+				test: :rmq_rmq,
+			recurse: false
+			}
 			}
 			}
 
@@ -426,6 +434,11 @@ true
 
 		def self.rmq_app(app)
 			self.run_tests(app.window)
+		end
+
+		def self.rmq_rmq(rmq_obj)
+			rmq_obj.each {|obj| return false unless obj.accessible?}
+			true
 		end
 
 		def self.find_tests(obj)
