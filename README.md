@@ -237,8 +237,8 @@ end
 ```
 
 #### RMQ Compatibility
-If you use [RMQ][http://rubymotionquery.com] or
-[RedPotion][http://redpotion.org], you can test any selection for
+If you use [RMQ](http://rubymotionquery.com) or
+[RedPotion](http://redpotion.org), you can test any selection for
 accessibility. For example:
 
 ```
