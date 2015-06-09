@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Austin Seraphin"]
   spec.email         = ["austin@austinseraphin.com"]
   spec.description   = %q{AA RubyMotion wrapper around the UIAccessibility procotols}
-  spec.summary       = %q{This gem provides easy ruby-like wrappers around the protocols which interact with VoiceOver and other assistive technologies. Making accessibility accessible! }
+  spec.summary       = %q{This gem provides easy ruby-like wrappers around the protocols which interact with VoiceOver and other assistive technologies. It also features automated testing for iOS, and a console. Making accessibility accessible! }
   spec.homepage      = "https://github.com/austinseraphin/motion-accessibility"
   spec.license       = "MIT"
 
