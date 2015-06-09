@@ -236,6 +236,16 @@ end
 end
 ```
 
+#### RMQ Compatibility
+If you use [RMQ][http://rubymotionquery.com] or
+[RedPotion][http://redpotion.org], you can test any selection for
+accessibility. For example:
+
+```
+it "has accessible buttons" do
+find(UIButton).should.be.accessible
+end
+
 #### Accessibility vs. Usability
 
 A difference exists between accessibility and usability, though often the two
@@ -768,11 +778,10 @@ just call the `speech_attribute` method on the following symbols.
 
 ### The Apple Watch
 
-Currently limited support for the APple Watch exists. For one thing, nobody can
-get one yet. For another, RubyMotion does not yet allow running specs on an
-Apple Watch extension. Currently the gem provides wrappers for the Watchkit
-methods. Note that Watchkit only provides the setters, not the getters, since
-you cannot retrieve values from the running extension.
+Currently limited support for the APple Watch exists. The gem
+provides wrappers for the Watchkit methods. Note that Watchkit only provides
+the setters, not the getters, since you cannot retrieve values from the running
+extension.
 
 #### `accessibility_label`
 The accessibility label.
