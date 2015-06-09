@@ -245,6 +245,7 @@ accessibility. For example:
 it "has accessible buttons" do
 find(UIButton).should.be.accessible
 end
+```
 
 #### Accessibility vs. Usability
 
